@@ -1,0 +1,145 @@
+
+
+let commandFiles;
+    try {
+      commandFiles = require(`./commands/${cmd}.js`);
+      commandFiles.run(client, message, args)
+    } catch (err) {
+      return message.reply("Command tidak tersedia/dalam tahap pengembangan. Silahkan ketik tghelp")
+    } finally {
+      console.log(`${message.author.tag} menggunakan command ${prefix}${cmd}`)
+    }
+    
+    
+    
+    
+    const Discord = require("discord.js");
+
+
+if (message.content.includes("membercount")) {
+      if (
+        !message.guild.channels.cache.find(
+          x => x.name === "MemberCount" && x.type === "category"
+        ) &&
+        !message.guild.channels.cache.find(
+          x => x.name === "All Members" && x.type === "voice"
+        ) &&
+        !message.guild.channels.cache.find(
+          x => x.name === "Humans" && x.type === "voice"
+        ) &&
+        !message.guild.channels.cache.find(
+          x => x.name === "Bots" && x.type === "Voice"
+        )
+      ) {
+        try {
+          message.guild.channels.create("MemberCount", {
+            type: "category"
+          });
+          message.guild.channels
+            .create("All Members :" + message.guild.members.cache.size, {
+              type: "voice"
+            })
+            .then(channel => {
+              const category = message.guild.channels.cache.find(
+                x => x.name === "MemberCount" && x.type === "category"
+              );
+              if (!category) {
+                try {
+                  message.guild.channels.create("MemberCouent", {
+                    type: "category"
+                  });
+                } finally {
+                  channel.setParent(category.id);
+                }
+              }
+              channel.setParent(category.id);
+            });
+          message.guild.channels
+            .create(
+              "Humans :" +
+                message.guild.members.cache.filter(x => !x.user.bot).size,
+              {
+                type: "voice"
+              }
+            )
+            .then(channel => {
+              const category = message.guild.channels.cache.find(
+                x => x.name === "MemberCount" && x.type === "category"
+              );
+              if (!category) {
+                try {
+                  message.guild.channels.create("MemberCouent", {
+                    type: "category"
+                  });
+                } finally {
+                  channel.setParent(category.id);
+                }
+              }
+              channel.setParent(category.id);
+            });
+          message.guild.channels
+            .create(
+              "Bots :" +
+                message.guild.members.cache.filter(x => x.user.bot).size,
+              {
+                type: "voice"
+              }
+            )
+            .then(channel => {
+              const category = message.guild.channels.cache.find(
+                x => x.name === "MemberCount" && x.type === "category"
+              );
+              if (!category) {
+                try {
+                  message.guild.channels.create("MemberCouent", {
+                    type: "category"
+                  });
+                } finally {
+                  channel.setParent(category.id);
+                }
+              }
+              channel.setParent(category.id);
+            });
+        } finally {
+          message.channel.send(`membercount has been create`);
+        }
+      } else if (
+        message.guild.channels.cache.find(
+          x => x.name === "MemberCount" && x.type === "category"
+        )
+        //   message.guild.channels.cache.find(
+        //     x => x.name.includes("All Members") && x.type === "voice"
+        //   ) &&
+        //   message.guild.channels.cache.find(
+        //     x => x.name.includes("Humans") && x.type === "voice"
+        //   ) &&
+        //   message.guild.channels.cache.find(
+        //     x => x.name.includes("Bots") && x.type === "Voice"
+        //   )
+      ) {
+        try {
+          message.guild.channels.cache
+            .find(x => x.name.includes("All Members") && x.type === "voice")
+            .setName("All Members :" + message.guild.members.cache.size, {
+              type: "voice"
+            });
+          message.guild.channels.cache
+            .find(x => x.name.includes("Humans") && x.type === "voice")
+            .setName(
+              "Humans :" +
+                message.guild.members.cache.filter(x => !x.user.bot).size
+            );
+          message.guild.channels.cache
+            .find(x => x.name.includes("Bots") && x.type === "voice")
+            .setName(
+              "Bots :" +
+                message.guild.members.cache.filter(x => x.user.bot).size,
+              {
+                type: "voice"
+              }
+            );
+        } finally {
+          message.channel.send(`membercount has been Update`);
+        }
+      }
+    }

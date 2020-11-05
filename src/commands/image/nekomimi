@@ -1,0 +1,21 @@
+const Discord = require("discord.js-light");
+const superagent = require("superagent");
+
+module.exports = {
+  name: "nekomimi",
+  category: "Image",
+  cooldown: "5",
+  usage: "nekomimi",
+  async run(client, message, args) {
+    const { body } = await superagent.get("https://nekos.life/api/v2/img/kemonomimi");
+
+    const embed = new Discord.MessageEmbed()
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+      .setTitle(
+        `${message.author.username}, this is your nekomimi`
+      )
+      .setImage(body.url)
+      .setTimestamp()
+    message.channel.send({ embed });
+  }
+};

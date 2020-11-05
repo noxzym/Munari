@@ -1,0 +1,50 @@
+const { MessageEmbed } = require("discord.js-light");
+const axios = require("axios");
+
+module.exports = {
+  name: "instagram",
+  aliases: ["insta", "ig"],
+  category: "General",
+  descriptions: "Display instagram information",
+  usage: "instagram <username>",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  async run(client, message, args) {
+    try {
+      const username = args[0];
+      if(!username) return message.channel.send(`You must input some instagram username`)
+      const response = await axios.get(
+        `https://instagram.hanifdwyputra.xyz/?username=${username}`
+      );
+      const { data } = response;
+
+      const get = data.graphql.user;
+
+      const fullname = get.full_name;
+      const userig = get.username;
+      const bio = get.biography === null ? "None" : get.biography;
+      const follower = get.edge_followed_by.count;
+      const following = get.edge_follow.count;
+      const priv = get.is_private ? "Yes 🔒" : "No 🔓";
+      
+      const thm = get.profile_pic_url_hd
+
+      let e = new MessageEmbed()
+        .setColor(
+          message.member.roles.cache
+            .sort((a, b) => b.position - a.position)
+            .first().color
+        )
+        .setTitle(`Instagram Account • ${fullname}`)
+        .setURL(`https://www.instagram.com/${username}`)
+        .setThumbnail(`${thm}`)
+        .setDescription(`**Account Information\n\`\`\`asciidoc\n• Username  :: ${userig}\n• Fullname  :: ${fullname}\n• Biography :: ${bio}\n• Followers :: ${follower}\n• Following :: ${following}\n• Private   :: ${priv}\n\`\`\`**`);
+
+      await message.channel.send(e);
+    } catch (error) {
+      message.channel.send("Cannot find username");
+      console.log(error);
+    }
+  }
+};
