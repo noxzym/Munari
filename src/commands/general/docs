@@ -1,0 +1,22 @@
+const request = require('request');
+module.exports = {
+  name: "docs",
+  aliases: [""],
+  category: "",
+  descriptions: "",
+  usage: "docs <type>",
+  options: [""],
+  cooldown: "3",
+  ownerOnly: true,
+  async run(client, message, args) {
+     try {
+    if (!args[0]) return message.reply('You need to give something to search!');
+    
+    request({url: 'https://djsdocs.sorta.moe/main/stable/embed?q=' + encodeURIComponent(args.join(' ')), json: true}, (req, res, json) => {
+      message.channel.send({embed: json});
+    });
+  } catch (err) {
+    message.channel.send('There was an error!\n' + err).catch();
+  }
+  }
+}

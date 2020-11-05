@@ -1,0 +1,25 @@
+const Discord = require("discord.js-light");
+const superagent = require("superagent");
+
+module.exports = {
+  name: "nekogirl",
+  aliases: [""],
+  category: "Image",
+  descriptions: "Give you random a nekogirl",
+  usage: "nekogirl",
+  options: [""],
+  cooldown: "5",
+  ownerOnly: false,
+  async run(client, message, args) {
+    const { body } = await superagent.get("https://nekos.life/api/v2/img/neko");
+
+    const embed = new Discord.MessageEmbed()
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+      .setTitle(
+        `${message.author.username}, this is your nekogirl`
+      )
+      .setImage(body.url)
+      .setTimestamp()
+    message.channel.send({ embed });
+  }
+};
