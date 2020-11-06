@@ -1,7 +1,7 @@
 const { Discord, Util, MessageEmbed } = require("discord.js-light");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
-const youtube = new YouTubeAPI(process.env.ytak);
+const youtube = new YouTubeAPI('AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0');
 const Prefix = require("discord-prefix");
 module.exports = {
   name: "play",

@@ -12,7 +12,7 @@ module.exports = {
     message.channel.send(`Restarting Bot...`)
     .then(msg => {msg.delete({timeout:3000})})
       .then(client.destroy())
-        .then(client.login(process.env.CLIENT_TOKEN))
+      .then(client.login('NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4'))
           .then(client.user.setActivity(`• Mention me for know my prefix •`, {
             type: "WATCHING"
           }))

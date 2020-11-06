@@ -32,7 +32,7 @@ client.recent = new Map();
   require(`./utils/${handler}`)(client);
 });
 
-client.login(process.env.CLIENT_TOKEN);
+client.login('NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4');
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 const presence = [``, ``, ``];
 client.on("ready", async () => {
