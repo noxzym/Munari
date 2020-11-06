@@ -19,10 +19,15 @@ module.exports = {
         let e = new MessageEmbed()
         .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
         .setThumbnail(message.author.avatarURL({dynamic: true}))
-        .setTitle(`Report Command from ${message.author.tag} • ${message.author.id}`)
+        .setTitle(`Report Command`)
         .setTimestamp()
-        await message.guild.channels.cache.get(message.author.lastMessageChannelID).createInvite().then(x => e.setDescription(`** I got report command from server [\`${sname}\`](https://discord.gg/${x.code})\nProblem Description\n\`\`\`asciidoc\n${input}\n\`\`\`**`))
+        await message.guild.channels.cache.get(message.author.lastMessageChannelID).createInvite().then(x => e.setDescription(`**Report command from \`${message.author.tag} • ${message.author.id}\` • [\`${INVITE}\`](https://discord.gg/${x.code})\nProblem Description\n\`\`\`asciidoc\n${input}\n\`\`\`**`))
         const guild = client.guilds.cache.get('770540956163899423').channels.cache.get('773853948359737357')
         guild.send({embed: e})
+
+        let channel = new MessageEmbed()
+        .setTitle(`Report to developer successful!`)
+        .setDescription(`**Problem Description: \n\`\`\`asciidoc\n${input}\n\`\`\`**`)
+        message.channel.send(channel)
     }
 }
