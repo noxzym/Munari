@@ -43,7 +43,7 @@ module.exports = {
         ];
         let selected = gif[Math.floor(Math.random() * gif.length)];
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
             .setTitle(
                 `${message.author.username} <action> ${member.user.username
