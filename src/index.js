@@ -69,7 +69,7 @@ client.on("message", async message => {
     .setDescription(
       `${"<a:mention:761488900513464341>"} **Hai ${
         message.author
-      }, prefix ku diserver ini adalah \`${prefix}\`** ${"<a:mention:761488900513464341>"}`
+      }, My Prefix in this server is \`${prefix}\`** ${"<a:mention:761488900513464341>"}`
     );
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
