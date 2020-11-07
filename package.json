@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "engines": {
-    "node": "12.x"
+    "node": "*"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/join/ad23e53a-e789-47e0-89e2-326205c74432"
