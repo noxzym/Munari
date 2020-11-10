@@ -1,5 +1,4 @@
 const Discord = require("discord.js-light")
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "ban",
   aliases: [""],
@@ -11,7 +10,7 @@ module.exports = {
   ownerOnly: false,
   async run(bot, message, args) {
     message.delete();
-    const prefix = Prefix.getPrefix(message.guild.id) || "m!";
+    const prefix = "m!";
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR"))
       return message.channel.send(
         `You don't have permissions \`BAN_MEMBERS\` or \`ADMINISTRATOR\``

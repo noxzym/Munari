@@ -1,5 +1,4 @@
 const Discord = require("discord.js-light")
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "kick",
   aliases: [""],
@@ -11,7 +10,7 @@ module.exports = {
   ownerOnly: false,
   async run(bot, message, args) {
     message.delete();
-    const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
     if (!message.member.hasPermission("ADMINISTRATOR" || "KICK_MEMBERS")) return message.reply("You don't have permissions \`KICK_MEMBERS\` or \`ADMINISTRATOR\`");
     let member = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
     if(!member) return message.channel.send(`usage: ${prefix + this.usage}`)

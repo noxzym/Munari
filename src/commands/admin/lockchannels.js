@@ -1,5 +1,4 @@
 const {  MessageEmbed  } = require('discord.js-light')
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "lockchannel",
   aliases: ["lockch", "lch"],
@@ -13,7 +12,7 @@ module.exports = {
     if(!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You couldn't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
     if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`I couldn't have permissions \`MANAGE_CHANNELS\``)
 
-    const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
     let channel = message.mentions.channels.first();
     if(!channel) {
       return message.channel.send(`Usage: ${prefix + this.usage}`)

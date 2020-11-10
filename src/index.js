@@ -16,8 +16,6 @@ const cooldowns = new Discord.Collection();
 
 const { readdirSync } = require("fs");
 const db = require("quick.db");
-const PREFIX = require("discord-prefix");
-const defpref = require("./data/config.json").prefix;
 
 client.queueradio = new Map();
 client.queue = new Map();
@@ -36,15 +34,12 @@ client.login("NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4");
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("ready", async () => {
   console.log("Amjay Mabar, SKUUYYY");
-  // client.user.setStatus("idle");
-  // client.user.setActivity(`• Mention me for know my prefix •`, {
-  //   type: "WATCHING"
-  // });
   setInterval(() => {
      const status = [
       `• Mention me for know my prefix •`,
       `• ${client.guilds.cache.size} Server •`,
-      `• ${client.users.cache.size} Users •`
+      `• ${client.users.cache.size} Users •`,
+      `• New Music Module!!! •`
     ];
     const type = [
       "PLAYING",
@@ -69,14 +64,8 @@ client.on("message", async message => {
   if (message.channel instanceof Discord.DMChannel) return;
   //Prefix In Here\\
   const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
-
-  const pref = PREFIX.getPrefix(message.guild.id);
-  let prefix = {};
-  if (!pref) {
-    prefix = defpref; //prefix default
-  } else {
-    prefix = pref;
-  }
+  
+  const prefix = 'm!'
 
   const embed = new Discord.MessageEmbed()
     .setColor("#C0FF0C")

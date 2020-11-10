@@ -1,5 +1,4 @@
 const Discord = require("discord.js-light");
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "managenickname",
   aliases: ["mn"],
@@ -10,7 +9,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   async run(bot, message, args) {
-    const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
         if (!message.guild.me.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`I don't have permission \`MANAGE_NICKNAMES\``);
         if(!message.member.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_NICKNAMES\``);
 

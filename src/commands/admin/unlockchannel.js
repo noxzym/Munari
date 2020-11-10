@@ -1,5 +1,4 @@
 const {  MessageEmbed  } = require('discord.js-light')
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "unlockchannel",
   aliases: ["unlockch"],
@@ -10,7 +9,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   async run(bot, message) {
-    const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
     if(!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
     if (!message.guild.me.hasPermission("MANAGE_CHANNELS" || "ADMINISTRATOR")) return message.channel.send(`I don't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
     

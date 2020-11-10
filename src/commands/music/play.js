@@ -2,7 +2,6 @@ const { Discord, Util, MessageEmbed } = require("discord.js-light");
 const ytdlp = require("discord-ytdl-core");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
-const Prefix = require("discord-prefix");
 
 let ytapk;
 try {
@@ -55,7 +54,7 @@ module.exports = {
           "I cannot speak in this voice channel, make sure I have the proper permissions!"
         );
 
-      const prefix = Prefix.getPrefix(message.guild.id) || "m!";
+      const prefix = "m!";
       const search = args.join(" ");
       if (!search) {
         return message.channel.send(prefix + this.usage);

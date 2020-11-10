@@ -1,5 +1,4 @@
 const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js-light");
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "queue",
   aliases: ["q"],
