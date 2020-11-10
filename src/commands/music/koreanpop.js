@@ -1,7 +1,7 @@
 const Discord = require('discord.js-light')
 module.exports = {
-  name: "koreanpop",
-  aliases: ["kpop"],
+  name: "kpop",
+  aliases: [""],
   category: "Music",
   descriptions: "Playing korean pop from Listen.moe",
   usage: "kpop",

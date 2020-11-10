@@ -86,7 +86,7 @@ function pickRandomGallery(galleryCollection) {
 
 module.exports = {
   name: 'fox',
-  category: 'Image',
+  category: 'Animal',
   cooldown: '5',
   usage:'fox',
   async run(bot, message, args) {

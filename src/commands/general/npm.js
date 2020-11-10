@@ -16,7 +16,7 @@ module.exports = {
     if (!query) { return message.channel.send("Please provide a query"); }
 
     const data = await fetch(`http://registry.npmjs.com/${query}`).then(i => i);
-    if (!data.ok) return message.channel.send(`Owch, Saya mendapatkan error ${data.status} ${data.statusText}, Silahkan periksa ejaannya`);
+    if (!data.ok) return message.channel.send(`Owch, i got ${data.status} ${data.statusText}, maybe you typo?`);
     const pkg = await data.json()
 
     let icon = 'https://images-ext-1.discordapp.net/external/-NXRfQPM329Ppw6RFeMnwDmLyqPo8Nj9gxy8vNBIuJs/https/i.imgur.com/8DKwbhj.png?width=1026&height=399'

@@ -14,7 +14,7 @@ module.exports = {
       message.mentions.members.first() ||
       message.guild.members.cache.get(args[0]);
     if (!member)
-      return message.reply("You need to mention someone to poke them");
+      return message.reply("You need to mention someone to punch them");
     const { body } = await superagent.get("https://neko-love.xyz/api/v1/punch");
 
     const embed = new Discord.MessageEmbed()
@@ -23,7 +23,7 @@ module.exports = {
           .sort((a, b) => b.position - a.position)
           .first().color
       )
-      .setTitle(`${message.author.username} Punched ${member.user.username}`)
+      .setTitle(`${member.user.username} Punched by ${message.author.username}`)
       .setImage(body.url)
       .setTimestamp();
     message.channel.send({ embed });
