@@ -6,9 +6,9 @@ const Prefix = require("discord-prefix");
 
 let ytapk;
 try {
-  ytapk = process.env.ytak;
+  ytapk = "AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0";
 } catch {
-  ytapk = process.env.ytapk1;
+  ytapk = "AIzaSyD5UfUigZZoHMMT7Ec0hHIjTKiNfBQkY1E";
 }
 
 const ffmpegFilters = {
