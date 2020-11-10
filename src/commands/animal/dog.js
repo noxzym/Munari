@@ -3,7 +3,7 @@ const request = require("request");
 
 module.exports = {
   name: "dog",
-  category: "Image",
+  category: "Animal",
   cooldown: "5",
   usage: "dog",
   async run(bot, message, args) {

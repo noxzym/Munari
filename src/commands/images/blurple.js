@@ -1,11 +1,11 @@
 const { MessageEmbed } = require("discord.js-light");
 const superagent = require("superagent");
 module.exports = {
-  name: "invert",
+  name: "blurple",
   aliases: [""],
   category: "Image",
-  descriptions: "Invert avatar",
-  usage: "invert [user]",
+  descriptions: "Brightniess avatar",
+  usage: "blurple [user]",
   options: [""],
   cooldown: "8",
   ownerOnly: false,
@@ -14,8 +14,9 @@ module.exports = {
       message.guild.members.cache.get(args[0]) ||
       message.mentions.members.first() ||
       message.member;
+    if(!member) return message.channel.send(`Please mention members first`)
     const { body } = await superagent.get(
-      `https://neko-love.xyz/api/v2/invert?url=${member.user.avatarURL({
+      `https://neko-love.xyz/api/v2/blurple?url=${member.user.avatarURL({
         dynamic: false, size: 4096
       })}`
     );

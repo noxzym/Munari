@@ -1,13 +1,13 @@
 {
   "name": "munari-bot",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": " - ",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "engines": {
-    "node": "*"
+    "node": "12.19.0"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/join/ad23e53a-e789-47e0-89e2-326205c74432"
@@ -20,7 +20,7 @@
     "express"
   ],
   "dependencies": {
-    "discord.js-light": "^3.3.4",
+    "discord.js-light": "^3.3.5",
     "quick.db": "^7.1.2",
     "discord-prefix": "^1.0.9",
     "fs": "^0.0.2",
@@ -31,17 +31,13 @@
     "figlet": "^1.5.0",
     "request": "^2.88.2",
     "http": "^0.0.0",
-    "node-opus": "^0.3.3",
-    "opusscript": "^0.0.7",
     "sodium": "^3.0.2",
-    "libsodium-wrappers": "^0.7.8",
     "ytdl-core": "^4.0.2",
     "simple-youtube-api": "^5.2.1",
     "node-fetch": "^2.6.1",
-    "node-html-parser": "^1.4.4",
+    "node-html-parser": "^1.4.8",
     "redis": "^3.0.2",
     "one-liner-joke": "^1.2.0",
-    "mathjs": "^7.5.1",
     "random-puppy": "^1.1.0",
     "string-progressbar": "^1.0.1",
     "cpu-stat": "^2.0.1",
@@ -52,6 +48,8 @@
     "ffmpeg-static": "^4.2.7",
     "common-tags": "^1.8.0",
     "axios": "^0.21.0",
-    "mal-scraper": "^2.11.2"
+    "mal-scraper": "^2.11.2",
+    "discord-ytdl-core": "4.1.5",
+    "ytdl-core-discord": "^1.2.4"
   }
 }

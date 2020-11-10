@@ -1,11 +1,11 @@
 const Discord = require("discord.js-light");
 const superagent = require("superagent");
 module.exports = {
-  name: "kiss",
+  name: "bully",
   aliases: [""],
   category: "Actions",
-  descriptions: "Kiss someone",
-  usage: "kiss <user>",
+  descriptions: "Bully someone",
+  usage: "bully <user>",
   options: [""],
   cooldown: "8",
   ownerOnly: false,
@@ -14,8 +14,8 @@ module.exports = {
       message.mentions.members.first() ||
       message.guild.members.cache.get(args[0]);
     if (!member)
-      return message.reply("You need to mention someone to kiss them");
-    const { body } = await superagent.get("https://waifu.pics/api/sfw/kiss");
+      return message.reply("You need to mention someone to bully them");
+    const { body } = await superagent.get("https://waifu.pics/api/sfw/bully");
 
     const embed = new Discord.MessageEmbed()
       .setColor(
@@ -23,7 +23,7 @@ module.exports = {
           .sort((a, b) => b.position - a.position)
           .first().color
       )
-      .setTitle(`${member.user.username} Kissed by ${message.author.username}`)
+      .setTitle(`${member.user.username} Bullyed by ${message.author.username}`)
       .setImage(body.url)
       .setTimestamp();
     message.channel.send({ embed });

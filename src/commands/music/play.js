@@ -1,52 +1,75 @@
 const { Discord, Util, MessageEmbed } = require("discord.js-light");
+const ytdlp = require("discord-ytdl-core");
+// const ytdl = require('discord-ytdl-core')
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
-const youtube = new YouTubeAPI('AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0');
 const Prefix = require("discord-prefix");
+
+let ytapk;
+try {
+  ytapk = process.env.ytak;
+} catch {
+  ytapk = process.env.ytapk1;
+}
+
+const ffmpegFilters = {
+  "3d": "apulsator=hz=0.125",
+  bassboost: "dynaudnorm=f=150:g=15,equalizer=f=40:width_type=h:width=50:g=10",
+  echo: "aecho=0.8:0.9:1000:0.3",
+  flanger: "flanger",
+  gate: "agate",
+  haas: "haas",
+  karaoke: "stereotools=mlev=0.1",
+  nightcore:
+    "asetrate=48000*1.25,aresample=48000,equalizer=f=40:width_type=h:width=50:g=10",
+  reverse: "areverse",
+  vaporwave: "asetrate=48000*0.8,aresample=48000,atempo=1.1"
+};
+
+const youtube = new YouTubeAPI(ytapk);
 module.exports = {
   name: "play",
   aliases: ["p"],
   category: "Music",
   descriptions: "Playing song from youtube client",
-  usage: "play <titke / url>",
+  usage: "play <title / url>",
   options: [""],
   cooldown: "",
   ownerOnly: false,
   run: async function(client, message, args) {
     try {
-    const { channel } = message.member.voice;
-    if (!channel)
-      return message
-        .reply("Please join voice channel first!")
-        .catch(console.error)
-        .then(msg => {
-          msg.delete({ timeout: 20000 });
-        });
-    const permissions = channel.permissionsFor(message.client.user);
-    if (!permissions.has("CONNECT"))
-      return message.channel.send(
-        "I cannot connect to your voice channel, make sure I have the proper permissions!"
-      );
-    if (!permissions.has("SPEAK"))
-      return message.channel.send(
-        "I cannot speak in this voice channel, make sure I have the proper permissions!"
-      );
-      
-    const prefix = Prefix.getPrefix(message.guild.id) || "m!";
-    const search = args.join(" ");
-    if (!search) {
-      return message.channel.send(prefix + this.usage);
-    }
+      const { channel } = message.member.voice;
+      if (!channel)
+        return message
+          .reply("Please join voice channel first!")
+          .catch(console.error)
+          .then(msg => {
+            msg.delete({ timeout: 20000 });
+          });
+      const permissions = channel.permissionsFor(message.client.user);
+      if (!permissions.has("CONNECT"))
+        return message.channel.send(
+          "I cannot connect to your voice channel, make sure I have the proper permissions!"
+        );
+      if (!permissions.has("SPEAK"))
+        return message.channel.send(
+          "I cannot speak in this voice channel, make sure I have the proper permissions!"
+        );
 
-    const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
-    const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
+      const prefix = Prefix.getPrefix(message.guild.id) || "m!";
+      const search = args.join(" ");
+      if (!search) {
+        return message.channel.send(prefix + this.usage);
+      }
 
-    if (playlistPattern.test(args[0])) {
-      return message.channel.send("I can`t play video from playlist");
-    }
+      const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+      const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
 
+      if (playlistPattern.test(args[0])) {
+        return message.channel.send("I can`t play video from playlist");
+      }
 
-    const serverQueue = message.client.queue.get(message.guild.id);
+      const serverQueue = message.client.queue.get(message.guild.id);
       const results = await youtube.searchVideos(search, 1);
       const songInfo = await ytdl.getInfo(results[0].url);
 
@@ -110,8 +133,17 @@ module.exports = {
         queue.connection.on("disconnect", () =>
           message.client.queue.delete(message.guild.id)
         );
+
         const dispatcher = queue.connection
-          .play(ytdl(song.url, { highWaterMark: 1 << 25 }))
+          .play(
+            await ytdlp(song.url, {
+              filter: "audioonly",
+              opusEncoded: true,
+              encoderArgs: ["-af", ffmpegFilters.bassboost]
+              // seek: 60,
+            }),
+            { type: "opus" }
+          )
           .on("finish", () => {
             if (collector && !collector.ended) collector.stop();
 
@@ -368,7 +400,7 @@ module.exports = {
       }
     } catch (err) {
       console.log(err);
-      message.channel.send(`Error code : ${err.code}`).then(msg => {
+      message.channel.send(`Cannot play this song because ${err}`).then(msg => {
         msg.delete({ timeout: 2000 });
       });
     }

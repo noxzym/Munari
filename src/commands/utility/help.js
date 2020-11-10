@@ -45,36 +45,40 @@ module.exports = {
     let commands = bot.commands
     const Admin = commands
     .filter(({category}) => category === 'Administration')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const Developer = commands
     .filter(({category}) => category === 'Developer')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const fun = commands
     .filter(({category}) => category === 'Fun')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const actions = commands
     .filter(({category}) => category === 'Actions')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const image = commands
     .filter(({category}) => category === 'Image')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
+    const animal = commands
+    .filter(({category}) => category === 'Animal')
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const general = commands
     .filter(({category}) => category === 'General')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const music = commands
     .filter(({category}) => category === 'Music')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     const utility = commands
     .filter(({category}) => category === 'Utility')
-    .map(({ name }) => `**[\`${name}\`](https://munari.glitch.me/)**`)
-    .join("  ");
+    .map(({ name }) => `**\`${name}\`**`)
+    .join(", ");
     
     
     let hembed = new Discord.MessageEmbed()
@@ -83,13 +87,14 @@ module.exports = {
     .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
     // .setDescription(`Halo ${message.author}, Saya adalah bot Discord buatan Indonesia :flag_id:.\n Don't forget to [invite](https://bit.ly/Takagi-Bot) me to your server\nMention saya untuk mengetahui prefixnya.\nGunakan \`${[prefix]}help [command]\` untuk mengetahui cara menggunakannya`)
     .setThumbnail(bot.user.displayAvatarURL())
-    .addField('**\`【🎭】\` • __GENERAL__**', general)
-    .addField('**\`【☺️】\` • __Actions__**', actions)
-    .addField('**\`【🖼️】\` • __Images__**', image)
-    .addField('**\`【🎲】\` • __FUN GAME__**', fun)
-    .addField('**\`【🛠️】\` • __UTILITY__**', utility)
-    .addField('**\`【⚙️】\` • __ADMINISTRATION__**', Admin)
-    .addField('**\`【🎧】\` • __MUSIC__**', music)
+    .addField('**\`【🐱】\` • Animal**', animal)    
+    .addField('**\`【☺️】\` • Action**', actions)
+    .addField('**\`【🖼️】\` • Image**', image)
+    .addField('**\`【🎭】\` • GENERAL**', general)
+    .addField('**\`【🎲】\` • FUN GAME**', fun)
+    .addField('**\`【🛠️】\` • UTILITY**', utility)
+    .addField('**\`【🎧】\` • MUSIC**', music)
+    .addField('**\`【⚙️】\` • ADMINISTRATION**', Admin)
     // .addField('**\`【💻】\` • __Developer__**', Developer)
     .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     .setTimestamp()

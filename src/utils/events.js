@@ -22,5 +22,5 @@ module.exports = (client) => {
 
     // debug
     // console.log(`[INFO][EVENT]: Loaded ${event.name}`);
-  });''
+  });
 };

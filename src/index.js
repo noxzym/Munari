@@ -32,15 +32,29 @@ client.recent = new Map();
   require(`./utils/${handler}`)(client);
 });
 
-client.login('NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4');
+client.login(process.env.CLIENT_TOKEN);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
-const presence = [``, ``, ``];
 client.on("ready", async () => {
   console.log("Amjay Mabar, SKUUYYY");
-  client.user.setStatus("idle");
-  client.user.setActivity(`• Mention me for know my prefix •`, {
-    type: "WATCHING"
-  });
+  // client.user.setStatus("idle");
+  // client.user.setActivity(`• Mention me for know my prefix •`, {
+  //   type: "WATCHING"
+  // });
+  setInterval(() => {
+     const status = [
+      `• Mention me for know my prefix •`,
+      `• ${client.guilds.cache.size} Server •`,
+      `• ${client.users.cache.size} Users •`
+    ];
+    const type = [
+      "PLAYING",
+      "WATCHING",
+      "LISTENING"
+    ]
+     let random = Math.floor(Math.random() * status.length)
+     let randomtp = Math.floor(Math.random() * type.length)
+     client.user.setActivity(status[random], {type: type[randomtp]});
+  }, 5000);
 });
 
 client.on("reconnecting", () => {
@@ -54,6 +68,8 @@ client.on("disconnect", () => {
 client.on("message", async message => {
   if (message.channel instanceof Discord.DMChannel) return;
   //Prefix In Here\\
+  const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
+
   const pref = PREFIX.getPrefix(message.guild.id);
   let prefix = {};
   if (!pref) {
@@ -61,8 +77,6 @@ client.on("message", async message => {
   } else {
     prefix = pref;
   }
-
-  const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
 
   const embed = new Discord.MessageEmbed()
     .setColor("#C0FF0C")

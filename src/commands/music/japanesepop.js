@@ -1,7 +1,7 @@
 const Discord = require('discord.js-light')
 module.exports = {
-  name: "japanesepop",
-  aliases: ["jpop"],
+  name: "jpop",
+  aliases: [""],
   category: "Music",
   descriptions: "Playing japanese song from Listen.moe",
   usage: "jpop",
@@ -35,9 +35,6 @@ module.exports = {
 			  volume: 100,
 			  playing: true
 		  };
-     
-     		  message.client.queue.set(message.guild.id, queueConstruct);
-		  queueConstruct.songs.push(song);
      
      try {
        
