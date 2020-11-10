@@ -1,6 +1,5 @@
 const { Discord, Util, MessageEmbed } = require("discord.js-light");
 const ytdlp = require("discord-ytdl-core");
-// const ytdl = require('discord-ytdl-core')
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const Prefix = require("discord-prefix");

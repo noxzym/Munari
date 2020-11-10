@@ -7,7 +7,8 @@
     "start": "node index.js"
   },
   "engines": {
-    "node": "12.19.0"
+    "node": "*",
+    "npm": "6.14.8"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/join/ad23e53a-e789-47e0-89e2-326205c74432"
@@ -49,7 +50,6 @@
     "common-tags": "^1.8.0",
     "axios": "^0.21.0",
     "mal-scraper": "^2.11.2",
-    "discord-ytdl-core": "4.1.5",
-    "ytdl-core-discord": "^1.2.4"
+    "discord-ytdl-core": "4.1.5"
   }
 }
