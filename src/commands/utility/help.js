@@ -1,5 +1,4 @@
 const Discord = require("discord.js-light");
-const PREFIX = require('discord-prefix')
 const { readdirSync } = require("fs");
 const db = require('quick.db')
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
   ownerOnly: false,
   async run(bot, message, args) {
     
-      const prefix = await PREFIX.getPrefix(message.guild.id) || 'm!';
+      const prefix = 'm!';
       const cmdArgs = args.join(" ")
       
     if (cmdArgs) {

@@ -11,7 +11,7 @@ module.exports = {
   async run(client, message, args) {
     let inviteEmbed = new Discord.MessageEmbed()
       .setTitle("Click Here For Invite Me to Your Server")
-      .setURL("https://munari.glitch.me")
+      .setURL("https://bit.ly/Munari-BOt")
       .setColor(
         message.member.roles.cache
           .sort((a, b) => b.position - a.position)

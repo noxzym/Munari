@@ -1,4 +1,3 @@
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "skipto",
   aliases: ["st"],
@@ -21,7 +20,7 @@ module.exports = {
         return message.reply("There is nothing playing that I could skip for you.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
       
       const amount = args.join(' ')
-      const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+      const prefix = 'm!'
       
       if (!args.length)
         return message.reply(prefix + this.usage)

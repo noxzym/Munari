@@ -1,6 +1,5 @@
 const Discord = require('discord.js-light');
 const fs = require("fs");
-const PREFIX = require('discord-prefix')
 module.exports = {
   name: "warning",
   aliases: ["warn"],
@@ -11,7 +10,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   async run(bot, message, args) {
-  const prefix = PREFIX.getPrefix(message.guild.id) || 'm!'
+  const prefix = 'm!'
   message.delete();
   if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send(`You don't have permissions \`KICK_MEMBERS\` or \`BAN_MEMBERS\` or \`ADMINISTRATOR\``);
   let reason = args.slice(1).join(' ');

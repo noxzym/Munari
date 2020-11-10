@@ -1,5 +1,4 @@
 const Discord = require("discord.js-light");
-const Prefix = require('discord-prefix')
 module.exports = {
   name: "unmute",
   aliases: [""],
@@ -10,7 +9,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   async run(bot, message, args) {
-    const prefix = Prefix.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
     if(!message.member.hasPermission('MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send("You don't have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\`");
   
   let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));

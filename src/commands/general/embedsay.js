@@ -1,4 +1,3 @@
-const PREFIX = require('discord-prefix')
 const { MessageEmbed } = require('discord.js-light')
 module.exports = {
   name: 'embedsay',
@@ -7,7 +6,7 @@ module.exports = {
   cooldown: '10',
   usage: 'embedsay [message]',
   async run (client, message, args) {
-  const prefix = PREFIX.getPrefix(message.guild.id) || 'm!'
+  const prefix = 'm!'
   message.delete()
     const content = args.join(' ')
     if(!content) {

@@ -17,9 +17,9 @@ module.exports = {
 		const command = client.commands.get(commandName);
 		// reloads command
 		try {
-			delete require.cache[require.resolve(`../${command.help.category}/${commandName}.js`)];
+			delete require.cache[require.resolve(`../${command.category}/${commandName}.js`)];
 			client.commands.delete(commandName);
-			const pull = require(`../${command.help.category}/${commandName}.js`);
+			const pull = require(`../${command.category}/${commandName}.js`);
 			client.commands.set(commandName, pull);
 		} catch(err) {
 			return message.channel.send({ embed:{ color:15158332, description:` Could not reload: \`${commandName}\`.` } }).then(m => m.delete({ timeout: 10000 }));

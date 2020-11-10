@@ -1,4 +1,3 @@
-const PREFIX = require('discord-prefix')
 module.exports = {
   name: "remove",
   aliases: [""],
@@ -19,7 +18,7 @@ module.exports = {
       const queue = client.queue.get(message.guild.id);
       if (!queue) return message.reply("There is nothing playing.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
         
-    const prefix = PREFIX.getPrefix(message.guild.id) || 'm!'
+    const prefix = 'm!'
     if (!queue) return message.channel.send("There is no queue.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
     
     if (!args.length && isNaN(args[0])) return message.reply(prefix + this.usage);

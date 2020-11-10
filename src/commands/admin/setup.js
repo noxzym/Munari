@@ -9,20 +9,6 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   async run(client, message, args) {
-    if (message.content.includes("welcome")) {
-      let channel =
-        message.guild.channels.cache.get(args[0]) ||
-        message.mentions.channels.first();
-      if (!channel)
-        return message.channel.send(`Please mentions channel first`);
-      if (message.content.includes("enable")) {
-        db.set(`welchannel_${message.guild.id}`, channel.id);
-        message.channel.send(`Welcome Channel is seted as ${channel}`);
-      } else if (message.content.includes("disable")) {
-        db.delete(`welchannel_${message.guild.id}`, channel.id);
-        message.channel.send(`Welcome Channel Has been deleted`);
-      }
-    }
     if(message.content.includes("shoob")) {
       if(message.content.includes("enable")) {
         if (!message.guild.me.hasPermission("MANAGE_ROLES"))
