@@ -3,10 +3,9 @@ const YoutubeAPI = require("simple-youtube-api");
 
 let YOUTUBE_API_KEY;
 try {
-  const config = require("../../config.json");
-  YOUTUBE_API_KEY = config.YOUTUBE_API_KEY;
+  YOUTUBE_API_KEY = "AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0";
 } catch(error) {
-  YOUTUBE_API_KEY = proccess.env.YOUTUBE_API_KEY;
+  YOUTUBE_API_KEY = "AIzaSyD5UfUigZZoHMMT7Ec0hHIjTKiNfBQkY1E";
 }
 const youtube = new YoutubeAPI(YOUTUBE_API_KEY);
 
