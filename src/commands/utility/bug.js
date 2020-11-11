@@ -9,6 +9,7 @@ module.exports = {
     options: [""],
     cooldown: "120",
     ownerOnly: false,
+    guildOnly: true,
     async run(client, message, args) {
         let input = args.join(' ')
         if(!input) return message.channel.send(`Please input your problem`).then(x => {x.delete({timeout: 8000})})

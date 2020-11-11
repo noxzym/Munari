@@ -1,8 +1,14 @@
 module.exports = {
   name: "owner",
+  aliases: [""],
   category: "Fun",
+  descriptions: "Only fun command",
+  usage: "owner <user>",
+  options: [""],
   cooldown: "5",
-  async run(bot, message, args) {
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
     let owner =
       message.mentions.members.first() ||
       message.guild.members.cache.get(args[0]);

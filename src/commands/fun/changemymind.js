@@ -1,13 +1,16 @@
 const { MessageEmbed } = require("discord.js-light");
 const fetch = require("node-fetch");
-
 module.exports = {
   name: "changemymind",
-  aliases: ['chm'],
-  category: 'Fun',
-  cooldown: '5',
-  usage:'changemymind <text>',
-  async run(bot, message, args) {
+  aliases: ["chm"],
+  category: "Fun",
+  descriptions: "generati image of change my mind",
+  usage: "changemymind",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
     const text = args.join(" ");
 
     if (!text) return message.channel.send(`Please input some word`);

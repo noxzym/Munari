@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "1",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
   let mentionedUser = message.mentions.users.first() || message.author;
   let latency = Math.round(new Date() - message.createdTimestamp)

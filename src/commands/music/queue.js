@@ -8,26 +8,73 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   run: async function(client, message, args) {
-    const queue = client.queue.get(message.guild.id);
-    if (!queue) return message.reply("There is nothing playing.").then(msg=>{msg.delete({timeout: 5000})});
-    const description = queue.songs.map((song, index) => `**${index + 1}. ${escapeMarkdown(`『[${song.title}](${song.url})』`)}  \`【${song.requester}】\`**`);
+  try {
+      const serverQueue = message.client.queue.get(message.guild.id);
+      if (!serverQueue) return message.channel.send("There is nothing playing").then(msg=>{msg.delete({timeout: 5000})});
+        let page = 0;
+            const embeds = geneembed(message, serverQueue.songs);
+            let e = new MessageEmbed()
+            const qEmbed = await message.channel.send(embeds[page])
+            await qEmbed.react("⬅️");
+            await qEmbed.react("➡️");
+            const filter = (reaction, user) => user.id !== message.client.user.id;
+              var collector = qEmbed.createReactionCollector(filter, {
+                time: 20000
+              });
 
-    let queueEmbed = new MessageEmbed()
-      .setAuthor(`Youtube Client Queue`) 
-      .setDescription(description)
-      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color);
+              collector.on("collect", (reaction, user) => {
+              const member = message.guild.member(user);
 
-    const splitDescription = splitMessage(description, {
-      maxLength: 2048,
-      char: "\n",
-      prepend: "",
-      append: ""
-    });
+              const { channel } = member.voice;
+              const botChannel = member.guild.me.voice.channel;
 
-    splitDescription.forEach(async (m) => {
-      queueEmbed.setDescription(m);
-      message.channel.send(queueEmbed);
-    });
+              switch (reaction.emoji.name) {
+                case "⬅️":
+                    reaction.users.remove(user).catch(console.error);
+                    if (page !== 0) {
+                    --page;
+                    qEmbed.edit(embeds[page]);
+                  }
+                  break;
+
+                  case "➡️":
+                    reaction.users.remove(user).catch(console.error);
+                    if (page < embeds.length - 1) {
+                      page++;
+                      qEmbed.edit(embeds[page]);
+                    } 
+                    break;
+
+                  default:
+                    reaction.users.remove(user).catch(console.error);
+                    break;
+                }
+                })
+        } catch (e) {
+          console.log(e)
+        }
   }
 };
+
+function geneembed(message, queue) {
+  const embeds = [];
+  let page = 0;
+    let k = 5;
+    for (let i = 0; i < queue.length; i += 5) {
+      const current = queue.slice(i, k);
+      let j = i;
+      k += 5;
+      const info = current.map((song) => `**${++j} • 『[${song.title}](${song.url})』 \`【${song.requester}】\`**`).join("\n");
+      const e = new MessageEmbed()
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+      .setAuthor("Youtube Client Queue")
+      .setThumbnail(queue[0].thumbnail)
+      .setDescription(`** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${info}`)
+      // .setFooter(`Page: ${embeds.length + 1}`)
+      .setTimestamp();
+      embeds.push(e);
+    }
+    return embeds;
+ }

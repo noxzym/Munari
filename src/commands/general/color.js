@@ -1,12 +1,16 @@
 const Discord = require("discord.js-light");
 
 module.exports = {
-  name: 'color',
-  category: 'General',
-  cooldown: '5',
-  usgae:'color <HexColor>',
-  
-  async run(bot, message, args) {
+  name: "color",
+  aliases: [""],
+  category: "General",
+  descriptions: "Show you color of hexcolor code",
+  usage: "color [hexcode]",
+  options: [""],
+  cooldown: "5",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
     const color = args[0] || 'RANDOM';
     const embed = new Discord.MessageEmbed()
       .setColor(color)

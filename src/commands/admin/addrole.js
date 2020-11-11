@@ -3,12 +3,13 @@ module.exports = {
   name: "addrole",
   aliases: [""],
   category: "Administration",
-  descriptions: "Add someone role by metion or id",
-  usage: "addrole <user> <role>",
+  descriptions: "Give someone role",
+  usage: "addrole [user] [role]",
   options: [""],
   cooldown: "",
   ownerOnly: false,
-  async run(bot, message, args) {
+  guildOnly: true,
+  async run(client, message, args) {
     if (!message.guild.me.hasPermission("MANAGE_ROLES"))
       return message.channel.send(`I don't Have permissions \`MANAGE_ROLES\``);
 

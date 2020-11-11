@@ -7,6 +7,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   run: async function(client, message, args) {
     const queue = client.queue.get(message.guild.id);
     

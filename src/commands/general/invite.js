@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "5",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     let inviteEmbed = new Discord.MessageEmbed()
       .setTitle("Click Here For Invite Me to Your Server")

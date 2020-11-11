@@ -3,12 +3,13 @@ module.exports = {
   name: "avatar",
   aliases: ["av"],
   category: "General",
-  descriptions: "Display avatar user",
-  usage: "General",
+  descriptions: "Display avatar of use",
+  usage: "avatar [user]",
   options: [""],
-  cooldown: "3",
+  cooldown: "5",
   ownerOnly: false,
-  async run(bot, message, args) {
+  guildOnly: true,
+  async run(client, message, args) {
     let member =
       message.guild.members.cache.get(args[0]) ||
       message.mentions.members.first() ||

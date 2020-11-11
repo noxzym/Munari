@@ -1,11 +1,15 @@
 const { MessageEmbed } = require('discord.js-light')
 module.exports = {
-  name: 'embedsay',
-  aliases: ['embsay'],
-  category: 'General',
-  cooldown: '10',
-  usage: 'embedsay [message]',
-  async run (client, message, args) {
+  name: "embedsay",
+  aliases: [""],
+  category: "General",
+  descriptions: "say command with embed",
+  usage: "embedsay [text]",
+  options: [""],
+  cooldown: "10",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
   const prefix = 'm!'
   message.delete()
     const content = args.join(' ')

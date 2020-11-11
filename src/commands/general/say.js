@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "10",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
   message.delete()
     const sayMessage = args.join(" ");    

@@ -9,6 +9,7 @@ module.exports = {
   options: [""],
   cooldown: "5",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const title = args.join(" ");
     if (!title) return message.channel.send("Please input anime title");

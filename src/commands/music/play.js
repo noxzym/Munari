@@ -21,7 +21,8 @@ const ffmpegFilters = {
   nightcore:
     "asetrate=48000*1.25,aresample=48000,equalizer=f=40:width_type=h:width=50:g=10",
   reverse: "areverse",
-  vaporwave: "asetrate=48000*0.8,aresample=48000,atempo=1.1"
+  vaporwave: "asetrate=48000*0.8,aresample=48000,atempo=1.1",
+  none: "none"
 };
 
 const youtube = new YouTubeAPI(ytapk);
@@ -34,6 +35,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   run: async function(client, message, args) {
     try {
       const { channel } = message.member.voice;
@@ -137,7 +139,7 @@ module.exports = {
             await ytdlp(song.url, {
               filter: "audioonly",
               opusEncoded: true,
-              encoderArgs: ["-af", ffmpegFilters.bassboost]
+              encoderArgs: ["-af", ffmpegFilters.none]
               // seek: 60,
             }),
             { type: "opus" }

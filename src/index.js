@@ -17,10 +17,8 @@ const cooldowns = new Discord.Collection();
 const { readdirSync } = require("fs");
 const db = require("quick.db");
 
-client.queueradio = new Map();
 client.queue = new Map();
 client.vote = new Map();
-client.recent = new Map();
 
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);
@@ -49,7 +47,7 @@ client.on("ready", async () => {
      let random = Math.floor(Math.random() * status.length)
      let randomtp = Math.floor(Math.random() * type.length)
      client.user.setActivity(status[random], {type: type[randomtp]});
-  }, 5000);
+  }, 20000);
 });
 
 client.on("reconnecting", () => {
@@ -61,7 +59,6 @@ client.on("disconnect", () => {
 });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
-  if (message.channel instanceof Discord.DMChannel) return;
   //Prefix In Here\\
   const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
   
@@ -69,11 +66,9 @@ client.on("message", async message => {
 
   const embed = new Discord.MessageEmbed()
     .setColor("#C0FF0C")
-    .setDescription(
-      `${"<a:mention:761488900513464341>"} **Hai ${
-        message.author
-      }, My Prefix in this server is \`${prefix}\`** ${"<a:mention:761488900513464341>"}`
-    );
+    .setAuthor(`Munari Help`)
+    .setThumbnail(`${client.user.avatarURL()}`)
+    .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`bug <detile problem>\`** for report to developer.`)
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
   if (!message.content.startsWith(prefix) || message.author.bot) return null;
@@ -92,6 +87,11 @@ client.on("message", async message => {
   //Owner Only
   if (command.ownerOnly && message.author.id !== "243728573624614912") {
     return message.reply("Owner Only Commands");
+  }
+
+  //GuildOwnly
+  if(command.guildOnly && message.channel.type === 'dm') {
+    return message.reply("This command for guildOnly");
   }
 
   //Cooldown command in here
@@ -114,7 +114,7 @@ client.on("message", async message => {
           )} more second(s) before reusing the \`${command.name}\` command.`
         )
         .then(msg => {
-          msg.delete({ timeout: cooldownAmount });
+          msg.delete({ timeout: 5000 });
         });
     }
   }

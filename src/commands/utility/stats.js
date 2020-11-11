@@ -11,6 +11,7 @@ module.exports = {
   options: [""],
   cooldown: "5",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
   
   const bot = client

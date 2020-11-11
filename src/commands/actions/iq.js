@@ -1,9 +1,14 @@
 const { MessageEmbed } = require('discord.js-light')
 module.exports = {
-  name: 'iq',
-  category: 'Actions',
-  cooldown: '5',
-  usage: 'iq [user]',
+  name: "iq",
+  aliases: [""],
+  category: "Actions",
+  descriptions: "Gacha Iq",
+  usage: "iq [user]",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  guildOnly: true,
     async run (client, message, args) {
     const iq = Math.floor(Math.random() * 200) + 1;
       let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member

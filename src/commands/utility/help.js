@@ -10,6 +10,7 @@ module.exports = {
   options: [""],
   cooldown: "3",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
     
       const prefix = 'm!';
@@ -26,14 +27,6 @@ module.exports = {
       const description = cmd.description ? cmd.description : "Not specified"
       
       const embed = new Discord.MessageEmbed()
-        // .setColor("#0099ff")
-        // .setTitle(`Command Name : ${cmd.name}`)
-        // .addField("Aliases", aliases, true)
-        // .addField("Cooldown", `${cooldown}`, true)
-        // .addField("Usage", cmd.usage ? `${prefix}${cmd.usage}` : "Not specified", true)
-        // .addField("Category", cmd.category, true)
-        // .addField("Description", cmd.description ? cmd.description : "Not specified")
-        // .addField("Options", options);
       .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setDescription(`**__Help Commands__**\n**\`\`\`asciidoc\n• Name        :: ${cmd.name}\n• Aliases     :: ${aliases}\n• Category    :: ${cmd.category}\n• Options     :: ${options}\n• Description :: ${description}\n• Usage       :: ${usage}\n• Cooldowns   :: ${cooldown}\n\`\`\`**`)
       .setThumbnail(bot.user.displayAvatarURL())
@@ -84,7 +77,6 @@ module.exports = {
     .setAuthor('Munari Help Commands', bot.user.displayAvatarURL())
     .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
     .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
-    // .setDescription(`Halo ${message.author}, Saya adalah bot Discord buatan Indonesia :flag_id:.\n Don't forget to [invite](https://bit.ly/Takagi-Bot) me to your server\nMention saya untuk mengetahui prefixnya.\nGunakan \`${[prefix]}help [command]\` untuk mengetahui cara menggunakannya`)
     .setThumbnail(bot.user.displayAvatarURL())
     .addField('**\`【🐱】\` • Animal**', animal)    
     .addField('**\`【☺️】\` • Action**', actions)
@@ -94,7 +86,6 @@ module.exports = {
     .addField('**\`【🛠️】\` • UTILITY**', utility)
     .addField('**\`【🎧】\` • MUSIC**', music)
     .addField('**\`【⚙️】\` • ADMINISTRATION**', Admin)
-    // .addField('**\`【💻】\` • __Developer__**', Developer)
     .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     .setTimestamp()
     message.channel.send(hembed)
