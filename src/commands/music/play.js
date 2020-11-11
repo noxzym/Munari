@@ -139,7 +139,7 @@ module.exports = {
             await ytdlp(song.url, {
               filter: "audioonly",
               opusEncoded: true,
-              encoderArgs: ["-af", ffmpegFilters.none]
+              encoderArgs: ["-af", ffmpegFilters.echo]
               // seek: 60,
             }),
             { type: "opus" }
