@@ -86,12 +86,12 @@ client.on("message", async message => {
 
   //Owner Only
   if (command.ownerOnly && message.author.id !== "243728573624614912") {
-    return message.reply("Owner Only Commands");
+    return
   }
 
   //GuildOwnly
   if(command.guildOnly && message.channel.type === 'dm') {
-    return message.reply("This command for guildOnly");
+    return
   }
 
   //Cooldown command in here

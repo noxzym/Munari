@@ -6,8 +6,8 @@ const YouTubeAPI = require("simple-youtube-api");
 let ytapk;
 try {
   ytapk = "AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0";
-} catch {
-  ytapk = "AIzaSyD5UfUigZZoHMMT7Ec0hHIjTKiNfBQkY1E";
+} catch {  
+  ytapk = "AIzaSyA5zRuMYIbt4Y_NlF317OG4ia84P1M9qWY";
 }
 
 const ffmpegFilters = {

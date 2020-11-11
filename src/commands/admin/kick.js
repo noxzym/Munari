@@ -25,10 +25,10 @@ module.exports = {
       );
     }
     
-    if(member.id === message.author.id) {
+    if(member.user.id === message.author.id) {
       return message.channel.send(`You can't kicked yourself`)
     }
-    if(member.id === client.user.id) {
+    if(member.user.id === message.client.user.id) {
       return message.channel.send(`I can't kick myself`)
     }
     let reason = args.slice(1).join(' ');
