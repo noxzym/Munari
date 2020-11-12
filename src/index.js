@@ -145,22 +145,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 1") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+          `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
         );
       }
     }
@@ -180,22 +180,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 2") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('2')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('2'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+          `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
         );
       }
     }
@@ -215,22 +215,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 3") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('3')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('3'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+          `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
         );
       }
     }
@@ -250,22 +250,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 4") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('4')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('4'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+          `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
         );
       }
     }
@@ -285,22 +285,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 5") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('5')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('5'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T5:772975287004692501> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T5:772975287004692501> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T5:772975287004692501> | **<@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+          `**<:T5:772975287004692501> | **${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
         );
       }
     }
@@ -320,22 +320,22 @@ client.on("message", async message => {
     embed.title.includes("Tier: 6") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1'))
     if(!roles) return
     var af = 20;
     var time = await message.channel.send(
-      `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+      `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
     );
     function myTimer() {
       if (af === 0) {
         clearInterval(timer);
         time.edit(
-          `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
+          `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞\`**`
         );
       } else {
         af = af - 2;
         time.edit(
-          `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞   Despawn in ${af}\`**`
+          `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞   Despawn in ${af}\`**`
         );
       }
     }
