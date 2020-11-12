@@ -146,6 +146,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -180,6 +181,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('2')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -214,6 +216,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('3')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -248,6 +251,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('4')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -282,6 +286,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('5')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -316,6 +321,7 @@ client.on("message", async message => {
     embed.image
   ) {
     const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
+    if(!roles) return
     var af = 20;
     var time = await message.channel.send(
       `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
