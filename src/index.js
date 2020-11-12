@@ -15,7 +15,6 @@ client.aliases = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const { readdirSync } = require("fs");
-const db = require("quick.db");
 
 client.queue = new Map();
 client.vote = new Map();
@@ -78,8 +77,6 @@ client.on("message", async message => {
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
 
-  if(!args.length) return;
-
   //Command Files in HERE
 
   let command =
@@ -141,18 +138,14 @@ client.on("message", async message => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~SHOOB PING IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 1") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("1")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -178,19 +171,15 @@ client.on("message", async message => {
 
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
 
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 2") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("2")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('2')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -216,19 +205,15 @@ client.on("message", async message => {
 
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
 
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 3") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("3")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('3')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -254,19 +239,15 @@ client.on("message", async message => {
 
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
 
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 4") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("4")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('4')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -292,19 +273,15 @@ client.on("message", async message => {
 
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
 
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 5") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("5")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('5')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
@@ -330,19 +307,15 @@ client.on("message", async message => {
 
 client.on("message", async message => {
   let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
 
   if (
     message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
     embed &&
     embed.title &&
     embed.title.includes("Tier: 6") &&
     embed.image
   ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("6")
-    ).id;
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1')).id
     var af = 20;
     var time = await message.channel.send(
       `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
