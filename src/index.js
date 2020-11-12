@@ -65,7 +65,7 @@ client.on("message", async message => {
   const prefix = 'm!'
 
   const embed = new Discord.MessageEmbed()
-    .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+    .setColor('#0099ff')
     .setAuthor(`Munari Help`)
     .setThumbnail(`${client.user.avatarURL()}`)
     .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`m!bug <detile problem>\`** for report to developer.`)
