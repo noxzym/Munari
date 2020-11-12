@@ -65,18 +65,20 @@ client.on("message", async message => {
   const prefix = 'm!'
 
   const embed = new Discord.MessageEmbed()
-    .setColor("#C0FF0C")
+    .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
     .setAuthor(`Munari Help`)
     .setThumbnail(`${client.user.avatarURL()}`)
-    .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`bug <detile problem>\`** for report to developer.`)
+    .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`m!bug <detile problem>\`** for report to developer.`)
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return null;
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
   let args = message.content
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
+
+  if(!args.length) return;
 
   //Command Files in HERE
 
