@@ -19,7 +19,7 @@ const { ShardingManager } = require('discord.js-light');
 		});
 
 		// Spawn your shards
-		manager.spawn().then(logger.log('=-=-=-=-=-=-=- Loading shard(s) -=-=-=-=-=-=-='));
+		manager.spawn().then(console.log('=-=-=-=-=-=-=- Loading shard(s) -=-=-=-=-=-=-='));
 
 		// Emitted when a shard is created
 		manager.on('shardCreate', (shard) => {
