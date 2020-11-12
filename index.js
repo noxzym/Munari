@@ -23,6 +23,6 @@ const { ShardingManager } = require('discord.js-light');
 
 		// Emitted when a shard is created
 		manager.on('shardCreate', (shard) => {
-			logger.log(`Shard ${shard.id} launched`);
+			console.log(`Shard ${shard.id} launched`);
 		});
 require('./src/index.js')
