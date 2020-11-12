@@ -140,6 +140,7 @@ client.on("message", async message => {
 let embed = message.embeds[0];
   if (
     message.author.id === "673362753489993749" &&
+    embed &&
     embed.title &&
     embed.title.includes("Tier") &&
     embed.image
