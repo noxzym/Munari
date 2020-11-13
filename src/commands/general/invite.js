@@ -12,7 +12,7 @@ module.exports = {
   async run(client, message, args) {
     let inviteEmbed = new Discord.MessageEmbed()
       .setTitle("Click Here For Invite Me to Your Server")
-      .setURL("https://bit.ly/Munari-BOt")
+      .setURL("https://bit.ly/Munari-Bot")
       .setColor(
         message.member.roles.cache
           .sort((a, b) => b.position - a.position)
