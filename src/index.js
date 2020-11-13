@@ -76,6 +76,7 @@ client.on("message", async message => {
     .trim()
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
+  if(!cmd) return
 
   //Command Files in HERE
 
