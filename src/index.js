@@ -149,7 +149,7 @@ let embed = message.embeds[0];
       let e = new Discord.MessageEmbed()
       var time = await message.channel.send({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
       var interval = setInterval (function () {
-        i = i - 2;
+        i = i - 5;
         if (i === 0) {
             clearInterval(interval)
             time.edit({embed: e.setDescription(`Timeout`)}).then(x => {x.delete({timeout: 3000})})
