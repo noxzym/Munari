@@ -10,6 +10,7 @@ module.exports = {
   options: [""],
   cooldown: "8",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const { body } = await superagent.get("https://shibe.online/api/birds");
 

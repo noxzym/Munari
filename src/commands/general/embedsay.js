@@ -11,7 +11,6 @@ module.exports = {
   guildOnly: true,
   async run(client, message, args) {
   const prefix = 'm!'
-  message.delete()
     const content = args.join(' ')
     if(!content) {
       return message.channel.send(`${prefix + this.usage}`)

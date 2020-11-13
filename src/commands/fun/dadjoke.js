@@ -11,7 +11,6 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
-      message.delete()
         const data = await fetch("https://icanhazdadjoke.com/slack").then(res => res.json());
         let e = new MessageEmbed()
         .setColor('RANDOM')

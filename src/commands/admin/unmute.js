@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
     const prefix = 'm!'
     if(!message.member.hasPermission('MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send("You don't have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\`");

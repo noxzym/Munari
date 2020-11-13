@@ -1,12 +1,13 @@
 module.exports = {
-  name: "nick",
-  aliases: ["botname"],
-  category: "Developer",
+  name: "botnick",
+  aliases: [""],
+  category: "Administrator",
   options: [""],
-  usage: "nickname <newNickname>",
+  usage: "botnick <newNickname>",
   descriptions: "Change bot nickname in a guild",
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const nickname = args.join(" ");
 

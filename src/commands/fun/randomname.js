@@ -10,12 +10,12 @@ module.exports = {
   options: [""],
   cooldown: "5",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const { body } = await superagent.get("https://nekos.life/api/v2/name");
     try {
     message.member.setNickname(`${body.name}`)
-    .then(x => x.channel.send(`Your name has change to **\`${body.name}\`**`))
-    .then(z => {x.delete({timeout: 6000})})
+    message.channel.send(`Your nickname has change to **\`${body.name}\`**`).then(x => {x.delete({timeout: 6000})})
   } catch (e) {
     message.channel.send(`I can't to change nickname because Missing Permissions of **\`MANAGE_NICKNAMES\`**`)
   }

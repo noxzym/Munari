@@ -14,7 +14,4 @@ module.exports = {
     const sayMessage = args.join(" ");    
     if(!sayMessage) return;
     message.channel.send(sayMessage);
-
-
-
 }}

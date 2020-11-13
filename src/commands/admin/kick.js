@@ -8,8 +8,8 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
-    message.delete();
     const prefix = 'm!'
     if (!message.member.hasPermission("ADMINISTRATOR" || "KICK_MEMBERS")) return message.reply("You don't have permissions \`KICK_MEMBERS\` or \`ADMINISTRATOR\`");
     let member = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);

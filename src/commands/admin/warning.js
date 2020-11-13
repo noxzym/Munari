@@ -9,9 +9,9 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
   const prefix = 'm!'
-  message.delete();
   if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send(`You don't have permissions \`KICK_MEMBERS\` or \`BAN_MEMBERS\` or \`ADMINISTRATOR\``);
   let reason = args.slice(1).join(' ');
     let member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));

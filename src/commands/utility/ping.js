@@ -20,6 +20,5 @@ module.exports = {
   .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
   .setTimestamp()
   message.channel.send(ping).then(msg => {msg.delete({  timeout: 20000  })})
-    message.delete();
 }
   }

@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
     if(!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You couldn't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
     if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`I couldn't have permissions \`MANAGE_CHANNELS\``)

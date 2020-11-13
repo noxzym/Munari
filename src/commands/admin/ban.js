@@ -8,8 +8,8 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
-    message.delete();
     const prefix = "m!";
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR"))
       return message.channel.send(

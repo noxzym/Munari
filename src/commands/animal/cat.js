@@ -6,6 +6,7 @@ module.exports = {
   category: 'Animal',
   cooldown: '5',
   usage:'cat',
+  guildOnly: true,
 async run(bot, message, args) {  
   request('http://aws.random.cat/meow', function (error, body) {
     var result = JSON.parse(body.body)
