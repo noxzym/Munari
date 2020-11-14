@@ -38,7 +38,6 @@ module.exports = {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
           case "❎":
-            reaction.users.remove(user).catch(console.error);
             output.delete()
             break;
 
