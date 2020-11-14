@@ -18,17 +18,12 @@ module.exports = {
             let e = new MessageEmbed()
             const qEmbed = await message.channel.send(embeds[page])
             await qEmbed.react("⬅️");
+            await qEmbed.react("❎");
             await qEmbed.react("➡️");
             const filter = (reaction, user) => user.id !== message.client.user.id;
-              var collector = qEmbed.createReactionCollector(filter, {
-                time: 20000
-              });
+            var collector = qEmbed.createReactionCollector(filter, {time: 20000});
 
               collector.on("collect", (reaction, user) => {
-              const member = message.guild.member(user);
-
-              const { channel } = member.voice;
-              const botChannel = member.guild.me.voice.channel;
 
               switch (reaction.emoji.name) {
                 case "⬅️":
@@ -39,7 +34,12 @@ module.exports = {
                   }
                   break;
 
-                  case "➡️":
+                case "❎":
+                  reaction.users.remove(user).catch(console.error);
+                  collector.stop()
+                  break;
+
+                case "➡️":
                     reaction.users.remove(user).catch(console.error);
                     if (page < embeds.length - 1) {
                       page++;

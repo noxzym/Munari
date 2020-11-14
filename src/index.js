@@ -34,9 +34,8 @@ client.on("ready", async () => {
   setInterval(() => {
      const status = [
       `• Mention me for know my prefix •`,
-      `• ${client.guilds.cache.size} Server •`,
-      `• ${client.users.cache.size} Users •`,
-      `• New Music Module!!! •`
+      `• Ready to ${client.guilds.cache.size} Servers •`,
+      `• With ${client.users.cache.size} Users •`,
     ];
     const type = [
       "PLAYING",

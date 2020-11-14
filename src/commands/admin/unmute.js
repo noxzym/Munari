@@ -16,14 +16,14 @@ module.exports = {
   let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
   if(!tomute) return message.channel.send(`Usage: ${prefix + this.usage}`);
   
-  let muterole = message.guild.roles.cache.find(r => r.name === 'TMute');
+  let muterole = message.guild.roles.cache.find(r => r.name === 'MunaMute');
   
     try {
       var react = await message.channel.send(`Are you sure to unmute **\`${tomute.user.tag}\`**?`);
       await react.react('✅');
       await react.react('❎');
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter);
+      var collector = react.createReactionCollector(filter, {time: 60000});
       collector.on('collect', (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
