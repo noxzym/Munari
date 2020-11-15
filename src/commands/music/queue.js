@@ -1,4 +1,4 @@
-const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js-light");
+  const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js-light");
 module.exports = {
   name: "queue",
   aliases: ["q"],
@@ -37,6 +37,7 @@ module.exports = {
                 case "❎":
                   reaction.users.remove(user).catch(console.error);
                   collector.stop()
+                  reaction.message.reactions.removeAll()
                   break;
 
                 case "➡️":
