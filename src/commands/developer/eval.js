@@ -40,10 +40,6 @@ module.exports = {
           case "❎":
             output.delete()
             break;
-
-          default:
-            reaction.users.remove(user).catch(console.error);
-            break;
         }
       });
       collector.on("end", () => {
