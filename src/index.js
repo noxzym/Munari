@@ -52,7 +52,7 @@ client.on("ready", async () => {
      client.user.setActivity(status[random], {type: type[randomtp]});
   }, 20000);
   setInterval(() => {
-    dbl.postStats(client.quilds.size)
+    dbl.postStats(client.guilds.cache.size)
   }, 1800000)
 });
 
