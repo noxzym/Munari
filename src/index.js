@@ -16,6 +16,7 @@ const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1Mz
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.snipes = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const { readdirSync } = require("fs");
@@ -51,7 +52,7 @@ client.on("ready", async () => {
      client.user.setActivity(status[random], {type: type[randomtp]});
   }, 20000);
   setInterval(() => {
-    dbl.postStats(client.quilds.cache.size)
+    dbl.postStats(client.quilds.size)
   }, 1800000)
 });
 
