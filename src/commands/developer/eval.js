@@ -30,23 +30,36 @@ module.exports = {
 
       var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-")}\n\`\`\``)
       await output.react('❎')
-      const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = output.createReactionCollector(filter, {time: 60000});
-      collector.on("collect", (reaction, user) => {
-        if (collector && !collector.ended) collector.stop();
-        switch (reaction.emoji.name) {
-          case "❎":
-            output.delete()
-            break;
 
-          default:
-              reaction.users.remove(user).catch(console.error);
-              break;
-        }
-      });
-      collector.on("end", () => {
-        output.reactions.removeAll().catch(console.error);
-      });
+      const filter = (reaction, user) => {
+          return ['❎'].includes(reaction.emoji.name) && user.id === message.author.id;
+        };
+        output.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+        .then(collected => {
+          const reaction = collected.first();
+          if (reaction.emoji.name === '❎') {
+            output.delete()
+            } else {return}
+         })
+          .catch(e) {return};
+      // await output.react('❎')
+      // const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
+      // var collector = output.createReactionCollector(filter, {time: 60000});
+      // collector.on("collect", (reaction, user) => {
+      //   if (collector && !collector.ended) collector.stop();
+      //   switch (reaction.emoji.name) {
+      //     case "❎":
+      //       output.delete()
+      //       break;
+
+      //     default:
+      //         reaction.users.remove(user).catch(console.error);
+      //         break;
+      //   }
+      // });
+      // collector.on("end", () => {
+      //   output.reactions.removeAll().catch(console.error);
+      // });
 
     } catch(e) {
         message.channel.send(`\`\`\`js\n${e}\n\`\`\``);
