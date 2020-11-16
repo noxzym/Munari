@@ -30,7 +30,7 @@ module.exports = {
         if (typeof code !== 'string')
             code = require('util').inspect(code, { depth: 0 });
 
-      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "NO TOKEN FOR YOU!")}\n\`\`\``)
+      var output = message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "NO TOKEN FOR YOU!")}\n\`\`\``)
       await output.react('❎')
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
       var collector = output.createReactionCollector(filter, {time: 60000});
@@ -38,8 +38,12 @@ module.exports = {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
           case "❎":
-            await output.delete()
+            output.delete()
             break;
+
+          default:
+              reaction.users.remove(user).catch(console.error);
+              break;
         }
       });
       collector.on("end", () => {
