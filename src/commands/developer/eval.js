@@ -1,6 +1,5 @@
 const Discord = require('discord.js-light')
 const moment = require('moment')
-const prefix = require('discord-prefix')
 module.exports = {
   name: "eval",
   aliases: ["ev"],
