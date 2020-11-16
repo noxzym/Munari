@@ -1,5 +1,4 @@
 const Discord = require('discord.js-light')
-const db = require('quick.db')
 const moment = require('moment')
 const prefix = require('discord-prefix')
 module.exports = {
