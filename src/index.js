@@ -10,6 +10,10 @@ const client = new Discord.Client({
   cacheEmojis: true,
   cachePresences: true
 });
+
+const DBL = require('dblapi.js');
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24', client);
+
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 const cooldowns = new Discord.Collection();
@@ -46,6 +50,9 @@ client.on("ready", async () => {
      let randomtp = Math.floor(Math.random() * type.length)
      client.user.setActivity(status[random], {type: type[randomtp]});
   }, 20000);
+  setInterval(() => {
+    dbl.postStats(client.quilds.cache.size)
+  }, 1800000)
 });
 
 client.on("reconnecting", () => {
