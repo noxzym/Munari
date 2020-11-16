@@ -41,7 +41,7 @@ module.exports = {
             output.delete()
             } else {return}
          })
-          .catch(e) {return};
+          .catch(e => {return});
       // await output.react('❎')
       // const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
       // var collector = output.createReactionCollector(filter, {time: 60000});
