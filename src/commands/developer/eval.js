@@ -30,7 +30,7 @@ module.exports = {
         if (typeof code !== 'string')
             code = require('util').inspect(code, { depth: 0 });
 
-      var output = message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "NO TOKEN FOR YOU!")}\n\`\`\``)
+      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-")}\n\`\`\``)
       await output.react('❎')
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
       var collector = output.createReactionCollector(filter, {time: 60000});
