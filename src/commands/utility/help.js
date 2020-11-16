@@ -1,6 +1,5 @@
 const Discord = require("discord.js-light");
 const { readdirSync } = require("fs");
-const db = require('quick.db')
 module.exports = {
   name: "help",
   aliases: ["h"],
