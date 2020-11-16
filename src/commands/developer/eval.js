@@ -38,7 +38,7 @@ module.exports = {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
           case "❎":
-            output.delete()
+            await output.delete()
             break;
         }
       });
