@@ -81,7 +81,7 @@ function geneembed(message, queue) {
     .setDescription(`** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${info}`)
     .setTimestamp();
     if(queue.length === 1) {e.setDescription(
-      `** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo songs to play next add songs by \`\`pp!play <song_name>\`\``
+      `** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo song in here? use **\`m!play <song[title/url]>\`**`
       )}
       embeds.push(e);
     }
