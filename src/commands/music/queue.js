@@ -9,9 +9,9 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
-  async run (message) {
+  run: async function (client, message, args) {
     try{
-      const queue = message.client.queue.get(message.guild.id)
+      const queue = client.queue.get(message.guild.id)
       if(!queue) return message.channel.send(`Nothing are playing now`)
       try{
         let page = 0;
