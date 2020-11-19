@@ -144,8 +144,11 @@ client.on("message", async message => {
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~SHOOB PING IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+let interval;
+let time;
+
 client.on("message", async message => {
-let embed = message.embeds[0];
+  let embed = message.embeds[0];
   if (
     message.author.id === "673362753489993749" &&
     embed &&
@@ -154,36 +157,36 @@ let embed = message.embeds[0];
     embed.image
   ) {
     var i = 20;
-      let e = new Discord.MessageEmbed()
-      var time = await message.channel.send({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
-      var interval = setInterval (function () {
-        i = i - 5;
-        if(
-          i === i &&
-          message.author.id === "673362753489993749" &&
-          embed &&
-          embed.description &&
-          embed.description.includes("Issue #:")
-          ) {
-          clearInterval(interval)
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Has Claimed\`**`)}).then(x => { x.delete({ timeout: 3000 })})
-          }
-        if (i === 0) {
-          clearInterval(interval)
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`)}).then(x => {x.delete({timeout: 3000})})
-        } 
-        if (i === 5) {
-          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000')})
-        }
-            if (i === 10) {
-          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300')}) 
-        }
-            if (i === 15) {
-          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00')})
-        }
-            if (i === 20) {
-          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
-        }
-      }, 5000);
+    let e = new Discord.MessageEmbed()
+    time = await message.channel.send({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+    interval = setInterval(function () {
+      i = i - 5;
+      if (i === 0) {
+        clearInterval(interval)
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 3000 }) })
+      }
+      if (i === 5) {
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') })
+      }
+      if (i === 10) {
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300') })
+      }
+      if (i === 15) {
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00') })
+      }
+    }, 5000);
   }
 });
+client.on('message', async message => {
+  let embed = message.embeds[0];
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.description &&
+    embed.description.includes('Issue')
+  ) {
+    clearInterval(interval)
+    let e = new Discord.MessageEmbed()
+    time.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) })
+  }
+})
