@@ -158,21 +158,31 @@ let embed = message.embeds[0];
       var time = await message.channel.send({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
       var interval = setInterval (function () {
         i = i - 5;
+        if(
+          i === i &&
+          message.author.id === "673362753489993749" &&
+          embed &&
+          embed.description &&
+          embed.description.includes("Issue #:")
+          ) {
+          clearInterval(interval)
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Has Claimed\`**`)}).then(x => { x.delete({ timeout: 3000 })})
+          }
         if (i === 0) {
-            clearInterval(interval)
-            time.edit({embed: e.setDescription(`Timeout`)}).then(x => {x.delete({timeout: 3000})})
+          clearInterval(interval)
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`)}).then(x => {x.delete({timeout: 3000})})
         } 
         if (i === 5) {
-            time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000')})
+          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000')})
         }
             if (i === 10) {
-            time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300')}) 
+          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300')}) 
         }
             if (i === 15) {
-            time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00')})
+          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00')})
         }
             if (i === 20) {
-            time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
+          time.edit({embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00')})
         }
       }, 5000);
   }
