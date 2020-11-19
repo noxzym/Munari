@@ -145,43 +145,47 @@ client.on("message", async message => {
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~SHOOB PING IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+client.on("message", async message => {
+  try{
+    let embed = message.embeds[0];
+    if (
+      message.author.id === "673362753489993749" &&
+      embed &&
+      embed.title &&
+      embed.title.includes("Tier") &&
+      embed.image
+    ) {
+      var i = 20;
+      let e = new Discord.MessageEmbed()
+      var time = await message.channel.send({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+      var interval = setInterval(function () {
+        i = i - 5;
+        if (i === 0) {
+          clearInterval(interval)
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 3000 }) })
+        }
+        if (i === 5) {
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') })
+        }
+        if (i === 10) {
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300') })
+        }
+        if (i === 15) {
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00') })
+        }
+        if (i === 20) {
+          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+        }
+      }, 5000);
+    }
+  }catch (e) {
+  return message.channel.send(e)
+  }
+});
+
 // let interval;
 // let time;
 
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  if (
-    message.author.id === "673362753489993749" &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier") &&
-    embed.image
-  ) {
-    var i = 20;
-    let e = new Discord.MessageEmbed()
-    var time = await message.channel.send({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
-    var interval = setInterval(function () {
-      i = i - 5;
-      if (i === 0) {
-        clearInterval(interval)
-        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 10000 }) })
-      }
-      if (i === 5) {
-        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') })
-      }
-      if (i === 10) {
-        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300') })
-      }
-      if (i === 15) {
-        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00') })
-      }
-      if (i === 20) {
-        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
-      }
-    }, 5000);
-
-  }
-});
 
 // client.on('message', async message => {
 // if (

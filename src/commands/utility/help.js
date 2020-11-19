@@ -71,7 +71,6 @@ module.exports = {
     .map(({ name }) => `**\`${name}\`**`)
     .join(", ");
     
-    
     let hembed = new Discord.MessageEmbed()
     .setAuthor('Munari Help Commands', bot.user.displayAvatarURL())
     .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
@@ -85,6 +84,7 @@ module.exports = {
     .addField('**\`【🛠️】\` • Utility**', utility)
     .addField('**\`【🎧】\` • Music**', music)
     .addField('**\`【⚙️】\` • Moderation**', Admin)
+    .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858)】 • 【[INVITE ME](https://bit.ly/Munari-Bot)】**")
     .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     .setTimestamp()
     message.channel.send(hembed)

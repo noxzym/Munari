@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "bug",
     aliases: ["error"],
-    category: "",
+    category: "Utility",
     descriptions: "Report to developer about bug or error command",
     usage: "bug <commands> <descriptiom>",
     options: [""],
