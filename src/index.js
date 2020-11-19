@@ -168,10 +168,12 @@ client.on("message", async message => {
         embed.description &&
         embed.description.includes('Issue')
       ) {
-        clearInterval(interval).then(x => x.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) }))
+        clearInterval(interval).then(x => x.edit)
+        time.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) })
       }
       if (i === 0) {
-        clearInterval(interval).then(x => x.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 3000 }) }))
+        clearInterval(interval)
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 10000 }) })
       }
       if (i === 5) {
         time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') })
