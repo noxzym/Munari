@@ -174,6 +174,9 @@ client.on("message", async message => {
       if (i === 15) {
         time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00') })
       }
+      if (i === 20) {
+        time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+      }
     }, 5000);
   }
 });
