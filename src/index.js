@@ -168,7 +168,7 @@ client.on("message", async message => {
         embed.description &&
         embed.description.includes('Issue')
       ) {
-        clearInterval(interval).then(x => x.edit)
+        clearInterval(interval)
         time.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) })
       }
       if (i === 0) {
