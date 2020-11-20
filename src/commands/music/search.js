@@ -29,46 +29,17 @@ module.exports = {
 
     let resultsEmbed = new MessageEmbed()
       .setTitle(`**Type the song number you want to play**`)
-      .setDescription(`Results for ${search}`)
       .setColor("#3F51B5");
 
     try {
-      const results = await youtube.searchVideos(search, 10);
-      results.map((video, index) => resultsEmbed.addField(video.shortURL, `${index + 1}. ${video.title.replace(/&amp;/g, '&')
-        .replace(/&gt;/g, '>').replace(/&lt;/g, '<')
-        .replace(/&quot;/g, '"')
-              .replace(/&OElig;/g, 'Œ')
-              .replace(/&oelig;/g, 'œ')
-              .replace(/&Scaron;/g, 'Š')
-              .replace(/&scaron;/g, 'š')
-              .replace(/&Yuml;/g, 'Ÿ')
-              .replace(/&circ;/g, 'ˆ')
-              .replace(/&tilde;/g, '˜')
-              .replace(/&ndash;/g, '–')
-              .replace(/&mdash;/g, '—')
-              .replace(/&lsquo;/g, '‘')
-              .replace(/&rsquo;/g, '’')
-              .replace(/&sbquo;/g, '‚')
-              .replace(/&ldquo;/g, '“')
-              .replace(/&rdquo;/g, '”')
-              .replace(/&bdquo;/g, '„')
-              .replace(/&dagger;/g, '†')
-              .replace(/&Dagger;/g, '‡')
-              .replace(/&permil;/g, '‰')
-              .replace(/&lsaquo;/g, '‹')
-              .replace(/&rsaquo;/g, '›')
-              .replace(/&euro;/g, '€')
-              .replace(/&copy;/g, '©')
-              .replace(/&trade;/g, '™')
-              .replace(/&reg;/g, '®')
-              .replace(/&nbsp;/g, ' ')
-      }`));
+      const results = await youtube.searchVideos(search, 5);
+      results.map((video, index) => resultsEmbed.setDescription(`**${index + 1}. ${[[video.title](video.shortURL)]}**`));
 
       var resultsMessage = await message.channel.send(resultsEmbed);
 
       function filter(msg) {
-        const pattern = /(^[1-9][0-9]{0,1}$)/g;
-        return pattern.test(msg.content) && parseInt(msg.content.match(pattern)[0]) <= 10;
+        const pattern = /(^[1-4][0-4]{0,1}$)/g;
+        return pattern.test(msg.content) && parseInt(msg.content.match(pattern)[0]) <= 5;
       }
 
       message.channel.activateCollector = true;
@@ -76,7 +47,7 @@ module.exports = {
       const choice = resultsEmbed.fields[parseInt(response.first()) - 1].name;
 
       message.channel.activateCollector = false;
-      message.client.commands.get("play").execute(message, [choice]);
+      message.client.commands.get("play").run(message, [choice]);
       resultsMessage.delete().catch(console.error);
     } catch(error) {
       console.error(error);
