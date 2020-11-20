@@ -33,7 +33,37 @@ module.exports = {
 
     try {
       const results = await youtube.searchVideos(search, 5);
-      results.map((video, index) => resultsEmbed.setDescription(`**${index + 1}. ${[[video.title](video.shortURL)]}**`));
+      results.map((video, index) => resultsEmbed.setDescription(`${index + 1}. ${video.title
+        .replace(/&amp;/g, '&')
+        .replace(/&gt;/g, '>')
+        .replace(/&lt;/g, '<')
+        .replace(/&quot;/g, '"')
+        .replace(/&OElig;/g, 'Œ')
+        .replace(/&oelig;/g, 'œ')
+        .replace(/&Scaron;/g, 'Š')
+        .replace(/&scaron;/g, 'š')
+        .replace(/&Yuml;/g, 'Ÿ')
+        .replace(/&circ;/g, 'ˆ')
+        .replace(/&tilde;/g, '˜')
+        .replace(/&ndash;/g, '–')
+        .replace(/&mdash;/g, '—')
+        .replace(/&lsquo;/g, '‘')
+        .replace(/&rsquo;/g, '’')
+        .replace(/&sbquo;/g, '‚')
+        .replace(/&ldquo;/g, '“')
+        .replace(/&rdquo;/g, '”')
+        .replace(/&bdquo;/g, '„')
+        .replace(/&dagger;/g, '†')
+        .replace(/&Dagger;/g, '‡')
+        .replace(/&permil;/g, '‰')
+        .replace(/&lsaquo;/g, '‹')
+        .replace(/&rsaquo;/g, '›')
+        .replace(/&euro;/g, '€')
+        .replace(/&copy;/g, '©')
+        .replace(/&trade;/g, '™')
+        .replace(/&reg;/g, '®')
+        .replace(/&nbsp;/g, ' ')
+      }`));
 
       var resultsMessage = await message.channel.send(resultsEmbed);
 
