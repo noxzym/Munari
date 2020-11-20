@@ -26,15 +26,15 @@ module.exports = {
       return message.reply("You need to join a voice channel first!").catch(console.error);
 
     const search = args.join(" ");
+    if(!search) return
 
     let resultsEmbed = new MessageEmbed()
       .setTitle(`**Type the song number you want to play**`)
       .setColor("#3F51B5");
 
     try {
-      const results = await youtube.searchVideos(search, 5);
-      results.map((video, index) => resultsEmbed.setDescription(`${index + 1}. ${video.title
-        .replace(/&amp;/g, '&')
+      const results = await youtube.searchVideos(search, 10);
+      results.map((video, index) => resultsEmbed.addField(video.shortURL, `${index + 1}. ${video.title.replace(/&amp;/g, '&')
         .replace(/&gt;/g, '>')
         .replace(/&lt;/g, '<')
         .replace(/&quot;/g, '"')
@@ -68,8 +68,8 @@ module.exports = {
       var resultsMessage = await message.channel.send(resultsEmbed);
 
       function filter(msg) {
-        const pattern = /(^[1-4][0-4]{0,1}$)/g;
-        return pattern.test(msg.content) && parseInt(msg.content.match(pattern)[0]) <= 5;
+        const pattern = /(^[1-9][0-9]{0,1}$)/g;
+        return pattern.test(msg.content) && parseInt(msg.content.match(pattern)[0]) <= 10;
       }
 
       message.channel.activateCollector = true;
