@@ -12,10 +12,17 @@ let commandFiles;
     
     
     
+     await ytdlp(song.url, {
+              filter: "audioonly",
+              opusEncoded: true,
+              encoderArgs: ["-af", ffmpegFilters.bassboost]
+              // seek: 60,
+            }),
+            { type: "opus" }
+
+
     
     const Discord = require("discord.js");
-
-
 if (message.content.includes("membercount")) {
       if (
         !message.guild.channels.cache.find(

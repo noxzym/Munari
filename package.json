@@ -49,6 +49,7 @@
     "sodium": "^3.0.2",
     "string-progressbar": "^1.0.1",
     "superagent": "^6.1.0",
-    "ytdl-core": "^4.0.2"
+    "ytdl-core": "^4.0.2",
+    "ytdl-core-discord": "^1.2.4"
   }
 }

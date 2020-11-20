@@ -1,5 +1,5 @@
 const { Discord, Util, MessageEmbed } = require("discord.js-light");
-const ytdlp = require("discord-ytdl-core");
+const ytdlp = require("ytdl-core-discord");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 
@@ -136,13 +136,7 @@ module.exports = {
 
         const dispatcher = queue.connection
           .play(
-            await ytdlp(song.url, {
-              filter: "audioonly",
-              opusEncoded: true,
-              encoderArgs: ["-af", ffmpegFilters.bassboost]
-              // seek: 60,
-            }),
-            { type: "opus" }
+            await ytdlp(song.url, {highWaterMark: 1<<25}), { type: "opus" }
           )
           .on("finish", () => {
             if (collector && !collector.ended) collector.stop();
