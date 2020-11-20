@@ -136,8 +136,8 @@ module.exports = {
 
         const dispatcher = queue.connection
           .play(
-            await ytdlp(song.url, {highWaterMark: 1<<25}), { type: "opus" }
-          )
+            await ytdlp(song.url, { filter:'audioonly' }), { type: "opus" }
+            )
           .on("finish", () => {
             if (collector && !collector.ended) collector.stop();
 
