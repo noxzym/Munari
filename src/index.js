@@ -65,7 +65,7 @@ client.on("disconnect", () => {
 });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
-  if(!message.guild.me.hasPermission("SEND_MESSAGES")) return
+  // if(!message.guild.me.hasPermission("SEND_MESSAGES")) return
   //Prefix In Here\\
   const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
   
