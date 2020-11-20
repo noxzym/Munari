@@ -19,7 +19,7 @@ module.exports = {
   cooldown: "5",
   ownerOnly: true,
   guildOnly: true,
-  async run(client, message, args) {
+  run: async function(client, message, args) {
     if(message.channel.activateCollector)
       return message.reply("A message collector is already active in this channel.");
     if(!message.member.voice.channel)
