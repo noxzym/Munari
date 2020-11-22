@@ -65,7 +65,6 @@ client.on("disconnect", () => {
 });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
-  // if(!message.guild.me.hasPermission("SEND_MESSAGES")) return
   //Prefix In Here\\
   const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
   
@@ -78,7 +77,14 @@ client.on("message", async message => {
     .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`m!bug <detile problem>\`** for report to developer.`)
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (
+    !message.content.startsWith(prefix) ||
+    message.author.bot ||
+    message.channel.type === 'dm' ||
+    (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
+    !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')
+  ) return
+  
   let args = message.content
     .slice(prefix.length)
     .trim()
@@ -155,26 +161,23 @@ client.on("message", async message => {
       embed.title.includes("Tier") &&
       embed.image
     ) {
-      var i = 20;
+      var i = 15;
       let e = new Discord.MessageEmbed()
-      var time = await message.channel.send({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+      var time = await message.channel.send({ embed: e.setDescription(`**\`:green_circle: | ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#78b159') })
       var interval = setInterval(function () {
         i = i - 5;
         if (i === 0) {
           clearInterval(interval)
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') }).then(x => { x.delete({ timeout: 3000 }) })
+          time.edit({ embed: e.setDescription(`**\`:red_circle: | ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#dd2e44') }).then(x => { x.delete({ timeout: 3000 }) })
         }
         if (i === 5) {
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff0000') })
+          time.edit({ embed: e.setDescription(`**\`:red_circle: | ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#dd2e44') })
         }
         if (i === 10) {
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ff8300') })
+          time.edit({ embed: e.setDescription(`**\`:yellow_circle: | ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#fdcb58') })
         }
         if (i === 15) {
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#ffff00') })
-        }
-        if (i === 20) {
-          time.edit({ embed: e.setDescription(`**\`❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#87ff00') })
+          time.edit({ embed: e.setDescription(`**\`:green_circle: | ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#78b159') })
         }
       }, 5000);
     }

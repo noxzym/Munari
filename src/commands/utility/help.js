@@ -84,7 +84,7 @@ module.exports = {
     .addField('**\`【🛠️】\` • Utility**', utility)
     .addField('**\`【🎧】\` • Music**', music)
     .addField('**\`【⚙️】\` • Moderation**', Admin)
-    .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858)】 • 【[INVITE ME](https://bit.ly/Munari-Bot)】**")
+      .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】 • 【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**")
     .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     .setTimestamp()
     message.channel.send(hembed)
