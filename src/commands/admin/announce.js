@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
   const prefix = 'm!'
   if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(`You don't have permissions \`ADMINISTRATOR\``);
@@ -28,6 +29,5 @@ module.exports = {
     let channel = message.mentions.channels.first()
     if(!channel) return message.channel.send(`Please input channel first`)
     channel.send({ embed });
-    message.delete()
   }
 }

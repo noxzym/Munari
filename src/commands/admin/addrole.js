@@ -3,12 +3,13 @@ module.exports = {
   name: "addrole",
   aliases: [""],
   category: "Administration",
-  descriptions: "Add someone role by metion or id",
-  usage: "addrole <user> <role>",
+  descriptions: "Give someone role",
+  usage: "addrole [user] [role]",
   options: [""],
   cooldown: "",
   ownerOnly: false,
-  async run(bot, message, args) {
+  guildOnly: true,
+  async run(client, message, args) {
     if (!message.guild.me.hasPermission("MANAGE_ROLES"))
       return message.channel.send(`I don't Have permissions \`MANAGE_ROLES\``);
 
@@ -68,7 +69,7 @@ module.exports = {
       await react.react("❎");
       const filter = (reaction, user) =>
         user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter);
+      var collector = react.createReactionCollector(filter, {time: 60000});
       collector.on("collect", (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {

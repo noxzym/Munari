@@ -8,8 +8,8 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
-    message.delete();
     const prefix = 'm!'
     if (!message.member.hasPermission("ADMINISTRATOR" || "KICK_MEMBERS")) return message.reply("You don't have permissions \`KICK_MEMBERS\` or \`ADMINISTRATOR\`");
     let member = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[0]);
@@ -25,8 +25,11 @@ module.exports = {
       );
     }
     
-    if(member.id === message.author.id) {
+    if(member.user.id === message.author.id) {
       return message.channel.send(`You can't kicked yourself`)
+    }
+    if(member.user.id === message.client.user.id) {
+      return message.channel.send(`I can't kick myself`)
     }
     let reason = args.slice(1).join(' ');
     if(!reason) {
@@ -41,7 +44,7 @@ module.exports = {
       await react.react('✅');
       await react.react('❎');
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter);
+      var collector = react.createReactionCollector(filter, {time: 60000});
       collector.on('collect', (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {

@@ -6,6 +6,7 @@ module.exports = {
   category: "Animal",
   cooldown: "5",
   usage: "dog",
+  guildOnly: true,
   async run(bot, message, args) {
     request("https://dog.ceo/api/breeds/image/random", function(error, body) {
       var result = JSON.parse(body.body);

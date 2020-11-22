@@ -14,7 +14,7 @@ module.exports = (client) => {
     
             if (pull.name) {
                 client.commands.set(pull.name, pull);
-                table.addRow(file, `✔️  -> command berhasil di load`);
+                // table.addRow(file, `✔️  -> command berhasil di load`);
             } else {
                 table.addRow(file, `❎  -> command.name atau help.name tidak dapat ditemukan`);
                 continue;

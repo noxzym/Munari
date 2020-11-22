@@ -8,8 +8,8 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
-    message.delete();
     if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
       return message.channel.send(
         `You couldn't have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``
@@ -36,12 +36,12 @@ module.exports = {
     let reason = args.slice(1).join(" ");
     if (!reason) reason = "No reason given";
 
-    let muteRole = message.guild.roles.cache.find(r => r.name === "TMute");
+    let muteRole = message.guild.roles.cache.find(r => r.name === "MunaMute");
     if (!muteRole) {
       try {
         muteRole = await message.guild.roles.create({
           data: {
-            name: "TMute",
+            name: "MunaMute",
             color: "#514f48",
             permissions: []
           }
@@ -73,7 +73,7 @@ module.exports = {
       await react.react("❎");
       const filter = (reaction, user) =>
         user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter);
+      var collector = react.createReactionCollector(filter, {time: 60000});
       collector.on("collect", (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {

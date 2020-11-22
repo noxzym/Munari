@@ -10,6 +10,7 @@ module.exports = {
   options: [""],
   cooldown: "5",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
   const color = message.member.roles.cache.sort((a, b) => b.position - a.position).first().color
   

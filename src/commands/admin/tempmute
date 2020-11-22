@@ -9,8 +9,8 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
-  message.delete()
   if(!message.member.hasPermission('MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``);
 
   let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));

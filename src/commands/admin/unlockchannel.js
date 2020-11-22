@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message) {
     const prefix = 'm!'
     if(!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
@@ -20,7 +21,7 @@ module.exports = {
       await react.react('✅');
       await react.react('❎');
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter);
+      var collector = react.createReactionCollector(filter, {time: 60000});
       collector.on('collect', (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {

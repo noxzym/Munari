@@ -89,6 +89,7 @@ module.exports = {
   category: 'Animal',
   cooldown: '5',
   usage:'fox',
+  guildOnly: true,
   async run(bot, message, args) {
     if (usingRedsi) redisImageCollections.ping();
 

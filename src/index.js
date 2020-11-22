@@ -10,17 +10,19 @@ const client = new Discord.Client({
   cacheEmojis: true,
   cachePresences: true
 });
+
+const DBL = require('dblapi.js');
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24', client);
+
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.snipes = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const { readdirSync } = require("fs");
-const db = require("quick.db");
 
-client.queueradio = new Map();
 client.queue = new Map();
 client.vote = new Map();
-client.recent = new Map();
 
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);
@@ -37,9 +39,8 @@ client.on("ready", async () => {
   setInterval(() => {
      const status = [
       `• Mention me for know my prefix •`,
-      `• ${client.guilds.cache.size} Server •`,
-      `• ${client.users.cache.size} Users •`,
-      `• New Music Module!!! •`
+      `• Ready to ${client.guilds.cache.size} Servers •`,
+      `• With ${client.users.cache.size} Users •`,
     ];
     const type = [
       "PLAYING",
@@ -49,7 +50,10 @@ client.on("ready", async () => {
      let random = Math.floor(Math.random() * status.length)
      let randomtp = Math.floor(Math.random() * type.length)
      client.user.setActivity(status[random], {type: type[randomtp]});
-  }, 5000);
+  }, 20000);
+  setInterval(() => {
+    dbl.postStats(client.guilds.cache.size)
+  }, 1800000)
 });
 
 client.on("reconnecting", () => {
@@ -61,27 +65,32 @@ client.on("disconnect", () => {
 });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
-  if (message.channel instanceof Discord.DMChannel) return;
   //Prefix In Here\\
   const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
   
   const prefix = 'm!'
 
   const embed = new Discord.MessageEmbed()
-    .setColor("#C0FF0C")
-    .setDescription(
-      `${"<a:mention:761488900513464341>"} **Hai ${
-        message.author
-      }, My Prefix in this server is \`${prefix}\`** ${"<a:mention:761488900513464341>"}`
-    );
+    .setColor('#0099ff')
+    .setAuthor(`Munari Help`)
+    .setThumbnail(`${client.user.avatarURL()}`)
+    .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`m!bug <detile problem>\`** for report to developer.`)
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return null;
+  if (
+    !message.content.startsWith(prefix) ||
+    message.author.bot ||
+    message.channel.type === 'dm' ||
+    (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
+    !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')
+  ) return
+  
   let args = message.content
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
+  if(!cmd) return
 
   //Command Files in HERE
 
@@ -91,7 +100,12 @@ client.on("message", async message => {
 
   //Owner Only
   if (command.ownerOnly && message.author.id !== "243728573624614912") {
-    return message.reply("Owner Only Commands");
+    return
+  }
+
+  //GuildOwnly
+  if(command.guildOnly && message.channel.type === 'dm') {
+    return
   }
 
   //Cooldown command in here
@@ -114,7 +128,7 @@ client.on("message", async message => {
           )} more second(s) before reusing the \`${command.name}\` command.`
         )
         .then(msg => {
-          msg.delete({ timeout: cooldownAmount });
+          msg.delete({ timeout: 5000 });
         });
     }
   }
@@ -138,228 +152,52 @@ client.on("message", async message => {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~SHOOB PING IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 1") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("1")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T1:772975158272983080> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-        );
-      }
+  try{
+    let embed = message.embeds[0];
+    if (
+      message.author.id === "673362753489993749" &&
+      embed &&
+      embed.title &&
+      embed.title.includes("Tier") &&
+      embed.image
+    ) {
+      var i = 15;
+      let e = new Discord.MessageEmbed()
+      var time = await message.channel.send({ embed: e.setDescription(`:green_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#78b159') })
+      var interval = setInterval(function () {
+        i = i - 5;
+        if (i === 0) {
+          clearInterval(interval)
+          time.edit({ embed: e.setDescription(`:black_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#31373d') }).then(x => { x.delete({ timeout: 3000 }) })
+        }
+        if (i === 5) {
+          time.edit({ embed: e.setDescription(`:red_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#dd2e44') })
+        }
+        if (i === 10) {
+          time.edit({ embed: e.setDescription(`:yellow_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#fdcb58') })
+        }
+        if (i === 15) {
+          time.edit({ embed: e.setDescription(`:green_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#78b159') })
+        }
+      }, 5000);
     }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
+  }catch (e) {
+  return message.channel.send(e)
   }
 });
 
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
+// let interval;
+// let time;
 
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 2") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("2")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T2:772975194461175828> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-        );
-      }
-    }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
-  }
-});
 
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
-
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 3") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("3")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T3:772975229647192085> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-        );
-      }
-    }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
-  }
-});
-
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
-
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 4") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("4")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T4:772975257677987901> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-        );
-      }
-    }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
-  }
-});
-
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
-
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 5") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("5")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T5:772975287004692501> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T5:772975287004692501> | **<@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-        );
-      }
-    }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
-  }
-});
-
-client.on("message", async message => {
-  let embed = message.embeds[0];
-  const guild = db.get(`shoob-${message.guild.id}`);
-
-  if (
-    message.author.id === "673362753489993749" &&
-    message.guild.id === guild &&
-    embed &&
-    embed.title &&
-    embed.title.includes("Tier: 6") &&
-    embed.image
-  ) {
-    const roles = message.guild.roles.cache.find(
-      x => x.name.includes("Tier") && x.name.includes("6")
-    ).id;
-    var af = 20;
-    var time = await message.channel.send(
-      `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
-    );
-    function myTimer() {
-      if (af === 0) {
-        clearInterval(timer);
-        time.edit(
-          `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞\`**`
-        );
-      } else {
-        af = af - 2;
-        time.edit(
-          `**<:T6:772975360689176586> | <@&${roles}> • \`❝ ${embed.title} ❞   Despawn in ${af}\`**`
-        );
-      }
-    }
-    var timer = setInterval(function() {
-      myTimer();
-    }, 2000);
-  }
-});
+// client.on('message', async message => {
+// if (
+//         message.author.id === "673362753489993749" &&
+//         embed &&
+//         embed.description &&
+//         embed.description.includes('Issue')
+//       ) {
+//         clearInterval(interval)
+//         time.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) })
+//       }
+// })

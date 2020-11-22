@@ -1,14 +1,16 @@
 const { MessageEmbed } = require("discord.js-light");
 const fetch = require("node-fetch");
-
 module.exports = {
   name: "compliment",
-  aliases: ['cpl'],
+  aliases: [""],
   category: "Fun",
-  cooldown: '5',
-  description: "Get a compliment",
-  usage:'compliment',
-  async run(bot, message) {
+  descriptions: "compliment command",
+  usage: "compliment",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
     const { compliment } = await fetch(
       "https://complimentr.com/api"
     ).then((res) => res.json());

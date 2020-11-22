@@ -9,6 +9,7 @@ module.exports = {
   options: [""],
   cooldown: "8",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     let member =
       message.mentions.members.first() ||

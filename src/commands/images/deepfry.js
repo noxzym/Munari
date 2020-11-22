@@ -9,6 +9,7 @@ module.exports = {
   options: [""],
   cooldown: "8",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
     if(!member) return message.channel.send(`Please mention members firs`)

@@ -1,13 +1,13 @@
 const { Discord, Util, MessageEmbed } = require("discord.js-light");
-const ytdlp = require("discord-ytdl-core");
+const ytdlp = require("ytdl-core-discord");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 
 let ytapk;
 try {
   ytapk = "AIzaSyAeoZxsotVd1HdcqG8KXAIzS_O8FxQbel0";
-} catch {
-  ytapk = "AIzaSyD5UfUigZZoHMMT7Ec0hHIjTKiNfBQkY1E";
+} catch {  
+  ytapk = "AIzaSyA5zRuMYIbt4Y_NlF317OG4ia84P1M9qWY";
 }
 
 const ffmpegFilters = {
@@ -21,7 +21,8 @@ const ffmpegFilters = {
   nightcore:
     "asetrate=48000*1.25,aresample=48000,equalizer=f=40:width_type=h:width=50:g=10",
   reverse: "areverse",
-  vaporwave: "asetrate=48000*0.8,aresample=48000,atempo=1.1"
+  vaporwave: "asetrate=48000*0.8,aresample=48000,atempo=1.1",
+  none: "none"
 };
 
 const youtube = new YouTubeAPI(ytapk);
@@ -34,6 +35,7 @@ module.exports = {
   options: [""],
   cooldown: "",
   ownerOnly: false,
+  guildOnly: true,
   run: async function(client, message, args) {
     try {
       const { channel } = message.member.voice;
@@ -134,14 +136,8 @@ module.exports = {
 
         const dispatcher = queue.connection
           .play(
-            await ytdlp(song.url, {
-              filter: "audioonly",
-              opusEncoded: true,
-              encoderArgs: ["-af", ffmpegFilters.bassboost]
-              // seek: 60,
-            }),
-            { type: "opus" }
-          )
+            await ytdlp(song.url, { filter:'audioonly' }), { type: "opus" }
+            )
           .on("finish", () => {
             if (collector && !collector.ended) collector.stop();
 
@@ -385,7 +381,7 @@ module.exports = {
         const connection = await channel.join();
         queueConstruct.connection = connection;
         await queueConstruct.connection.voice.setSelfDeaf(true);
-        play(queueConstruct.songs[0]);
+        play(queueConstruct.songs[0], message);
       } catch (error) {
         console.error(`I could not join the voice channel: ${error}`);
         message.client.queue.delete(message.guild.id);

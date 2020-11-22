@@ -3,11 +3,12 @@ module.exports = {
   name: "ascii",
   aliases: [""],
   category: "Fun",
-  descriptions: "convert text to ascii word",
+  descriptions: "convert text to ascii style",
   usage: "ascii <text>",
   options: [""],
-  cooldown: "5",
+  cooldown: "8",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const text = args.join(" ");
 

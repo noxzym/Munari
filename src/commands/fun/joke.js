@@ -1,12 +1,16 @@
 const Discord = require('discord.js-light')
 const joke = require('one-liner-joke').getRandomJoke
-
 module.exports = {
-  name: 'joke',
-  category: 'Fun',
-  cooldown: '5',
-  usage:'joke',
-async run(bot, message, args) {
+  name: "joke",
+  aliases: [""],
+  category: "Fun",
+  descriptions: "Generate joke",
+  usage: "joke",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
   
     message.channel.send(
       new Discord.MessageEmbed()

@@ -10,6 +10,7 @@ module.exports = {
   options: [""],
   cooldown: "3",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     
     const query = args.join(" ");

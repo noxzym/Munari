@@ -12,10 +12,17 @@ let commandFiles;
     
     
     
+     await ytdlp(song.url, {
+              filter: "audioonly",
+              opusEncoded: true,
+              encoderArgs: ["-af", ffmpegFilters.bassboost]
+              // seek: 60,
+            }),
+            { type: "opus" }
+
+
     
     const Discord = require("discord.js");
-
-
 if (message.content.includes("membercount")) {
       if (
         !message.guild.channels.cache.find(
@@ -144,22 +151,212 @@ if (message.content.includes("membercount")) {
       }
     }
 
-    if (message.content.includes("welcome")) {
-      let channel =
-        message.guild.channels.cache.get(args[0]) ||
-        message.mentions.channels.first();
-      if (!channel)
-        return message.channel.send(`Please mentions channel first`);
-      if (message.content.includes("enable")) {
-        db.set(`welchannel_${message.guild.id}`, channel.id);
-        message.channel.send(`Welcome Channel is seted as ${channel}`);
-      } else if (message.content.includes("disable")) {
-        db.delete(`welchannel_${message.guild.id}`, channel.id);
-        message.channel.send(`Welcome Channel Has been deleted`);
+//Shoob with ping
+client.on("message", async message => {
+  let embed = message.embeds[0];
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 1") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('1'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T1:772975158272983080> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+        );
       }
     }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});
 
+client.on("message", async message => {
+  let embed = message.embeds[0];
 
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 2") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('2'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T2:772975194461175828> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+        );
+      }
+    }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});
 
+client.on("message", async message => {
+  let embed = message.embeds[0];
 
-    
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 3") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('3'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T3:772975229647192085> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+        );
+      }
+    }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});
+
+client.on("message", async message => {
+  let embed = message.embeds[0];
+
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 4") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('4'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T4:772975257677987901> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+        );
+      }
+    }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});
+
+client.on("message", async message => {
+  let embed = message.embeds[0];
+
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 5") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('5'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T5:772975287004692501> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T5:772975287004692501> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T5:772975287004692501> | **${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+        );
+      }
+    }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});
+
+client.on("message", async message => {
+  let embed = message.embeds[0];
+
+  if (
+    message.author.id === "673362753489993749" &&
+    embed &&
+    embed.title &&
+    embed.title.includes("Tier: 6") &&
+    embed.image
+  ) {
+    const roles = message.guild.roles.cache.find(x => (x.name.includes('T') || x.name.includes('t')) && x.name.includes('6'))
+    if(!roles) return
+    var af = 20;
+    var time = await message.channel.send(
+      `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞ Despawn in ${af}\`**`
+    );
+    function myTimer() {
+      if (af === 0) {
+        clearInterval(timer);
+        time.edit(
+          `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞\`**`
+        );
+      } else {
+        af = af - 2;
+        time.edit(
+          `**<:T6:772975360689176586> | ${roles} • \`❝ ${embed.title} ❞   Despawn in ${af}\`**`
+        );
+      }
+    }
+    var timer = setInterval(function() {
+      myTimer();
+    }, 2000);
+  }
+});

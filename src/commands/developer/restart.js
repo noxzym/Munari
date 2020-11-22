@@ -13,9 +13,6 @@ module.exports = {
     .then(msg => {msg.delete({timeout:3000})})
       .then(client.destroy())
       .then(client.login('NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4'))
-          .then(client.user.setActivity(`• Mention me for know my prefix •`, {
-            type: "WATCHING"
-          }))
   message.delete();
 //     try {
 //       var react = await message.channel.send(`Are you sure Restart ${client.user.username}?`);

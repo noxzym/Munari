@@ -1,12 +1,16 @@
 const { MessageEmbed } = require("discord.js-light");
 
 module.exports = {
-    name: "textblock",
-    category: "Fun",
-    cooldown: '5',
-    description: "Write text with blocks",
-    usage: 'textblock <text/number>',
-    run(bot, message, args) {
+  name: "textblock",
+  aliases: [""],
+  category: "Fun",
+  descriptions: "change text/number to textblokc",
+  usage: "textblock [text/number]",
+  options: [""],
+  cooldown: "5",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
         const blocks = args
             .join(" ")
             .toLowerCase()

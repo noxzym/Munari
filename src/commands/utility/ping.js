@@ -8,6 +8,7 @@ module.exports = {
   options: [""],
   cooldown: "1",
   ownerOnly: false,
+  guildOnly: true,
   async run(bot, message, args) {
   let mentionedUser = message.mentions.users.first() || message.author;
   let latency = Math.round(new Date() - message.createdTimestamp)
@@ -19,6 +20,5 @@ module.exports = {
   .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
   .setTimestamp()
   message.channel.send(ping).then(msg => {msg.delete({  timeout: 20000  })})
-    message.delete();
 }
   }

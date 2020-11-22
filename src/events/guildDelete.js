@@ -1,15 +1,7 @@
-const db = require("quick.db");
-const prefix = require("discord-prefix");
+const { MessageEmbed } = require("discord.js-light");
 module.exports = {
   name: "guildDelete",
   async run(client, guild) {
-    db.delete(`prefix_${guild.id}`);
-    db.delete(`messagewelcome_${guild.id}`);
-    db.delete(`imagewelcome_${guild.id}`);
-    db.delete(`shoob-${guild.id}`);
-
-    prefix.removePrefix(guild.id);
-    const { MessageEmbed } = require("discord.js-light");
     const sname = guild.name
       .toLowerCase()
       .split(" ")

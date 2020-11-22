@@ -10,16 +10,17 @@ module.exports = {
   options: [""],
   cooldown: "8",
   ownerOnly: false,
+  guildOnly: true,
   async run(client, message, args) {
     const { body } = await superagent.get("https://shibe.online/api/birds");
 
-    const embed = new Discord.MessageEmbed()
+    const e = new Discord.MessageEmbed()
       .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setTitle(
         `${message.author.username}, this is your bird picture`
       )
-      .setImage(body)
+      await e.setImage(body.join(' '))
       .setTimestamp()
-    message.channel.send({ embed });
+    message.channel.send({ embed: e });
   }
 };

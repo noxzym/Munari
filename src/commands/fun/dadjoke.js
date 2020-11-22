@@ -1,13 +1,16 @@
 const fetch = require("node-fetch");
 const { MessageEmbed } = require('discord.js-light')
 module.exports = {
-    name: "dadjoke",
-    category: "Fun",
-    cooldown: '5',
-    description: "Shows a dadjoke",
-    usage : 'dadjoke',
-    async run(bot, message) {
-      message.delete()
+  name: "dadjoke",
+  aliases: [""],
+  category: "Fun",
+  descriptions: "dadjoke Command",
+  usage: "dadjoke",
+  options: [""],
+  cooldown: "8",
+  ownerOnly: false,
+  guildOnly: true,
+  async run(client, message, args) {
         const data = await fetch("https://icanhazdadjoke.com/slack").then(res => res.json());
         let e = new MessageEmbed()
         .setColor('RANDOM')
