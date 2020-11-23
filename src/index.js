@@ -70,11 +70,11 @@ client.on("message", async message => {
   
   const prefix = 'm!'
 
-  const embed = new Discord.MessageEmbed()
+ const embed = new Discord.MessageEmbed()
     .setColor('#0099ff')
     .setAuthor(`Munari Help`)
     .setThumbnail(`${client.user.avatarURL()}`)
-    .setDescription(`My global prefix is **\`m!\`**\n\nIf you don't know my command,\nyou can use **\`m!help\`** to getStarted.\nFor more information about command,\nYou can use **\`m!help [commandName]\`**.\n\nIf command can't be run,\nYou can use **\`m!bug <detile problem>\`** for report to developer.`)
+    .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
   if (message.content.match(prefixMention)) return message.channel.send(embed);
 
   if (
