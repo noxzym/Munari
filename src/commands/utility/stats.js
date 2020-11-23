@@ -1,4 +1,4 @@
-const Discord = require("discord.js-light")
+const Discord = require("discord.js")
 const os = require('os')
 const cpuStat = require("cpu-stat");
 const moment = require("moment") 
@@ -15,7 +15,7 @@ module.exports = {
   async run(client, message, args) {
   
   const bot = client
-  let { version } = require("discord.js-light");
+  let { version } = require("discord.js");
      
   cpuStat.usagePercent(function(err, percent, seconds) {
   if (err) {

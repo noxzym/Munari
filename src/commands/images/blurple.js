@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js-light");
+const { MessageEmbed } = require("discord.js");
 const superagent = require("superagent");
 module.exports = {
   name: "blurple",

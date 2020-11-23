@@ -1,4 +1,4 @@
-const Discord = require('discord.js-light');
+const Discord = require('discord.js');
 const moment = require('moment');
 moment.locale();
 module.exports = {

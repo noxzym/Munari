@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js-light");
+const { MessageEmbed } = require("discord.js");
 const axios = require("axios");
 
 module.exports = {

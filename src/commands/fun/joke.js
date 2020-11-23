@@ -1,4 +1,4 @@
-const Discord = require('discord.js-light')
+const Discord = require('discord.js')
 const joke = require('one-liner-joke').getRandomJoke
 module.exports = {
   name: "joke",

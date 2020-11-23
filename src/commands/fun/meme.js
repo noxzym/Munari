@@ -1,4 +1,4 @@
-const Discord = require('discord.js-light')
+const Discord = require('discord.js')
 const randomPuppy = require('random-puppy')
 module.exports = {
   name: "meme",

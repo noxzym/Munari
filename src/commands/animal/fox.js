@@ -1,4 +1,4 @@
-const Discord = require('discord.js-light');
+const Discord = require('discord.js');
 const request = require('request');
 const { parse } = require('node-html-parser');
 const redis = require('redis');

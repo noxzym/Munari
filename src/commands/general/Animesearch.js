@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js-light");
+const { MessageEmbed } = require("discord.js");
 const { getInfoFromName } = require("mal-scraper");
 module.exports = {
   name: "anime",

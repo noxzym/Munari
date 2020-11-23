@@ -1,4 +1,4 @@
-const {  MessageEmbed  } = require('discord.js-light')
+const {  MessageEmbed  } = require('discord.js')
 module.exports = {
   name: "lockchannel",
   aliases: ["lockch", "lch"],

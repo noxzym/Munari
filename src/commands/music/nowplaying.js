@@ -1,5 +1,5 @@
 const createBar = require("string-progressbar");
-const { MessageEmbed } = require("discord.js-light");
+const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "nowplaying",
   aliases: ["np"],

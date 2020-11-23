@@ -1,4 +1,4 @@
-const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js-light");
+const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "queue",
   aliases: ["q"],

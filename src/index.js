@@ -1,14 +1,7 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~PACKAGE REQUIREMENT CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
-const Discord = require("discord.js-light");
+const Discord = require("discord.js");
 const client = new Discord.Client({
-  disableMentions: "everyone",
-  fetchAllMembers: true,
-  cacheGuilds: true,
-  cacheChannels: true,
-  cacheOverwrites: true,
-  cacheRoles: true,
-  cacheEmojis: true,
-  cachePresences: true
+  disableMentions: "everyone"
 });
 
 const DBL = require('dblapi.js');

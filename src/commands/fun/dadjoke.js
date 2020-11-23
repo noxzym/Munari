@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const { MessageEmbed } = require('discord.js-light')
+const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: "dadjoke",
   aliases: [""],

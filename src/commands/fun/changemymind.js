@@ -1,5 +1,4 @@
-const { MessageEmbed } = require("discord.js-light");
-const fetch = require("node-fetch");
+const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "changemymind",
   aliases: ["chm"],
@@ -15,19 +14,12 @@ module.exports = {
 
     if (!text) return message.channel.send(`Please input some word`);
 
-    const data = await fetch(
-      `https://nekobot.xyz/api/imagegen?type=changemymind&text=${text}`
-    ).then((res) => res.json());
-
+    const msg = `https://vacefron.nl/api/changemymind?text=${text}`
     const embed = new MessageEmbed()
-      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
       .setColor("RANDOM")
-      .setDescription(
-        `[Click here if the image failed to load.](${data.message})`
-      )
-      .setImage(data.message)
+      .setImage(msg)
+      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp();
-
-    message.channel.send({ embed });
+    message.channel.send(embed);
   },
 };
