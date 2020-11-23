@@ -30,7 +30,7 @@ module.exports = {
                           reaction.users.remove(user).catch(console.error);
                           if (page !== 0) {
                             --page;
-                            qEmbed.edit(embeds[page]);
+                            embed.edit(embeds[page]);
                             }
                           break;
 
@@ -44,7 +44,7 @@ module.exports = {
                           reaction.users.remove(user).catch(console.error);
                           if (page < embeds.length - 1) {
                              page++;
-                             qEmbed.edit(embeds[page]);
+                             embed.edit(embeds[page]);
                             } 
                           break;
 
