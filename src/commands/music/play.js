@@ -154,7 +154,7 @@ module.exports = {
             await ytdlp(song.url, { filter:'audioonly' }), { type: "opus" }
             )
           .on("finish", () => {
-            if (collector && !collector.ended) collector.stop();
+            // if (collector && !collector.ended) collector.stop();
 
             if (queue.loop) {
               let lastSong = queue.songs.shift();

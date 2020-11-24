@@ -4,11 +4,11 @@ module.exports = {
   name: "nowplaying",
   aliases: ["np"],
   category: "Music",
-  descriptions: "Display now playing songs",
+  descriptions: "UNDER CONSTRUCTION",
   usage: "nowplaying",
   options: [""],
   cooldown: "",
-  ownerOnly: false,
+  ownerOnly: true,
   guildOnly: true,
   run: async function(client, message, args) {
     const queue = client.queue.get(message.guild.id);
