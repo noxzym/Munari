@@ -19,9 +19,10 @@ module.exports = {
         let ath = new MessageAttachment(img, "communist.png")
 
         let e = new MessageEmbed()
-            .setTitle(member.user.tag)
-            .setImage('attachment://communist.png')
-            .setTimestamp()
+        .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+        .setTitle(member.user.tag)
+        .setImage('attachment://communist.png')
+        .setTimestamp()
         message.channel.send({ files: [ath], embed: e })
     }
 }

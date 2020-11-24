@@ -19,6 +19,7 @@ module.exports = {
     let ath = new MessageAttachment(img, "deepfry.png")
 
     let e = new MessageEmbed()
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setTitle(member.user.tag)
       .setImage('attachment://deepfry.png')
       .setTimestamp()

@@ -19,6 +19,7 @@ module.exports = {
     let ath = new MessageAttachment(img, "sepia.png")
 
     let e = new MessageEmbed()
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setTitle(member.user.tag)
       .setImage('attachment://sepia.png')
       .setTimestamp()

@@ -10,6 +10,7 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
+  message.delete()
   const prefix = 'm!'
     const content = args.join(' ')
     if(!content) {
@@ -19,7 +20,7 @@ module.exports = {
     const e = new MessageEmbed()
     .setDescription(contentinput[0])
     .setColor('#0099ff')
-    .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
+    // .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     message.channel.send(e)
   }
 }

@@ -16,7 +16,7 @@ module.exports = {
       return message.channel.send("Please provide some text.");
     }
     
-    if(text.length > 15) return message.channel.send(`Your provide text over size`)
+    if(text.length > 15) return message.channel.send(`Your provide text oversize`)
 
     figlet.text(text, (e, txt) => {
       if (e) return;
