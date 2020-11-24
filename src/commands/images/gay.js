@@ -1,4 +1,4 @@
-const {MessageEmbed} = require('discord.js')
+const {MessageEmbed, MessageAttachment} = require('discord.js')
 const alex = require('alexflipnote.js')
 const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
 
     const img = await image.gay({ image: `${member.user.avatarURL({ dynamic: false, size: 4096, format: 'png' })}` })
 
-    let ath = new Discord.MessageAttachment(img, "gay.png")
+    let ath = new MessageAttachment(img, "gay.png")
 
     let e = new MessageEmbed()
       .setTitle(member.user.tag)
