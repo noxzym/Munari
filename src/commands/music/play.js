@@ -73,6 +73,7 @@ module.exports = {
             requester: `${message.author.tag}`,
             channel: songInfo.videoDetails.author.name
           };
+          if(song.duration === null) song.duration = `\u200B`
         } catch (e) {
           console.log(e);
           return message.channel.send("I could not find any videos that match that link");
@@ -89,6 +90,7 @@ module.exports = {
             requester: `${message.author.tag}`,
             channel: vid.author.name
           };
+          if(song.duration === null) song.duration = `\u200B`
         } catch (e) {
           console.log(e);
           return message.channel.send("I could not find any videos that match that title");
