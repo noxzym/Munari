@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
+    "alexflipnote.js": "^2.2.0",
     "ascii-table": "^0.0.9",
     "axios": "^0.21.0",
     "common-tags": "^1.8.0",

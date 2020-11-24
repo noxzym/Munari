@@ -1,5 +1,6 @@
 const {MessageEmbed} = require('discord.js')
-
+const alex = require('alexflipnote.js')
+const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
   name: "deepfry",
   aliases: [""],
@@ -12,12 +13,15 @@ module.exports = {
   guildOnly: true,
   async run(client, message, args) {
     const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-    if(!member) return message.channel.send(`Please mention members firs`)
+
+    const img = await image.deepfry({ image: `${member.user.avatarURL({ dynamic: false, size: 4096, format: 'png' })}` })
+
+    let ath = new Discord.MessageAttachment(img, "deepfry.png")
+
     let e = new MessageEmbed()
-    .setTitle(member.user.username)
-    .setURL(`https://api.alexflipnote.dev/filter/deepfry?image=${member.user.avatarURL({dynamic: false, size: 4096})}`)
-    .setImage(`https://api.alexflipnote.dev/filter/deepfry?image=${member.user.avatarURL({dynamic: false, size: 4096})}`)
-    .setTimestamp()
-    message.channel.send(e)
+      .setTitle(member.user.tag)
+      .setImage('attachment://deepfry.png')
+      .setTimestamp()
+    message.channel.send({ files: [ath], embed: e })
   }
 }

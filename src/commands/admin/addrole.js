@@ -10,7 +10,7 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
-    if (!message.guild.me.hasPermission("MANAGE_ROLES"))
+    if (!message.guild.me.permissions.has("MANAGE_ROLES"))
       return message.channel.send(`I don't Have permissions \`MANAGE_ROLES\``);
 
     if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
