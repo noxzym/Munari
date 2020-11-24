@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js')
+const { MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
@@ -13,13 +13,13 @@ module.exports = {
     guildOnly: true,
     async run(client, message, args) {
         const input = args[0]
-        
+
         if (!input) message.channel.send(`Please provide some text.`)
         if (input.length > 15) return message.channel.send(`You provide text oversize`)
 
         const img = await image.supreme({ text: `${input}` })
 
-        let ath = new Discord.MessageAttachment(img, "supreme.png")
+        let ath = new MessageAttachment(img, "supreme.png")
         message.channel.send(ath)
     }
 }
