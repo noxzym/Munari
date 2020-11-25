@@ -8,7 +8,7 @@ module.exports = {
   usage: "nowplaying",
   options: [""],
   cooldown: "",
-  ownerOnly: true,
+  ownerOnly: false,
   guildOnly: true,
   run: async function(client, message, args) {
     const queue = client.queue.get(message.guild.id);

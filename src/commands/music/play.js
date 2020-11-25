@@ -167,8 +167,8 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-          let embed = new MessageEmbed()
           const duras = song.nowplaying === 0 ? " ◉ LIVE" : song.duration
+          let embed = new MessageEmbed()
           .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
           .setAuthor(`Youtube Client`)
           .setThumbnail(song.thumbnail)
