@@ -72,16 +72,16 @@ function geneembed(message, queue) {
       k += 5;
       const info = current.map((song) => {
         if (song === queue[0]) return
-          return `**${++j} • 『[${song.title}](${song.url})』 \`【${song.requester}】\`**`
+          return `**${++j} • [${song.title}](${song.url}) \`【${song.requester}】\`**`
       }).join("\n")
       let e = new MessageEmbed()
     .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
     .setAuthor("Youtube Client Queue")
     .setThumbnail(queue[0].thumbnail)
-    .setDescription(`** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${info}`)
+    .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${info}`)
     .setTimestamp();
     if(queue.length === 1) {e.setDescription(
-      `** • 『[${queue[0].title}](${queue[0].url})』 \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo song in here? use **\`m!play <song[title/url]>\`**`
+      `** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo song in here? use **\`m!play <song[title/url]>\`**`
       )}
       embeds.push(e);
     }

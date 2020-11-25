@@ -64,16 +64,16 @@ module.exports = {
       if (urlv) {
         try {
           songInfo = await ytdl.getInfo(url); 
-          const duration = await yts(songInfo.videoDetails.title)
+          const infoSong = await yts(songInfo.videoDetails.title)
           song = {
             title: Util.escapeMarkdown(songInfo.videoDetails.title),
             url: songInfo.videoDetails.video_url,
-            duration: duration.all[0].timestamp,
-            thumbnail: songInfo.videoDetails.thumbnail.thumbnails[0].url,
+            duration: infoSong.all[0].timestamp,
+            thumbnail: infoSong.thumbnail+"?size=4096",
+            nowplaying: songInfo.videoDetails.lengthSeconds,
             requester: `${message.author.tag}`,
             channel: songInfo.videoDetails.author.name
           };
-          if(song.duration === null) song.duration = `\u200B`
         } catch (e) {
           console.log(e);
           return message.channel.send("I could not find any videos that match that link");
@@ -82,15 +82,16 @@ module.exports = {
         try {
           const result = await yts(search);
           const vid = result.all[0];
+          songInfo = await ytdl.getInfo(vid.url)
           song = {
             title: Util.escapeMarkdown(vid.title),
             url: vid.url,
             duration: vid.timestamp,
-            thumbnail: vid.thumbnail,
+            nowplaying: songInfo.videoDetails.lengthSeconds,
+            thumbnail: vid.thumbnail + "?size=4096",
             requester: `${message.author.tag}`,
             channel: vid.author.name
           };
-          if(song.duration === null) song.duration = `\u200B`
         } catch (e) {
           console.log(e);
           return message.channel.send("I could not find any videos that match that title");
@@ -101,9 +102,7 @@ module.exports = {
 
       if (serverQueue) {
         serverQueue.songs.push(song);
-        return message.channel.send(
-          `✅ **\`${song.title}\`** by **\`${song.requester}\` Has been added to queue!**`
-        );
+        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester}\` Has been added to queue!**`);
       }
 
       const queueConstruct = {
@@ -147,16 +146,12 @@ module.exports = {
             .catch(console.error);
         }
 
-        queue.connection.on("disconnect", () =>
-          message.client.queue.delete(message.guild.id)
-        );
-
+        queue.connection.on("disconnect", () =>message.client.queue.delete(message.guild.id));
         const dispatcher = queue.connection
           .play(
             await ytdlp(song.url, { filter:'audioonly' }), { type: "opus" }
             )
           .on("finish", () => {
-            // if (collector && !collector.ended) collector.stop();
 
             if (queue.loop) {
               let lastSong = queue.songs.shift();
@@ -172,212 +167,15 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-          // let duration = new Date(song.duration * 1000).toISOString().substr(11, 8);
           let embed = new MessageEmbed()
+          const duras = song.nowplaying === 0 ? " ◉ LIVE" : song.duration
           .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
           .setAuthor(`Youtube Client`)
           .setThumbnail(song.thumbnail)
-          .setDescription(`**[${song.title}](${song.url})\nDuration: \`${song.duration}\`     Channel: \`${song.channel}\`**`)
+          .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
           .setFooter(`Commanded by ${message.author.tag}`,message.author.avatarURL({ dynamic: true }))
           .setTimestamp();
           queue.textChannel.send(embed)
-          // var react = await queue.textChannel.send(embed);
-      //     await react.react("⏯️");
-      //     await react.react("⏹️");
-      //     await react.react("⏭️");
-      //     await react.react("🔁");
-      //     await react.react("🔀");
-      //     await react.react("🔇");
-      //     await react.react("🔉");
-      //     await react.react("🔊");
-      //     const filter = (reaction, user) => user.id !== message.client.user.id;
-      //     var collector = react.createReactionCollector(filter, {
-      //       time: song.duration > 0 ? song.duration * 1000 : 600000
-      //     });
-
-      //     collector.on("collect", (reaction, user) => {
-      //       if (!queue) return;
-      //       const member = message.guild.member(user);
-
-      //       const { channel } = member.voice;
-      //       const botChannel = member.guild.me.voice.channel;
-
-      //       if (channel !== botChannel) {
-      //         return message.channel
-      //           .send(`${member}, You need to join the voice channel first!`)
-      //           .then(msg => {
-      //             msg.delete({ timeout: 5000 });
-      //           })
-      //           .catch(console.error);
-      //       }
-
-      //       switch (reaction.emoji.name) {
-      //         case "⏯️":
-      //           reaction.users.remove(user).catch(console.error);
-      //           if (queue.playing) {
-      //             queue.playing = !queue.playing;
-      //             queue.connection.dispatcher.pause(true);
-      //             queue.textChannel
-      //               .send(
-      //                 `<a:yes:765207711423004676> | ${user} has paused the music!`
-      //               )
-      //               .then(msg => {
-      //                 msg.delete({ timeout: 5000 });
-      //               })
-      //               .catch(console.error);
-      //           } else {
-      //             queue.playing = !queue.playing;
-      //             queue.connection.dispatcher.resume();
-      //             queue.textChannel
-      //               .send(
-      //                 `<a:yes:765207711423004676> | ${user} has resumed the music!`
-      //               )
-      //               .then(msg => {
-      //                 msg.delete({ timeout: 5000 });
-      //               })
-      //               .catch(console.error);
-      //           }
-      //           break;
-
-      //         case "⏹️":
-      //           reaction.users.remove(user).catch(console.error);
-      //           queue.songs = [];
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | ${user} has stopped the music!`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           try {
-      //             queue.connection.dispatcher.end();
-      //           } catch (error) {
-      //             console.error(error);
-      //             queue.connection.disconnect();
-      //           }
-      //           collector.stop();
-      //           break;
-
-      //         case "⏭️":
-      //           queue.playing = true;
-      //           reaction.users.remove(user).catch(console.error);
-      //           queue.connection.dispatcher.end();
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | ${user} has skipped the song!`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           collector.stop();
-      //           break;
-
-      //         case "🔁":
-      //           reaction.users.remove(user).catch(console.error);
-      //           queue.loop = !queue.loop;
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | Loop is now ${
-      //                 queue.loop ? `**\`On\`**` : `**\`Off\`**`
-      //               }`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           break;
-
-      //         case "🔀":
-      //           reaction.users.remove(user).catch(console.error);
-      //           let songs = queue.songs;
-      //           for (let i = songs.length - 1; i > 1; i--) {
-      //             let j = 1 + Math.floor(Math.random() * i);
-      //             [songs[i], songs[j]] = [songs[j], songs[i]];
-      //           }
-      //           queue.songs = songs;
-      //           message.client.queue.set(message.guild.id, queue);
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | ${user} has shuffled the queue!`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           break;
-
-      //         case "🔇":
-      //           reaction.users.remove(user).catch(console.error);
-      //           if (queue.volume <= 0) {
-      //             queue.volume = 100;
-      //             queue.connection.dispatcher.setVolumeLogarithmic(100 / 100);
-      //             queue.textChannel
-      //               .send(
-      //                 `<a:yes:765207711423004676> | ${user} has unmuted the music!`
-      //               )
-      //               .then(msg => {
-      //                 msg.delete({ timeout: 5000 });
-      //               })
-      //               .catch(console.error);
-      //           } else {
-      //             queue.volume = 0;
-      //             queue.connection.dispatcher.setVolumeLogarithmic(0);
-      //             queue.textChannel
-      //               .send(
-      //                 `<a:yes:765207711423004676> | ${user} has muted the music!`
-      //               )
-      //               .then(msg => {
-      //                 msg.delete({ timeout: 5000 });
-      //               })
-      //               .catch(console.error);
-      //           }
-      //           break;
-
-      //         case "🔉":
-      //           reaction.users.remove(user).catch(console.error);
-      //           if (queue.volume - 10 <= 0) queue.volume = 0;
-      //           else queue.volume = queue.volume - 10;
-      //           queue.connection.dispatcher.setVolumeLogarithmic(
-      //             queue.volume / 100
-      //           );
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | ${user} has decreased the volume to ${queue.volume}%`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           break;
-
-      //         case "🔊":
-      //           reaction.users.remove(user).catch(console.error);
-      //           if (queue.volume + 10 >= 100) queue.volume = 100;
-      //           else queue.volume = queue.volume + 10;
-      //           queue.connection.dispatcher.setVolumeLogarithmic(
-      //             queue.volume / 100
-      //           );
-      //           queue.textChannel
-      //             .send(
-      //               `<a:yes:765207711423004676> | ${user} has increased the volume to ${queue.volume}%`
-      //             )
-      //             .then(msg => {
-      //               msg.delete({ timeout: 5000 });
-      //             })
-      //             .catch(console.error);
-      //           break;
-
-      //         default:
-      //           reaction.users.remove(user).catch(console.error);
-      //           break;
-      //       }
-      //     });
-
-      //     collector.on("end", () => {
-      //       react.reactions.removeAll().catch(console.error);
-      //     });
         } catch (error) {
           console.error(error);
           message.channel.send(error.message);

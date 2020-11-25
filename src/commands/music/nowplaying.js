@@ -15,18 +15,35 @@ module.exports = {
     if (!queue) return message.reply("There is nothing playing.").catch(console.error);
     const song = queue.songs[0];
     const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
-    const left = song.duration - seek;
-    const nowpl = "[" + createBar((song.duration == 0 ? seek : song.duration), seek, 20)[0] + "]"
-    const date = `${new Date(seek * 1000).toISOString().substr(11, 8)}/${(song.duration == 0 ? " ◉ LIVE" : new Date(song.duration * 1000).toISOString().substr(11, 8))}`
+    const left = song.nowplaying - seek;
+    const nowpl = createBar((song.nowplaying == 0 ? seek : song.nowplaying), seek, 15)[0]
+
+    const duration = song.nowplaying
+
+    let dur;
+    if ((duration === 3600 || duration > 3600)) {
+      dur = new Date(((queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(11, 8)
+    } else {
+      dur = new Date(((queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(14, 5)
+    }
+
+    let remaining;
+    if ((duration === 3600 || duration > 3600)) {
+      remaining = new Date((song.nowplaying - (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(11, 8)
+    } else {
+      remaining = new Date((song.nowplaying - (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(14, 5)
+    }
+
+    const date = `${dur}/${(song.nowplaying == 0 ? " ◉ LIVE" : song.duration)}`
 
     let nowPlaying = new MessageEmbed()
       .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setAuthor(`Youtube Client Now Playing`)
+      .setTitle(`${song.title}`)
+    await nowPlaying.setURL(client.queue.get(message.guild.id).songs[0].url)
+      .setDescription(`➤ **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester}】\`**`)
       .setThumbnail(song.thumbnail)
-      .setDescription(`**『[${song.title}](${song.url})』\n\n${nowpl}\n\`${date}\`\nRequested by \`【${song.requester}】\`**`)
-    
-    if (song.duration > 0) nowPlaying.setFooter("Time Remaining: " + new Date(left * 1000).toISOString().substr(11, 8));
-    
+      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
     return message.channel.send(nowPlaying);
   }
 };
