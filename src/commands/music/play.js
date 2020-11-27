@@ -101,8 +101,8 @@ module.exports = {
               description: 'The request has canceled because no response'
             }})
           }
-          embedsearch.delete().catch(console.error)
-          response.delete().catch(console.error)
+          embedsearch.delete()
+          response.delete()
           const videoIndex = parseInt(response.first().content);
           var video = await searcher[videoIndex - 1];
 
