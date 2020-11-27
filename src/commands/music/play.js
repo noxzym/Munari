@@ -18,7 +18,7 @@ module.exports = {
   aliases: ["p"],
   category: "Music",
   descriptions: "Playing song from youtube client",
-  usage: "play <title / url>",
+  usage: "play <song[title/url/id]>",
   run: async function(client, message, args) {
     try {
       const { channel } = message.member.voice;
@@ -85,12 +85,12 @@ module.exports = {
           .setAuthor(`Youtube Client get Video`)
           .setTitle(`This is result for ${search}`)
           .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
-          message.channel.send(em).then(x => {x.delete({timeout: 60000})})
+          var embedsearch = await message.channel.send(em)
           try {
             var response = await message.channel.awaitMessages(
-              message2 => message2.content > 0 && message2.content < 6, {
+              message2 => message2.content > 0 && message2.content < 6 && message2.author.id === message.author.id, {
                 max: 1,
-                time: 60000,
+                time: 30000,
                 errors: ["time"]
               }
               );
@@ -101,12 +101,13 @@ module.exports = {
               description: 'The request has canceled because no response'
             }})
           }
+          embedsearch.delete().catch(console.error)
+          response.delete().catch(console.error)
           const videoIndex = parseInt(response.first().content);
-          response.delete()
           var video = await searcher[videoIndex - 1];
 
           var vids = `https://www.youtube.com/watch?v=${video.id}`;
-           songInfo = await ytdl.getInfo(vids);
+          songInfo = await ytdl.getInfo(vids);
           const infoSong = await yts(songInfo.videoDetails.title);
           const vid = infoSong.all[0];
           song = {
