@@ -2,6 +2,7 @@ const { Discord, Util, MessageEmbed } = require("discord.js");
 const ytdlp = require("ytdl-core-discord");
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
+const ytsr = require('youtube-sr')
 // const YouTubeAPI = require("simple-youtube-api");
 
 // let ytapk;
@@ -18,10 +19,6 @@ module.exports = {
   category: "Music",
   descriptions: "Playing song from youtube client",
   usage: "play <title / url>",
-  options: [""],
-  cooldown: "",
-  ownerOnly: false,
-  guildOnly: true,
   run: async function(client, message, args) {
     try {
       const { channel } = message.member.voice;
@@ -69,7 +66,7 @@ module.exports = {
             title: Util.escapeMarkdown(songInfo.videoDetails.title),
             url: songInfo.videoDetails.video_url,
             duration: infoSong.all[0].timestamp,
-            thumbnail: infoSong.thumbnail+"?size=4096",
+            thumbnail: infoSong.all[0].thumbnail+"?size=4096",
             nowplaying: songInfo.videoDetails.lengthSeconds,
             requester: `${message.author.tag}`,
             channel: songInfo.videoDetails.author.name
@@ -80,9 +77,38 @@ module.exports = {
         }
       } else {
         try {
-          const result = await yts(search);
-          const vid = result.all[0];
-          songInfo = await ytdl.getInfo(vid.url)
+          var searcher = await ytsr.search(search, { limit: 5 });
+          if(searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
+          let index = 0;
+          let em = new MessageEmbed()
+          .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+          .setAuthor(`Youtube Client get Video`)
+          .setTitle(`This is result for ${search}`)
+          .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
+          message.channel.send(em).then(x => {x.delete({timeout: 60000})})
+          try {
+            var response = await message.channel.awaitMessages(
+              message2 => message2.content > 0 && message2.content < 6, {
+                max: 1,
+                time: 60000,
+                errors: ["time"]
+              }
+              );
+          } catch (e) {
+            console.log(e)
+            return message.channel.send({embed: {
+              color: "RED",
+              description: 'The request has canceled because no response'
+            }})
+          }
+          const videoIndex = parseInt(response.first().content);
+          response.delete()
+          var video = await searcher[videoIndex - 1];
+
+          var vids = `https://www.youtube.com/watch?v=${video.id}`;
+           songInfo = await ytdl.getInfo(vids);
+          const infoSong = await yts(songInfo.videoDetails.title);
+          const vid = infoSong.all[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
             url: vid.url,
