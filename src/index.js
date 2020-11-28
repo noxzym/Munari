@@ -1,21 +1,15 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~PACKAGE REQUIREMENT CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
+require('dotenv').config()
 const Discord = require("discord.js");
-const client = new Discord.Client({
-  disableMentions: "everyone"
+const Munari = require('./struct/Client');
+const client = new Munari({
+  token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
+  dblapi: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24',
+  alexapi: '93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb',
+  prefix: 'm!'
 });
-
 const DBL = require('dblapi.js');
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24', client);
-
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
-client.snipes = new Discord.Collection();
-const cooldowns = new Discord.Collection();
-
-const { readdirSync } = require("fs");
-
-client.queue = new Map();
-client.vote = new Map();
+const dbl = new DBL(client.config.dblapi, client);
 
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);
@@ -25,7 +19,18 @@ client.vote = new Map();
   require(`./utils/${handler}`)(client);
 });
 
-client.login("NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4");
+process.on("unhandledRejection", e => {
+  console.error(`Error handler caught an error: \n${e.stack}`);
+});
+
+process.on("uncaughtException", e => {
+  console.error(`Error handler caught an error: \n${e.stack}`);
+  console.info("Fatal error has been detected. Exiting processing...");
+
+  process.exit(1);
+});
+
+client.login(client.config.token);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("ready", async () => {
   console.log("Amjay Mabar, SKUUYYY");
@@ -48,30 +53,23 @@ client.on("ready", async () => {
     dbl.postStats(client.guilds.cache.size)
   }, 1800000)
 });
-
-client.on("reconnecting", () => {
-  console.log("Reconnecting!");
-});
-
-client.on("disconnect", () => {
-  console.log("Disconnect!");
-});
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("message", async message => {
   //Prefix In Here\\
-  const prefixMention = new RegExp(`^<@!?${client.user.id}>`);
-  
-  const prefix = 'm!'
+  const prefix = client.config.prefix;
+  const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
+  const prefixMention = new RegExp(`^<@!?${client.user.id}> `);
+  const newPrefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : prefix;
 
  const embed = new Discord.MessageEmbed()
     .setColor('#0099ff')
     .setAuthor(`Munari Help`)
     .setThumbnail(`${client.user.avatarURL()}`)
     .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
-  if (message.content.match(prefixMention)) return message.channel.send(embed);
+  if (message.content.match(getpref)) return message.channel.send(embed);
 
   if (
-    !message.content.startsWith(prefix) ||
+    !message.content.startsWith(newPrefix) ||
     message.author.bot ||
     message.channel.type === 'dm' ||
     (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
@@ -79,14 +77,13 @@ client.on("message", async message => {
   ) return
   
   let args = message.content
-    .slice(prefix.length)
+    .slice(newPrefix.length)
     .trim()
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
   if(!cmd) return
 
   //Command Files in HERE
-
   let command =
     client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
   if (!command) return;
@@ -97,7 +94,7 @@ client.on("message", async message => {
   }
 
   //GuildOwnly
-  if(command.guildOnly && message.channel.type === 'dm') {
+  if (command.guildOnly && message.channel.type === 'dm') {
     return
   }
 
@@ -131,6 +128,7 @@ client.on("message", async message => {
   if (message.member.id === "243728573624614912") {
     timestamps.delete(message.author.id, now);
   }
+
   //Execute command in here
   if (command)
     try {
@@ -178,19 +176,3 @@ client.on("message", async message => {
   return message.channel.send(e)
   }
 });
-
-// let interval;
-// let time;
-
-
-// client.on('message', async message => {
-// if (
-//         message.author.id === "673362753489993749" &&
-//         embed &&
-//         embed.description &&
-//         embed.description.includes('Issue')
-//       ) {
-//         clearInterval(interval)
-//         time.edit({ embed: e.setDescription(`** <a:yes:765207711423004676> | \`Card has Claimed\`**`).setColor('#87ff00') }).then(x => { x.delete({ timeout: 8000 }) })
-//       }
-// })

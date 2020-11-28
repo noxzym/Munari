@@ -19,7 +19,11 @@ module.exports = {
   category: "Music",
   descriptions: "Playing song from youtube client",
   usage: "play <song[title/url/id]>",
-  run: async function(client, message, args) {
+  options: [""],
+  cooldown: "5",
+  ownerOnly: false,
+  guildOnly: true,
+  run: async function (client, message, args) {
     try {
       const { channel } = message.member.voice;
       if (!channel)
@@ -60,13 +64,13 @@ module.exports = {
 
       if (urlv) {
         try {
-          songInfo = await ytdl.getInfo(url); 
+          songInfo = await ytdl.getInfo(url);
           const infoSong = await yts(songInfo.videoDetails.title)
           song = {
             title: Util.escapeMarkdown(songInfo.videoDetails.title),
             url: songInfo.videoDetails.video_url,
             duration: infoSong.all[0].timestamp,
-            thumbnail: infoSong.all[0].thumbnail+"?size=4096",
+            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
             nowplaying: songInfo.videoDetails.lengthSeconds,
             requester: `${message.author.tag}`,
             channel: songInfo.videoDetails.author.name
@@ -78,28 +82,29 @@ module.exports = {
       } else {
         try {
           var searcher = await ytsr.search(search, { limit: 5 });
-          if(searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
+          if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
           let index = 0;
           let em = new MessageEmbed()
-          .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-          .setAuthor(`Youtube Client get Video`)
-          .setTitle(`This is result for ${search}`)
-          .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
+            .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+            .setAuthor(`Youtube Client get Video`)
+            .setTitle(`This is result for ${search}`)
+            .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
           var embedsearch = await message.channel.send(em)
           try {
             var response = await message.channel.awaitMessages(
               message2 => message2.content > 0 && message2.content < 6 && message2.author.id === message.author.id, {
-                max: 1,
-                time: 30000,
-                errors: ["time"]
-              }
-              );
+              max: 1,
+              time: 30000,
+              errors: ["time"]
+            }
+            );
           } catch (e) {
-            console.log(e)
-            return message.channel.send({embed: {
-              color: "RED",
-              description: 'The request has canceled because no response'
-            }})
+            return message.channel.send({
+              embed: {
+                color: "RED",
+                description: 'The request has canceled because no response'
+              }
+            }).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
           }
           embedsearch.delete()
           response.delete()
@@ -148,7 +153,7 @@ module.exports = {
       const play = async song => {
         const queue = message.client.queue.get(message.guild.id);
         if (!song) {
-          setTimeout(function() {
+          setTimeout(function () {
             if (
               !queue.connection.dispatcher &&
               message.guild.me.voice.channel
@@ -173,11 +178,11 @@ module.exports = {
             .catch(console.error);
         }
 
-        queue.connection.on("disconnect", () =>message.client.queue.delete(message.guild.id));
+        queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
         const dispatcher = queue.connection
           .play(
-            await ytdlp(song.url, { filter:'audioonly' }), { type: "opus" }
-            )
+            await ytdlp(song.url, { filter: 'audioonly' }), { type: "opus" }
+          )
           .on("finish", () => {
 
             if (queue.loop) {
@@ -194,14 +199,19 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-          const duras = song.nowplaying === 0 ? " ◉ LIVE" : song.duration
+          let duras;
+          if (song.duration === undefined) {
+            duras = "◉ LIVE"
+          } else {
+            duras = song.duration
+          }
           let embed = new MessageEmbed()
-          .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-          .setAuthor(`Youtube Client`)
-          .setThumbnail(song.thumbnail)
-          .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
-          .setFooter(`Commanded by ${message.author.tag}`,message.author.avatarURL({ dynamic: true }))
-          .setTimestamp();
+            .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+            .setAuthor(`Youtube Client`)
+            .setThumbnail(song.thumbnail)
+            .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
+            .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+            .setTimestamp();
           queue.textChannel.send(embed)
         } catch (error) {
           console.error(error);

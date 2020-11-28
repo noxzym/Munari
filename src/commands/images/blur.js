@@ -1,6 +1,5 @@
 const {MessageEmbed, MessageAttachment} = require('discord.js')
 const alex = require('alexflipnote.js')
-const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
   name: "blur",
   aliases: [""],
@@ -12,6 +11,8 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
+    const { image } = new alex(client.config.alexapi)
+
     const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
     const img = await image.blur({ image: `${member.user.avatarURL({ dynamic: false, size: 4096, format: 'png' })}` })
