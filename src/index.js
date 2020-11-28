@@ -99,7 +99,7 @@ client.on("message", async message => {
   }
 
   //Cooldown command in here
-  if (!cooldowns.has(command.name)) {
+  if (!client.cooldowns.has(command.name)) {
     cooldowns.set(command.name, new Discord.Collection());
   }
   const now = Date.now();
