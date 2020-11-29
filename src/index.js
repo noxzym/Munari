@@ -58,8 +58,8 @@ client.on("message", async message => {
   //Prefix In Here\\
   const prefix = client.config.prefix;
   const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
-  const prefixMention = new RegExp(`^<@!?${client.user.id}> `);
-  const newPrefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : prefix;
+  // const prefixMention = new RegExp(`^<@!?${client.user.id}> `);
+  // const newPrefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : prefix;
 
  const embed = new Discord.MessageEmbed()
     .setColor('#0099ff')
@@ -69,7 +69,7 @@ client.on("message", async message => {
   if (message.content.match(getpref)) return message.channel.send(embed);
 
   if (
-    !message.content.startsWith(newPrefix) ||
+    !message.content.startsWith(prefix) ||
     message.author.bot ||
     message.channel.type === 'dm' ||
     (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
@@ -77,7 +77,7 @@ client.on("message", async message => {
   ) return
   
   let args = message.content
-    .slice(newPrefix.length)
+    .slice(prefix.length)
     .trim()
     .split(/ +/g);
   let cmd = args.shift().toLowerCase();
