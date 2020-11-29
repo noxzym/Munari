@@ -9,7 +9,7 @@ const client = new Munari({
   prefix: 'm!'
 });
 const DBL = require('dblapi.js');
-const dbl = new DBL(client.config.dblapi, client);
+client.dbl = new DBL(client.config.dblapi, client);
 
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);
@@ -30,7 +30,7 @@ process.on("uncaughtException", e => {
   process.exit(1);
 });
 
-// client.login(client.config.token);
+client.login(client.config.token);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("ready", async () => {
   console.log("Amjay Mabar, SKUUYYY");
@@ -50,7 +50,7 @@ client.on("ready", async () => {
      client.user.setActivity(status[random], {type: type[randomtp]});
   }, 20000);
   setInterval(() => {
-    dbl.postStats(client.guilds.cache.size)
+    client.dbl.postStats(client.guilds.cache.size)
   }, 1800000)
 });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
