@@ -20,7 +20,7 @@ module.exports = {
     const { body } = await superagent.get("https://nekos.life/api/v2/img/hug");
     const get = body.url
     const ath = new MessageAttachment(get, 'hug.gif')
-    const e = new Discord.MessageEmbed()
+    const e = new MessageEmbed()
       .setColor(
         message.member.roles.cache
           .sort((a, b) => b.position - a.position)
