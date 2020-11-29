@@ -23,8 +23,8 @@ module.exports = {
             switch (reaction.emoji.name) {
                 case "✅":
                     reaction.users.remove(user).catch(console.error);
-                    await channel.clone().then(x => x.channel.send('<a:yes:765207711423004676> | Nuke command succesful!'))
-                    await channel.delete()
+                    channel.clone().then(x => x.channel.send('<a:yes:765207711423004676> | Nuke command succesful!'))
+                    channel.delete()
                     break;
 
                 case "❎":
