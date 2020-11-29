@@ -2,9 +2,9 @@
 const { ShardingManager } = require('discord.js')
 const shard = new ShardingManager("./src/index.js", {
     token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
-    autoSpawn: true,
+    shardList: 'auto',
     respawn: true,
-    totalShards: "auto",
+    totalShards: 1,
 })
 
 shard.spawn()
