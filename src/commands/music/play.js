@@ -181,7 +181,7 @@ module.exports = {
         queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
         const dispatcher = queue.connection
           .play(
-            await ytdlp(song.url, { filter: 'audioonly' }), { type: "opus" }
+            await ytdlp(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1<<25 }), { type: "opus" }
           )
           .on("finish", () => {
 
