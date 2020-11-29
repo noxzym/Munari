@@ -28,7 +28,7 @@ module.exports = {
         if (typeof code !== 'string')
             code = require('util').inspect(code, { depth: 0 });
 
-      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-")}\n\`\`\``)
+      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-").replace(client.config, "-")}\n\`\`\``)
       await output.react('❎')
 
       const filter = (reaction, user) => {

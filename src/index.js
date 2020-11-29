@@ -58,8 +58,6 @@ client.on("message", async message => {
   //Prefix In Here\\
   const prefix = client.config.prefix;
   const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
-  // const prefixMention = new RegExp(`^<@!?${client.user.id}> `);
-  // const newPrefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : prefix;
 
  const embed = new Discord.MessageEmbed()
     .setColor('#0099ff')
