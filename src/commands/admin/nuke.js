@@ -11,7 +11,9 @@ module.exports = {
     async run(client, message, args) {
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You couldn't have permissions \`MANAGE_CHANNELS\` or \`ADMINISTRATOR\``)
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`I couldn't have permissions \`MANAGE_CHANNELS\``)
-        const channel = message.guild.channels.cache.get(message.mentions.channels.first().id) || message.mentions.channels.first() || message.channel
+        const chn = args.join(' ')
+        const channel = message.guild.channels.cache.get(chn) || message.mentions.channels.first() || message.channel
+        if(!channel) return message.channel.send(`Please mentions channels first`)
         try {
         var msg = await message.channel.send(`Are you sure to nuke channel **\`${channel.name}\`**`)
         await msg.react("✅");
@@ -22,8 +24,7 @@ module.exports = {
             if (collector && !collector.ended) collector.stop();
             switch (reaction.emoji.name) {
                 case "✅":
-                    reaction.users.remove(user).catch(console.error);
-                    channel.clone().then(x => x.channel.send('<a:yes:765207711423004676> | Nuke command succesful!'))
+                    channel.clone()
                     channel.delete()
                     break;
 
