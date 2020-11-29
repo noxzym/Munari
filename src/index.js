@@ -69,7 +69,7 @@ client.on("message", async message => {
   if (message.content.match(getpref)) return message.channel.send(embed);
 
   if (
-    !message.content.startsWith(prefiz) ||
+    !message.content.startsWith(prefix) ||
     message.author.bot ||
     message.channel.type === 'dm' ||
     (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
