@@ -20,7 +20,7 @@ module.exports = {
      const serverQueue = message.client.queue.get(message.guild.id);
       const song = {
         title:'Korean Pop by Listen.moe',
-        url:'https://listen.moe/kpop/opus'
+        url:'https://listen.moe/kpop/stream'
 		  };
 
 		  if (serverQueue) {
@@ -56,7 +56,7 @@ module.exports = {
         const connection = await channel.join()
         queueConstruct.connection = connection;
         await queueConstruct.connection.voice.setSelfDeaf(true);
-        connection.play('https://listen.moe/kpop/opus', {highWaterMark : 1<<12});
+        connection.play('https://listen.moe/kpop/stream', {highWaterMark : 1<<12});
       } catch (error) {
         console.error(`I could not join the voice channel: ${error}`);
         message.client.queue.delete(message.guild.id);
