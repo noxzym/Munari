@@ -30,7 +30,7 @@ process.on("uncaughtException", e => {
   process.exit(1);
 });
 
-// client.login(client.config.token);
+client.login(client.config.token);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 client.on("ready", async () => {
   console.log("Amjay Mabar, SKUUYYY");
