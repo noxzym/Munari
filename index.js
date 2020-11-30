@@ -1,6 +1,6 @@
 // require('./src/index.js')
 const { ShardingManager } = require('discord.js');
-const mainFile = "./srd/index.js";
+const mainFile = "./src/index.js";
 const shards = new ShardingManager(`${mainFile}`, {
     token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4'
 
