@@ -1,14 +1,14 @@
-require('./src/index.js')
-// const { ShardingManager } = require('discord.js')
-// const shard = new ShardingManager("./src/index.js", {
-//     token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
-//     autoSpawn: true,
-//     respawn: true,
-//     totalShards: "auto",
-// })
+// require('./src/index.js')
+const { ShardingManager } = require('discord.js');
+const mainFile = "./srd/index.js";
+const shards = new ShardingManager(`${mainFile}`, {
+    token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4'
 
-// shard.spawn()
-
-// shard.on('launch', (shard) => {
-//     console.log(`⬇ [SHARD] Shard ID #${shard.id} ⬇`)
-// })
+});
+shards.on('shardCreate', shard => {
+    console.log(`[${new Date().toString().split(" ", 5).join(" ")}] Launched shard #${shard.id}`);
+});
+shards.on('message', (shard, msg) => {
+    console.log(`[${new Date().toString().split(" ", 5).join(" ")}] #${shard.id} | ${msg._eval} | ${msg._result}`);
+});
+shards.spawn()
