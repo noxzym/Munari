@@ -6,14 +6,14 @@ module.exports = {
   descriptions: "generati image of change my mind",
   usage: "changemymind",
   options: [""],
-  cooldown: "8",
+  cooldown: "10",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
     const text = args.join(" ");
 
     if (!text) return message.channel.send(`Please input some word`);
-
+    if (text.length > 20) return message.channel.send('You provide text oversize')
     const msg = `https://vacefron.nl/api/changemymind?text=${text}`
     const ath = new MessageAttachment(msg, "chm.png")
     const e = new MessageEmbed()
