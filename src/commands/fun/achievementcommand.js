@@ -1,13 +1,13 @@
 const { MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
-  name: "",
-  aliases: [""],
-  category: "",
-  descriptions: "",
-  usage: "",
+  name: "achievement",
+  aliases: ["acv"],
+  category: "Fun",
+  descriptions: "Generate achievement",
+  usage: "acv <text>",
   options: [""],
-  cooldown: "",
+  cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
