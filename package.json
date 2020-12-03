@@ -51,8 +51,8 @@
     "string-progressbar": "^1.0.1",
     "superagent": "^6.1.0",
     "youtube-sr": "^2.0.4",
-    "yt-search": "^2.5.0",
-    "ytdl-core": "^4.1.1",
+    "yt-search": "^2.5.1",
+    "ytdl-core": "^4.1.2",
     "ytdl-core-discord": "^1.2.4"
   }
 }
