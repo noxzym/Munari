@@ -12,7 +12,6 @@ module.exports = {
   guildOnly: true,
   async run(client, message) {
   message.delete()
-  const args = message.content.split(" ").slice(1);
   try {
     function clean(text) {
       if (typeof text === "string")
