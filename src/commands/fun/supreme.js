@@ -11,7 +11,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const { image } = new ales(client.config.alexapi)
+        const { image } = new alex(client.config.alexapi)
         const input = args.slice(0).join(' ')
 
         if (!input) message.channel.send(`Please provide some text.`)
