@@ -10,7 +10,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: true,
   guildOnly: true,
-  async run(client, message) {
+  async run(client, message, args) {
   message.delete()
   try {
     function clean(text) {
