@@ -21,14 +21,36 @@ module.exports = {
           .replace(/@/g, "@" + String.fromCharCode(8203));
       else return text;
     }
-        let codein = args.join(" ");
+        let codein = args.slice(0).join(" ");
         if(!codein) return
-        let code = await eval(codein);    
 
-        if (typeof code !== 'string')
-            code = require('util').inspect(code, { depth: 0 });
+        let code;
+        if (codein.includes('--silent') && codein.includes('--async')) {
+          codein = codein.replace('--async', '').replace('--silent', '');
+          await eval(`(aysnc function() {
+            ${codein}
+          })()`)
+          return;
+        } else if (codein.includes('--async')) {
+          codein = codein.replace('--async', '')
+          code = await eval(`(async function() {
+            ${codein}
+          })()`)
+        } else if (codein.includes('--silent')) {
+          codein = codein.replace('--silent', '')
+          await eval(codein)
+          return;
+        } else {
+          code = await eval(codein)
+        }   
 
-      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-").replace(client.config, "-")}\n\`\`\``)
+        if (typeof code !== 'string') {
+            code = require('util').inspect(code, { 
+              depth: 0 
+            });
+        }
+
+      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-")}\n\`\`\``)
       await output.react('❎')
 
       const filter = (reaction, user) => {
