@@ -19,8 +19,8 @@ module.exports = {
 
         let img;
         if (input.includes('--dark')) {
-            input.replace('--dark', '')
-            img = await image.supreme({ text: `${input}`, dark: true })
+            let inputin = input.replace('--dark', '')
+            img = await image.supreme({ text: `${inputin}`, dark: true })
         } else {
          img = await image.supreme({ text: `${input}` })
         }
