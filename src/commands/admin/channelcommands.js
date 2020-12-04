@@ -85,7 +85,7 @@ module.exports = {
             } catch (e) {
                 console.log(e)
             }
-        } else if (!message.content.inludes('--lock') || !message.content.includes('--unlock')) {
+        } else if (!channel) {
             const e = new MessageEmbed()
                 .setColor('RED')
                 .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
