@@ -6,7 +6,7 @@ module.exports = {
     category: "Fun",
     descriptions: "Generate supreme message",
     usage: "supreme text",
-    options: ["--dark"],
+    options: ["--dark", "--light"],
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
@@ -21,6 +21,9 @@ module.exports = {
         if (input.includes('--dark')) {
             let inputin = input.replace('--dark', '')
             img = await image.supreme({ text: `${inputin}`, dark: true })
+        } else if (input.includes('--light')) {
+            let inputin = input.replace('--light', '')
+            img = await image.supreme({ text: `${inputin}`, light: true })
         } else {
          img = await image.supreme({ text: `${input}` })
         }
