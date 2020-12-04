@@ -20,12 +20,12 @@ module.exports = {
         `Missing permissions for me: \`BAN_MEMBERS\` or \`ADMINISTRATOR\``
         )
 
-    const member = message.guild.member(message.mentions.members.first()).id || message.guild.members.cache.get(args[0]).id;
+    const member = message.guild.member(message.mentions.members.first()) || message.guild.members.cache.get(args[0]);
     
     let wantban;
     let name;
 
-    if(member === undefined) {
+    if(member.id === undefined) {
       wantban = client.users.cache.get(args[0]).id
       name = client.users.cache.get(args[0]).tag
     } else {
@@ -43,8 +43,8 @@ module.exports = {
       if (member.id === message.author.id)
         return message.channel.send("You can't banned yourself");
 
-      name = client.users.cache.get(member).tag
-      wantban = member
+      name = client.users.cache.get(member.id).tag
+      wantban = `${member.id}`
     }
     if (!wantban) return message.channel.send(`usage: ${prefix + this.usage}`);
 
