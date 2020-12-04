@@ -20,7 +20,7 @@ module.exports = {
         `Missing permissions for me: \`BAN_MEMBERS\` or \`ADMINISTRATOR\``
         )
 
-    let member = message.guild.members.cache.get(client.users.cache.get(args[0]).id) || message.guild.member(message.mentions.members.first()) || message.guild.members.cache.get(args[0]);
+    let member = message.guild.members.cache.get(bot.users.cache.get(args[0]).id) || message.guild.member(message.mentions.members.first()) || message.guild.members.cache.get(args[0]);
     if (!member) return message.channel.send(`usage: ${prefix + this.usage}`);
     if (member.hasPermission("ADMINISTRATOR"))
       return message.channel.send("This member can't be banned");
