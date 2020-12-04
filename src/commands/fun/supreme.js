@@ -23,7 +23,7 @@ module.exports = {
             img = await image.supreme({ text: `${inputin}`, dark: true })
         } else if (input.includes('--light')) {
             let inputin = input.replace('--light', '')
-            img = await image.supreme({ text: `${inputin}`, dark: false, light: true })
+            img = await image.supreme({ text: `${inputin}`, light: true })
         } else {
          img = await image.supreme({ text: `${input}` })
         }
