@@ -11,14 +11,15 @@
     "npm": "6.14.8"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/join/ad23e53a-e789-47e0-89e2-326205c74432"
+    "type" : "git",
+    "url": "git+https://github.com/BlazeDexX/MunariHeroku.git"
   },
   "license": "MIT",
   "author": "DexX",
   "keywords": [
-    "node",
-    "glitch",
-    "express"
+    "Discord.js",
+    "Discord Bot",
+    "Munari"
   ],
   "dependencies": {
     "@discordjs/opus": "^0.3.2",

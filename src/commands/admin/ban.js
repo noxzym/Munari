@@ -20,21 +20,33 @@ module.exports = {
         `Missing permissions for me: \`BAN_MEMBERS\` or \`ADMINISTRATOR\``
         )
 
-    let member = message.guild.members.cache.get(bot.users.cache.get(args[0]).id) || message.guild.member(message.mentions.members.first()) || message.guild.members.cache.get(args[0]);
-    if (!member) return message.channel.send(`usage: ${prefix + this.usage}`);
-    if (member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send("This member can't be banned");
+    const member = message.guild.member(message.mentions.members.first()).id || message.guild.members.cache.get(args[0]).id;
+    
+    let wantban;
+    let name;
 
-    if (
-      message.guild.me.roles.highest.comparePositionTo(member.roles.highest) < 0
-    ) {
-      return message.channel.send(
-        `My Highest role must be higher than **\`${member.user.username}\`** highest role!`
-      );
+    if(member === undefined) {
+      wantban = client.users.cache.get(args[0]).id
+      name = client.users.cache.get(args[0]).tag
+    } else {
+      if (member.hasPermission("ADMINISTRATOR"))
+        return message.channel.send("This member can't be banned");
+
+      if (
+        message.guild.me.roles.highest.comparePositionTo(member.roles.highest) < 0
+      ) {
+        return message.channel.send(
+          `My Highest role must be higher than **\`${member.user.username}\`** highest role!`
+        );
+      }
+
+      if (member.id === message.author.id)
+        return message.channel.send("You can't banned yourself");
+
+      name = client.users.cache.get(member).tag
+      wantban = member
     }
-
-    if (member.id === message.author.id)
-      return message.channel.send("You can't banned yourself");
+    if (!wantban) return message.channel.send(`usage: ${prefix + this.usage}`);
 
     let reason = args.join(" ").slice(22);
 
@@ -45,36 +57,26 @@ module.exports = {
     }
 
     try {
-      var react = await message.channel.send(
-        `Are you sure to Ban **\`${member.user.tag}\`**?`
-      );
+      var react = await message.channel.send(`Are you sure to Ban **\`${name}\`**?`);
       await react.react("✅");
       await react.react("❎");
-      const filter = (reaction, user) =>
-        user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter, {time: 60000});
+      const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
+      var collector = react.createReactionCollector(filter, {time: 30000});
       collector.on("collect", (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
           case "✅":
             reaction.users.remove(user).catch(console.error);
             react.edit(
-              `<a:yes:765207711423004676> | Banned **\`${member.user.tag}\`** successful!`
+              `<a:yes:765207711423004676> | Banned **\`${name}\`** successful!`
             );
-            member
-              .ban({ reason: reason })
-              .catch(e =>
-                message.channel.send(
-                  `Sorry i couldn't ban this user because ${e}`
-                )
-              );
+            message.guild.members.ban(`${wantban}`, {reason: reason})
+              .catch(e => message.channel.send(`Sorry i couldn't ban this user because ${e}`));
             break;
 
           case "❎":
             reaction.users.remove(user).catch(console.error);
-            react.edit(
-              `<a:no:765207855506522173> | Banned **\`${member.user.tag}\`** has canceled!`
-            );
+            react.edit(`<a:no:765207855506522173> | Banned **\`${name}\`** has canceled!`);
             break;
 
           default:
