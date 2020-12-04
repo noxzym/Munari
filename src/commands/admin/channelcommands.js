@@ -14,10 +14,6 @@ module.exports = {
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`)
 
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel
-        const e = new MessageEmbed()
-        .setColor('RED')
-        .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
-        if (!channel) return message.channel.send(e)
 
         if (message.content.includes('--lock')) {
             try {
@@ -89,6 +85,11 @@ module.exports = {
             } catch (e) {
                 console.log(e)
             }
+        } else {
+            const e = new MessageEmbed()
+                .setColor('RED')
+                .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
+            if (!channel) return message.channel.send(e)
         }
     }
 }
