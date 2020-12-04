@@ -31,6 +31,7 @@ module.exports = {
 
         queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
         let streamtype = song.url.includes("youtube.com") ? "opus" : "ogg/opus"
+        try {
         const dispatcher = queue.connection
             .play(
                 await ytdlp(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
@@ -73,5 +74,9 @@ module.exports = {
             console.error(error);
             message.channel.send(error.message);
         }
+    } catch (e) {
+        message.channel.send(error.message)
+        process.exit(1)
+    }
     }
 }
