@@ -15,12 +15,7 @@ module.exports = {
 
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel
 
-        if (!message.content.inludes('--lock') || !message.content.includes('--unlock')) {
-            const e = new MessageEmbed()
-                .setColor('RED')
-                .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
-            return message.channel.send(e)
-        } else if (message.content.includes('--lock')) {
+        if (message.content.includes('--lock')) {
             try {
                 var react = await message.channel.send(`Are you sure to Lock Channel **\`${channel.name}\`**?`);
                 await react.react('✅');
@@ -90,7 +85,12 @@ module.exports = {
             } catch (e) {
                 console.log(e)
             }
-        }
+        } else if (!message.content.inludes('--lock') || !message.content.includes('--unlock')) {
+            const e = new MessageEmbed()
+                .setColor('RED')
+                .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
+            return message.channel.send(e)
+        } 
         
     }
 }
