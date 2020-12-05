@@ -75,7 +75,7 @@ module.exports = {
             message.channel.send(error.message);
         }
     } catch (e) {
-        message.channel.send(error.message)
+        message.channel.send(e.message)
         process.exit(1)
     }
     }
