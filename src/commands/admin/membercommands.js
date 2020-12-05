@@ -17,7 +17,8 @@ module.exports = {
         if (!member) {
             const e = new MessageEmbed()
                 .setColor('RED')
-                .setDescription(`\`\`\`md\nUsage: m!member <member[mention/id]> <argumen>\nArgumen Options: \n* <--mute>, <--unmute>, <--kick>, <--ban>\nExample: m!member 1234567890 <--mute>\n\`\`\``)
+                .setDescription(`\`\`\`md\nUsage: m!member <member[mention/id]> <argumen>\nArgumen Options: \n* <--mute>, <--unmute>, <--kick>, <--ban>\nExample: m!member 1234567890 [reason] <--ban>\n\`\`\``)
+                .setFooter(`Note: Don't input <> or []. It's meaning <> is required and [] is optional`)
             return message.channel.send(e)
         }
 
@@ -113,7 +114,7 @@ module.exports = {
             }
         } else if (message.content.includes('--unmute')) {
             let muterole = message.guild.roles.cache.find(r => r.name === 'MunaMute');
-            if (!member.roles.cache.some(r => muteRole.id === r.id)) {
+            if (!member.roles.cache.some(r => muterole.id === r.id)) {
                 return message.channel.send(`${member} wasn't muted now`);
             }
             try {
@@ -214,7 +215,7 @@ module.exports = {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Banned **\`${member.user.tag}\`** successful!`)
-                            member.ban(reason.replace('--ban', '')).catch(e => message.channel.send(`Sorry i couldn't kick this user because ${e}`))
+                            member.ban({ reason: reason.replace('--ban', '') }).catch(e => message.channel.send(`Sorry i couldn't ban this user because ${e}`))
                             break;
 
                         case "❎":
