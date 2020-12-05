@@ -15,7 +15,7 @@ module.exports = {
 
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first()
 
-        if (channel.id === undefined) {
+        if (!channel) {
             const e = new MessageEmbed()
                 .setColor('RED')
                 .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
