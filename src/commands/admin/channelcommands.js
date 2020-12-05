@@ -4,7 +4,7 @@ module.exports = {
     aliases: ["ch"],
     category: "Administration",
     descriptions: "Setting channel",
-    usage: "ch <options>",
+    usage: "ch <channel[mention/id]> <argumen>",
     options: ["--lock", "--unlock"],
     cooldown: "",
     ownerOnly: false,
