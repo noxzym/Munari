@@ -5,7 +5,7 @@ module.exports = {
     category: "Administration",
     descriptions: "Setting member",
     usage: "member <member[mention/id]> <argumen>",
-    options: [""],
+    options: ["--mute", "--unmute", "--kick", "--ban"],
     cooldown: "",
     ownerOnly: false,
     guildOnly: true,
