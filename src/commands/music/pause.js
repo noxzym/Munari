@@ -12,13 +12,14 @@ module.exports = {
     try {
       const { channel } = message.member.voice;
       const botChannel = message.member.guild.me.voice.channel;
-      const playing = queue.playing
-
       if (channel !== botChannel) {
         return message.reply("You need to join the voice channel first!").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
       }
+
       const queue = client.queue.get(message.guild.id);
       if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+
+      const playing = queue.playing
 
       if (playing = true) {
         playing = false;
