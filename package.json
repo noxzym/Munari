@@ -56,5 +56,8 @@
     "yt-search": "^2.5.1",
     "ytdl-core": "^4.1.2",
     "ytdl-core-discord": "^1.2.4"
+  },
+  "optionalDependencies": {
+    "opusscript": "0.0.7"
   }
 }
