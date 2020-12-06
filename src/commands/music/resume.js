@@ -20,8 +20,8 @@ module.exports = {
       if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
       const playing = queue.playing
-      
-      if (playing = false) {
+
+      if (!playing) {
         queue.playing = true;
         queue.connection.dispatcher.resume(true);
         return queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has resumed the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);

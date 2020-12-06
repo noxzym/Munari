@@ -21,7 +21,7 @@ module.exports = {
 
       const playing = queue.playing
 
-      if (playing = true) {
+      if (playing) {
         playing = false;
         queue.connection.dispatcher.pause(true);
         return queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has paused the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
