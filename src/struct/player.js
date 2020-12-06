@@ -35,7 +35,7 @@ module.exports = {
         try {
         const dispatcher = queue.connection
             .play(
-                await ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
+                ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: 'opus' }
             )
             .on("finish", () => {
 
