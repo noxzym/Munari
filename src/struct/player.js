@@ -36,7 +36,7 @@ module.exports = {
         const dispatcher = queue.connection
             .play(
                 // await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
-                await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 }), { type: streamtype }
+                await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 , bitrate: 96000 }), { type: streamtype }
             )
             .on("finish", () => {
 
