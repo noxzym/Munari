@@ -57,12 +57,7 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-            let duras;
-            if (song.duration === undefined) {
-                duras = "◉ LIVE"
-            } else {
-                duras = song.duration
-            }
+            let duras = song.duration === undefined ? song.duration : '◉ LIVE'
             let embed = new MessageEmbed()
                 .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
                 .setAuthor(`Youtube Client`)

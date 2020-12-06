@@ -41,9 +41,9 @@ module.exports = {
        
        let e = new Discord.MessageEmbed()
        .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-       .setAuthor(`Listen.moe Stream Link : JPOP`)
+       .setTitle(`Listen.moe Stream Link : JPOP`)
        .setURL('https://listen.moe')
-       .setImage('https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
+       .setThumbnail('https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
        .setTimestamp()
        .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true})) 
        var react = await message.channel.send(e)
