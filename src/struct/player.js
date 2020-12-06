@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const ytdlp = require('ytdl-core-discord')
+const ytdl = require('ytdl-core')
 module.exports = {
     async play(song, message, client) {
         const queue = message.client.queue.get(message.guild.id);
@@ -34,7 +35,7 @@ module.exports = {
         try {
         const dispatcher = queue.connection
             .play(
-                await ytdlp(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
+                await ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
             )
             .on("finish", () => {
 
