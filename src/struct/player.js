@@ -35,7 +35,8 @@ module.exports = {
         try {
         const dispatcher = queue.connection
             .play(
-                await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
+                // await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
+                await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 }), { type: streamtype }
             )
             .on("finish", () => {
 
@@ -57,7 +58,13 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-            let duras = song.duration === undefined ? song.duration : '◉ LIVE'
+            // let duras = song.duration === undefined ? song.duration : '◉ LIVE'
+            let duras;
+            if (song.duration === undefined) {
+                duras = "◉ LIVE"
+            } else {
+                duras = song.duration
+            }
             let embed = new MessageEmbed()
                 .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
                 .setAuthor(`Youtube Client`)
