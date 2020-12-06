@@ -20,7 +20,6 @@ module.exports = {
         }
         if (oldState.channel.members.size === 1 && oldState.channel === queue.voiceChannel || change) {
             queue.textChannel.send(`I will disconnect if i alone in my voice channel`)
-            queue.connection.dispatcher.pause(true)
             setTimeout(() => {
                 if (!queue || !queue.connection.dispatcher || queue.connection.dispatcher === null) return;
                 if (queue.voiceChannel.members.size === 1) {
@@ -28,8 +27,6 @@ module.exports = {
                     queue.connection.dispatcher.end();
                 }
             }, 60000);
-        } else {
-            queue.connection.dispatcher.resume()
         }
     }
 }

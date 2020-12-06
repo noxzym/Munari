@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageAttachment } = require("discord.js");
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "color",
@@ -19,23 +19,28 @@ module.exports = {
     const data = await others.color(input.replace('#', ''))
     const hex = data.hex
     const image = data.image
-    const gradient = data.gradient
+    const gradient = data.image_gradient
     const int = data.int
     const name = data.name
     const bright = data.brightness
     const rgb = data.rgb
 
-    const embed = new MessageEmbed()
+    const ath = new MessageAttachment(gradient, `color.png`)
+    const e = new MessageEmbed()
       .setColor(hex)
       .setTitle(`${name} • ${hex}`)
-      .addField(`Color name`, name, true)
-      .addField(`Color hex`, hex, true)
-      .addField(`Color RGB`, rgb, true)
-      .addField(`Color Int`, int, true)
-      .addField(`Color Brightness`, bright, true)
-      .setImage(gradient)
+      .setDescription(`
+      \`\`\`asciidoc\n
+      • Color name       :: ${name}\n
+      • Color hex        :: ${hex}\n
+      • Color RGB        :: ${rgb}\n
+      • Color Int        :: ${int}\n
+      • Color Brightness :: ${bright}\n
+      \`\`\`
+      `)
+      .setImage('attachment://color.png')
       .setThumbnail(image)
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
-    message.channel.send(embed);
+    message.channel.send({embed: e, files: [ath]});
 }}
