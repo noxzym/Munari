@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js')
-const ytdlp = require('ytdl-core-discord')
 const erityt = require('erit-ytdl')
 module.exports = {
     async play(song, message, client) {
