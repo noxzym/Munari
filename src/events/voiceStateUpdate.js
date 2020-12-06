@@ -19,15 +19,17 @@ module.exports = {
             }
         }
         if (oldState.channel.members.size === 1 && oldState.channel === queue.voiceChannel || change) {
+            queue.textChannel.send(`I will disconnect if i alone in my voice channel`)
+            queue.connection.dispatcher.pause(true)
             setTimeout(() => {
                 if (!queue || !queue.connection.dispatcher || queue.connection.dispatcher === null) return;
                 if (queue.voiceChannel.members.size === 1) {
                     queue.textChannel.send(`I have left the channel as i was left alone.`);
-                    queue.songs = [];
-                    queue.loop = false;
                     queue.connection.dispatcher.end();
                 }
-            }, 120000);
+            }, 60000);
+        } else {
+            queue.connection.dispatcher.resume()
         }
     }
 }
