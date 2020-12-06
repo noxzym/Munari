@@ -19,10 +19,8 @@ module.exports = {
       const queue = client.queue.get(message.guild.id);
       if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
-      const playing = queue.playing
-
-      if (playing) {
-        playing = false;
+      if (queue.playing) {
+        queue.playing = false;
         queue.connection.dispatcher.pause(true);
         return queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has paused the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
       } else {
