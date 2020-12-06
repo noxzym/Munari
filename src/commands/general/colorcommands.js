@@ -33,7 +33,7 @@ module.exports = {
       .addField(`Color RGB`, rgb, true)
       .addField(`Color Int`, int, true)
       .addField(`Color Brightness`, bright, true)
-      .addImage(gradient)
+      .setImage(gradient)
       .setThumbnail(image)
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
