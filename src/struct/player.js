@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const ytdlp = require('ytdl-core-discord')
-const ytdl = require('ytdl-core')
+const ytdl = require('ytdl')
 module.exports = {
     async play(song, message, client) {
         const queue = message.client.queue.get(message.guild.id);
@@ -34,9 +34,10 @@ module.exports = {
         let streamtype = song.url.includes("youtube.com") ? "opus" : "ogg/opus"
         try {
         const dispatcher = queue.connection
-            .play(
-                ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: 'opus' }
-            )
+            // .play(
+            //     await ytdlp(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 50, bitrate: 96000 }), { type: streamtype }
+            // )
+            .play(ytdl(song.url,  { filter: 'audioonly', highWaterMark: 1<<50, quality: 'highestaudio' } ), { type: 'opus' })
             .on("finish", () => {
 
                 if (queue.loop) {
