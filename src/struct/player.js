@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const ytdlp = require('ytdl-core-discord')
-const ytdl = require('ytdl')
+const ytdl = require('ytdl-core')
 module.exports = {
     async play(song, message, client) {
         const queue = message.client.queue.get(message.guild.id);
