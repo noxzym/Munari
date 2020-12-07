@@ -114,7 +114,7 @@ module.exports = {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Set slowmode Channel **\`${channel.name}\`** successful!`)
-                            channel.rateLimitPerUser(number)
+                            channel.setRateLimitPerUser(number)
                             break;
 
                         case "❎":
