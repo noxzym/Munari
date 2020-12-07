@@ -5,7 +5,7 @@ module.exports = {
     category: "Administration",
     descriptions: "Setting channel",
     usage: "ch <channel[mention/id]> <argumen>",
-    options: ["--lock", "--unlock"],
+    options: ["--lock", "--unlock", "--slowmode", "--nuke"],
     cooldown: "",
     ownerOnly: false,
     guildOnly: true,
@@ -14,7 +14,7 @@ module.exports = {
         if (!channel) {
             const e = new MessageEmbed()
                 .setColor('RED')
-                .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>\nExample: m!channel #general <--lock>\n\`\`\``)
+                .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>, <--slowmode>, <--nuke>\nExample: m!channel #general <--lock>\n\`\`\``)
             return message.channel.send(e)
         } 
 
@@ -99,7 +99,7 @@ module.exports = {
             const number = args[1]
             if (!number) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`)
             if (isNaN(number)) return message.channel.send(`Please input the correct number in second`)
-            if (numver > 21600) return message.channel.send(`Maximal number is 21600 second or 6 hours`)
+            if (number > 21600) return message.channel.send(`Maximal number is 21600 second or 6 hours`)
             if (number < 0) return message.channel.send(`Minimal number is 0 second`)
 
             try {
@@ -145,7 +145,7 @@ module.exports = {
                     switch (reaction.emoji.name) {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:yes:765207711423004676> | Set slowmode Channel **\`${channel.name}\`** successful!`)
+                            react.edit(`<a:yes:765207711423004676> | Nuke Channel **\`${channel.name}\`** successful!`)
                             channel.clone().then(x => {message.guild.channels.cache.get(x.id).send(`Nothing in here, Nuke command successful!`)})
                             setTimeout(() => {
                                 channel.delete(`Nuke Command Successful!`)
@@ -154,7 +154,7 @@ module.exports = {
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:no:765207855506522173> | Set slowmode Channel **\`${channel}\`** has canceled!`)
+                            react.edit(`<a:no:765207855506522173> | Nuke Channel **\`${channel}\`** has canceled!`)
                             break;
 
                         default:
