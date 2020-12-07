@@ -10,9 +10,6 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        if (!message.guild.me.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
-        if (!message.member.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
-
         const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first()
         if (!member) {
             const e = new MessageEmbed()
@@ -21,6 +18,8 @@ module.exports = {
                 .setFooter(`Note: Don't input <> or []. It's meaning <> is required and [] is optional`)
             return message.channel.send(e)
         }
+        if (!message.guild.me.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
+        if (!message.member.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
 
         let reason = args.slice(1).join(' ');
         if (!reason) {
