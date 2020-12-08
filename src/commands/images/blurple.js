@@ -15,22 +15,19 @@ module.exports = {
       message.guild.members.cache.get(args[0]) ||
       message.mentions.members.first() ||
       message.member;
-    if(!member) return message.channel.send(`Please mention members first`)
-    const { body } = await superagent.get(
-      `https://neko-love.xyz/api/v2/blurple?url=${member.user.avatarURL({
-        dynamic: false, size: 4096
-      })}`
+    if (!member) return message.channel.send(`Please mention members first`)
+    const { body } = await superagent.get(`https://neko-love.xyz/api/v2/blurple?url=${member.user.avatarURL({
+      dynamic: false, size: 4096
+    })}`
     );
-    const embed = new MessageEmbed()
-      .setColor(
-        message.member.roles.cache
-          .sort((a, b) => b.position - a.position)
-          .first().color
-      )
+    var fetchmsg = await message.channel.send(`Fetching Image <a:LoadingFetch:785715659727175731>`)
+
+    const embed = new MessageEmbed().setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
       .setTitle(`${member.user.username}`)
       .setURL(body.url)
       .setImage(body.url)
       .setTimestamp();
     message.channel.send({ embed });
+    fetchmsg.delete()
   }
 };

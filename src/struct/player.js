@@ -57,14 +57,8 @@ module.exports = {
 
         try {
             let duras = song.duration === undefined ? '◉ LIVE' : song.duration
-            // let duras;
-            // if (song.duration === undefined) {
-            //     duras = "◉ LIVE"
-            // } else {
-            //     duras = song.duration
-            // }
             let embed = new MessageEmbed()
-                .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+                .setColor('ff544b')
                 .setAuthor(`Youtube Client`)
                 .setThumbnail(song.thumbnail)
                 .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)

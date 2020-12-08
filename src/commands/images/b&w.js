@@ -1,4 +1,4 @@
-const {MessageEmbed, MessageAttachment} = require('discord.js')
+const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "b&w",
@@ -15,15 +15,17 @@ module.exports = {
 
     const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
-    const img = await image.bnw({image: `${member.user.avatarURL({dynamic: false, size: 4096, format: 'png'})}`})
+    const img = await image.bnw({ image: `${member.user.avatarURL({ dynamic: false, size: 4096, format: 'png' })}` })
 
     let ath = new MessageAttachment(img, "bnw.png")
+    var fetchmsg = await message.channel.send(`Fetching Image <a:LoadingFetch:785715659727175731>`)
 
     let e = new MessageEmbed()
-    .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-    .setTitle(member.user.tag)
-    .setImage("attachment://bnw.png")
-    .setTimestamp()
-    message.channel.send({files: [ath], embed: e})
+      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+      .setTitle(member.user.tag)
+      .setImage("attachment://bnw.png")
+      .setTimestamp()
+    message.channel.send({ files: [ath], embed: e })
+    fetchmsg.delete()
   }
 }

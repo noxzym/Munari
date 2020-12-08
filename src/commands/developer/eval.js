@@ -24,7 +24,7 @@ module.exports = {
         if(!codein) return
 
         let code;
-        if (codein.includes('--silent') && codein.includes('--async')) {
+        if ((codein.includes('--silent') && codein.includes('--async'))) {
           codein = codein.replace('--async', '').replace('--silent', '');
           await eval(`(aysnc function() {
             ${codein}

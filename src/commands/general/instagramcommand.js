@@ -15,10 +15,10 @@ module.exports = {
     try {
       const username = args[0];
       if(!username) return message.channel.send(`You must input some instagram username`)
+
       var fetchmsg = await message.channel.send(`Fetching Data <a:LoadingFetch:785715659727175731>`)
-      const response = await axios.get(
-        `https://instagram.hanifdwyputra.xyz/?username=${username}`
-      );
+
+      const response = await axios.get(`https://lab.hanifdwyputra.xyz/api/instagram/${username}`);
       const { data } = response;
 
       const get = data.graphql.user;
@@ -48,7 +48,6 @@ module.exports = {
     } catch (error) {
       message.channel.send("Cannot find that username or the service maintenance");
       fetchmsg.delete()
-      // console.log(error);
     }
   }
 };

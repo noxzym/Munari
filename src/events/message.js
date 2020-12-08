@@ -1,7 +1,7 @@
 const { MessageEmbed, Collection } = require('discord.js')
 module.exports = {
     name: 'message',
-    async run (client, message) {
+    async run(client, message) {
         //Prefix In Here\\
         const prefix = client.config.prefix;
         const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);

@@ -29,7 +29,7 @@ module.exports = {
     const e = new MessageEmbed()
       .setColor(hex)
       .setTitle(`${name} • ${hex}`)
-      .setDescription(`\`\`\`asciidoc\n• Color name       :: ${name}\n• Color hex        :: ${hex}\n• Color RGB        :: ${rgb}\n• Color Int        :: ${int}\n• Color Brightness :: ${bright}\n\`\`\``)
+      .setDescription(`\`\`\`asciidoc\n• Color name    :: ${name}\n• Color hex     :: ${hex}\n• Color RGB     :: ${rgb}\n• Color Int     :: ${int}\n• Color Brightness :: ${bright}\n\`\`\``)
       .setImage('attachment://color.png')
       .setThumbnail(image)
       .setTimestamp()
