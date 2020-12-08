@@ -14,8 +14,8 @@ module.exports = {
       message.guild.members.cache.get(args[0]) ||
       message.mentions.members.first() ||
       message.member;
-    if (ratus.id === client.user.id) return;
     if (!ratus) return message.channel.send("Tag someone to rate them!");
+    if (ratus.id === client.user.id) return;
 
     let rates = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 

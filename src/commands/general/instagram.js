@@ -44,8 +44,8 @@ module.exports = {
 
       await message.channel.send(e);
     } catch (error) {
-      message.channel.send("Cannot find username");
-      console.log(error);
+      message.channel.send("Cannot find that username or the service maintenance");
+      // console.log(error);
     }
   }
 };

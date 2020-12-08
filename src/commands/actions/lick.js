@@ -14,9 +14,9 @@ module.exports = {
         let member =
             message.mentions.members.first() ||
             message.guild.members.cache.get(args[0]);
-        if (member.id === client.user.id) return message.channel.send(`I don't want it`)
         if (!member)
             return message.reply("You need to mention someone to Lick them");
+        if (member.id === client.user.id) return message.channel.send(`I don't want it`)
         const { body } = await superagent.get("https://waifu.pics/api/sfw/lick");
 
         const embed = new Discord.MessageEmbed()
