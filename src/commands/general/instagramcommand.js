@@ -15,6 +15,7 @@ module.exports = {
     try {
       const username = args[0];
       if(!username) return message.channel.send(`You must input some instagram username`)
+      var fetchmsg = await message.channel.send(`Fetching Data <a:LoadingFetch:785715659727175731>`)
       const response = await axios.get(
         `https://instagram.hanifdwyputra.xyz/?username=${username}`
       );
@@ -43,8 +44,10 @@ module.exports = {
         .setDescription(`**Account Information\n\`\`\`asciidoc\n• Username  :: ${userig}\n• Fullname  :: ${fullname}\n• Biography :: ${bio}\n• Followers :: ${follower}\n• Following :: ${following}\n• Private   :: ${priv}\n\`\`\`**`);
 
       await message.channel.send(e);
+      fetchmsg.delete()
     } catch (error) {
       message.channel.send("Cannot find that username or the service maintenance");
+      fetchmsg.delete()
       // console.log(error);
     }
   }

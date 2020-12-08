@@ -14,7 +14,7 @@ module.exports = {
         const input = args.join(' ')
         if (!input) return message.channel.send(`Please input query`)
 
-        await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent('client')}`)
+        await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(input)}`)
             .then(res => res.json())
             .then(embed => {
                 if (embed && !embed.eror) {

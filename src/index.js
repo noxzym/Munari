@@ -14,7 +14,6 @@ client.dbl = new DBL(client.config.dblapi, client);
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);
 });
-//event
 ["events"].forEach(handler => {
   require(`./utils/${handler}`)(client);
 });
@@ -31,17 +30,3 @@ process.on("uncaughtException", e => {
 });
 
 client.login(client.config.token);
-//~~~~~~~~~~~~~~~~~~~~~~~~~~START SERVER CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
-// client.on("ready", async () => {
-  
-// });
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~COMMAND CONSOLE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-// client.on("message", async message => {
-  
-// });
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~SHOOB PING IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-// client.on("message", async message => {
-  
-// });
