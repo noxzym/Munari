@@ -19,7 +19,7 @@ module.exports = {
         const img = `https://i.scdn.co/image/${presence.assets.largeImage.slice(8)}`
         const url = `https://open.presenceify.com/track/${presence.syncID}`
         const songname = presence.details
-        const title = `${presence.state} + ${presence.details}`
+        const title = `${presence.state} • ${presence.details}`
         const auth = presence.state
         let e = new MessageEmbed()
             .setColor('18d869 ')
