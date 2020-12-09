@@ -44,7 +44,7 @@ module.exports = {
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:no:765207855506522173> | Locked Channel **\`${channel}\`** has canceled!`)
+                            react.edit(`<a:no:765207855506522173> | Locked Channel **\`${channel.name}\`** has canceled!`)
                             break;
 
                         default:
@@ -81,7 +81,7 @@ module.exports = {
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:no:765207855506522173> | Unlocked Channel **\`${channel}\`** has canceled!`)
+                            react.edit(`<a:no:765207855506522173> | Unlocked Channel **\`${channel.name}\`** has canceled!`)
                             break;
 
                         default:
@@ -119,7 +119,7 @@ module.exports = {
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:no:765207855506522173> | Set slowmode Channel **\`${channel}\`** has canceled!`)
+                            react.edit(`<a:no:765207855506522173> | Set slowmode Channel **\`${channel.name}\`** has canceled!`)
                             break;
 
                         default:
@@ -154,7 +154,7 @@ module.exports = {
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
-                            react.edit(`<a:no:765207855506522173> | Nuke Channel **\`${channel}\`** has canceled!`)
+                            react.edit(`<a:no:765207855506522173> | Nuke Channel **\`${channel.name}\`** has canceled!`)
                             break;
 
                         default:
