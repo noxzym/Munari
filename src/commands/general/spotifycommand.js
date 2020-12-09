@@ -28,7 +28,7 @@ module.exports = {
         const end = presence.timestamps.end
         const time = end - start
         const duri = Date.now() - start
-        const timestampformatted = (dur / time) * 180
+        const timestampformatted = (duri / time) * 180
         const convirt = convert(time)
 
         let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
