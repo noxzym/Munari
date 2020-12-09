@@ -73,7 +73,7 @@ module.exports = {
 
             ctx.font = "bold 8px Noto Serif JP";
             ctx.fillStyle = "#FFFFFF";
-            ctx.fillText(minut, 320, 95);
+            ctx.fillText(timeleft, 320, 95);
 
             const image = canvas.toBuffer();
             const ath = new MessageAttachment(image, "spotify.png");
