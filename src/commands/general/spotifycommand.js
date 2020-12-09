@@ -27,13 +27,13 @@ module.exports = {
         const start = presence.timestamps.start
         const end = presence.timestamps.end
         const time = end - start
-        const dur = Date.now() - start
+        const duri = Date.now() - start
         const timestampformatted = (dur / time) * 180
         const convirt = convert(time)
 
         let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
         let detik = convirt.seconds < 10 ? `0${convirt.seconds}` : convirt.seconds;
-        let dur = convert(dur);
+        let dur = convert(duri);
         let durationmenit = dur.minutes < 10 ? `0${dur.minutes}` : dur.minutes;
         let durationdetik = dur.seconds < 10 ? `0${dur.seconds}` : dur.seconds;
         const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
