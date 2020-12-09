@@ -1,5 +1,5 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
-const { Spotiy } = require('canvacord')
+const { Spotify } = require('canvacord')
 module.exports = {
     name: "spotify",
     aliases: [""],
@@ -28,7 +28,7 @@ module.exports = {
         const end = presence.timestamps.end
 
         if (message.content.includes('--card')) {
-            const spotify = new Spotiy()
+            const spotify = new Spotify()
                 .setAuthor(auth)
                 .setTitle(canvatitle)
                 .setImage(img)
