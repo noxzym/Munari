@@ -26,11 +26,14 @@ module.exports = {
 
         const start = presence.timestamps.start
         const end = presence.timestamps.end
-        const convirt = convert(end - start)
+        const time = end - start
+        const dur = Date.now() - start
+        const timestampformatted = (dur / time) * 180
+        const convirt = convert(time)
 
         let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
         let detik = convirt.seconds < 10 ? `0${convirt.seconds}` : convirt.seconds;
-        let dur = convert(Date.now() - start);
+        let dur = convert(dur);
         let durationmenit = dur.minutes < 10 ? `0${dur.minutes}` : dur.minutes;
         let durationdetik = dur.seconds < 10 ? `0${dur.seconds}` : dur.seconds;
         const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
@@ -66,7 +69,7 @@ module.exports = {
             ctx.fillRect(130, 90, 180, 4);
 
             ctx.fillStyle = "#1DB954";
-            ctx.fillRect(130, 90, prog, 4);
+            ctx.fillRect(130, 90, timestampformatted, 4);
 
             ctx.font = "bold 8px Noto Serif JP";
             ctx.fillStyle = "#FFFFFF";
