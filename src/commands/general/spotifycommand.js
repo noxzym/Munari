@@ -27,7 +27,7 @@ module.exports = {
         const end = presence.timestamps.end
 
         if (message.content.includes('--card')) {
-            registerFont('notoserifsemi.otf', { family: 'Noto Serif JP' })
+            registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
 
             const canvas = createCanvas(900, 285)
             const ctx = canvas.getContext('2d')
@@ -50,7 +50,7 @@ module.exports = {
             ctx.fillText(auth, 40, canvas.height / 2 + 50)
 
             const image = canvas.toBuffer()
-            const ath = new MessageAttachment(image, "spotify,png")
+            const ath = new MessageAttachment(image, "spotify.png")
 
             message.channel.send(member, ath)
         } else {
