@@ -1,5 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
 const { registerFont, createCanvas, loadImage } = require('canvas')
+const convert = require('parse-ms')
 module.exports = {
     name: "spotify",
     aliases: [""],
@@ -15,51 +16,76 @@ module.exports = {
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
         if (!presence) return message.channel.send(`I can't find spotify presence, try again`)
-        
-        const songname = presence.details.length > 15 ? presence.details.replace(presence.details.substr(15, 1000), " ...") : presence.details
-        const album = presence.assets.largeText.length > 18 ? presence.assets.largeText.replace(presence.assets.largeText.substr(18, 1000), " ...") : presence.assets.largeText
-        const auth = presence.state.length > 20 ? presence.state.replace(presence.state.substr(20, 1000), ' ...') : presence.state
+
+        const songname = presence.details.length > 5 ? presence.details.replace(presence.details.substr(5, 1000), " ...") : presence.details;
+        const album = presence.assets.largeText.length > 15 ? presence.assets.largeText.replace(presence.assets.largeText.substr(15, 1000), " ...") : presence.assets.largeText;
+        const auth = presence.state.length > 8 ? presence.state.replace(presence.state.substr(8, 1000), ' ...') : presence.state;
         const title = `${presence.state} • ${presence.details}`
         const url = `https://open.spotify.com/track/${presence.syncID}`
         const img = `https://i.scdn.co/image/${presence.assets.largeImage.slice(8)}`
 
         const start = presence.timestamps.start
         const end = presence.timestamps.end
+        const convirt = convert(end - start)
+
+        let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
+        let detik = convirt.seconds < 10 ? `0${convirt.seconds}` : convirt.seconds;
+        let dur = convert(Date.now() - start);
+        let durationmenit = dur.minutes < 10 ? `0${dur.minutes}` : dur.minutes;
+        let durationdetik = dur.seconds < 10 ? `0${dur.seconds}` : dur.seconds;
+        const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
 
         if (message.content.includes('--card')) {
             registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
 
-            const canvas = createCanvas(900, 285)
-            const ctx = canvas.getContext('2d')
-            const bg = await loadImage('https://cdn.discordapp.com/attachments/767235205202444309/786139633192927242/images.png')
-            ctx.drawImage(bg, 0, 0, canvas.width, canvas.height)
+            const canvas = createCanvas(400, 120);
+            const ctx = canvas.getContext("2d");
 
-            const img2 = await loadImage(img)
-            ctx.drawImage(img2, 650, 30, 220, 220)
+            const bg = await loadImage(
+                "https://cdn.discordapp.com/attachments/767235205202444309/786139633192927242/images.png"
+            );
+            ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-            ctx.font = "bold 30px Noto Serif JP"
-            ctx.fillStyle = '#FFFFFF'
-            ctx.fillText('Spotify • ' + album, 35, 50)
+            const img2 = await loadImage(img);
+            ctx.drawImage(img2, 20, 10, 100, 100);
 
-            ctx.font = "bold 50px Noto Serif JP"
-            ctx.fillStyle = '#FFFFFF'
-            ctx.fillText(songname, 40, canvas.height / 2)
+            ctx.font = "bold 20px Noto Serif JP";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText(songname, 130, 40);
 
-            ctx.font = "bold 30px Noto Serif JP"
-            ctx.fillStyle = '#FFFFFF'
-            ctx.fillText(auth, 40, canvas.height / 2 + 50)
+            ctx.font = "bold 11px Noto Serif JP";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText("By " + auth, 130, 60);
 
-            const image = canvas.toBuffer()
-            const ath = new MessageAttachment(image, "spotify.png")
+            ctx.font = "bold 8px Noto Serif JP";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText("On " + album, 130, 80);
 
-            message.channel.send(member, ath)
+            ctx.rect(130, 90, 180, 4);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(130, 90, 180, 4);
+
+            ctx.fillStyle = "#1DB954";
+            ctx.fillRect(130, 90, prog, 4);
+
+            ctx.font = "bold 8px Noto Serif JP";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText(minut, 320, 95);
+
+            const image = canvas.toBuffer();
+            const ath = new MessageAttachment(image, "spotify.png");
+
+            message.channel.send(message.author, ath)
         } else {
+            const songnameuncard = presence.details
+            const albumnocard = presence.assets.largeText
+            const authnocard = presence.state
             let e = new MessageEmbed()
                 .setColor('18d869 ')
                 .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png')
                 .setTitle(`${title}`)
                 .setURL(url)
-                .setDescription(`\`\`\`asciidoc\n• SongName   :: ${songname}\n• SongAlbum  :: ${album}\n• SongAuthor :: ${auth}\n\`\`\``)
+                .setDescription(`\`\`\`asciidoc\n• SongName   :: ${songnameuncard}\n• SongAlbum  :: ${albumnocard}\n• SongAuthor :: ${authnocard}\n\`\`\``)
                 .setThumbnail(`${img}`)
                 .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))

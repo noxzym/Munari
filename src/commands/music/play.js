@@ -85,7 +85,7 @@ module.exports = {
           if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
           let index = 0;
           let em = new MessageEmbed()
-            .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
+            .setColor('ff544b')
             .setAuthor(`Youtube Client get Video`)
             .setTitle(`This is result for ${search}`)
             .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
