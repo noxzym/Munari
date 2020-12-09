@@ -58,7 +58,6 @@
     "ytdl-core": "^4.1.4"
   },
   "optionalDependencies": {
-    "canvacord": "^5.0.8",
     "opusscript": "0.0.7"
   }
 }

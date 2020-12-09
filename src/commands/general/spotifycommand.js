@@ -1,12 +1,12 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
-const { Spotify } = require('canvacord')
+// const { Spotify } = require('canvacord')
 module.exports = {
     name: "spotify",
     aliases: [""],
     category: "General",
     descriptions: "Display spotify user",
     usage: "spotify [member<mention/id>]",
-    options: [""],
+    options: ["--card"],
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
@@ -27,18 +27,18 @@ module.exports = {
         const start = presence.timestamps.start
         const end = presence.timestamps.end
 
-        if (message.content.includes('--card')) {
-            const spotify = new Spotify()
-                .setAuthor(auth)
-                .setTitle(canvatitle)
-                .setImage(img)
-                .setAlbum(album)
-                .setStartTimestamp(start)
-                .setEndTimestamp(end)
-            const buffer = await spotify.build()
-            const ath = new MessageAttachment(buffer, 'Spotify.png')
-            message.channel.send(member, ath)
-        } else {
+        // if (message.content.includes('--card')) {
+        //     const spotify = new Spotify()
+        //         .setAuthor(auth)
+        //         .setTitle(canvatitle)
+        //         .setImage(img)
+        //         .setAlbum(album)
+        //         .setStartTimestamp(start)
+        //         .setEndTimestamp(end)
+        //     const buffer = await spotify.build()
+        //     const ath = new MessageAttachment(buffer, 'Spotify.png')
+        //     message.channel.send(member, ath)
+        // } else {
             let e = new MessageEmbed()
                 .setColor('18d869 ')
                 .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png')
@@ -49,6 +49,6 @@ module.exports = {
                 .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
             message.channel.send(e)
-        }
+        // }
     }
 }
