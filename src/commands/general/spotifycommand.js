@@ -17,9 +17,9 @@ module.exports = {
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
         if (!presence) return message.channel.send(`I can't find spotify presence, try again`)
 
-        const songname = presence.details.length > 5 ? presence.details.replace(presence.details.substr(5, 1000), " ...") : presence.details;
-        const album = presence.assets.largeText.length > 15 ? presence.assets.largeText.replace(presence.assets.largeText.substr(15, 1000), " ...") : presence.assets.largeText;
-        const auth = presence.state.length > 8 ? presence.state.replace(presence.state.substr(8, 1000), ' ...') : presence.state;
+        const songname = presence.details.length <= 13 ? presence.details : presence.details.substr(0, 13).trim() + ' ...';
+        const album = presence.assets.largeText.length <= 20 ? presence.assets.largeText : presence.assets.largeText.substr(0, 20).trim() + " ...";
+        const auth = presence.state.length <= 10 ? presence.state : presence.state.substr(0, 10).trim() + " ...";
         const title = `${presence.state} • ${presence.details}`
         const url = `https://open.spotify.com/track/${presence.syncID}`
         const img = `https://i.scdn.co/image/${presence.assets.largeImage.slice(8)}`
@@ -78,7 +78,7 @@ module.exports = {
             const image = canvas.toBuffer();
             const ath = new MessageAttachment(image, "spotify.png");
 
-            message.channel.send(message.author, ath)
+            message.channel.send(ath)
         } else {
             const songnameuncard = presence.details
             const albumnocard = presence.assets.largeText
