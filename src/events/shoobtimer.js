@@ -5,6 +5,7 @@ module.exports = {
         try {
             let embed = message.embeds[0];
             if (
+                message.guild.id !== '733474234600521850' &&
                 message.author.id === "673362753489993749" &&
                 embed &&
                 embed.title &&
