@@ -29,4 +29,4 @@ process.on("uncaughtException", e => {
   process.exit(1);
 });
 
-// client.login(client.config.token);
+client.login(client.config.token);
