@@ -9,7 +9,7 @@ module.exports = {
   usage: "instagram <username>",
   options: [""],
   cooldown: "8",
-  ownerOnly: false,
+  ownerOnly: true,
   guildOnly: true,
   async run(client, message, args) {
     try {
