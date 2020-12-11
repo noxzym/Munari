@@ -18,7 +18,7 @@ module.exports = {
             client.user.setActivity(status[random], { type: type[randomtp] });
         }, 20000);
         setInterval(() => {
-            client.dbl.postStats(client.guilds.cache.size)
+            client.dbl.postStats(client.guilds.cache.size, client.ws.shards.map(x => x)[0].id, client.ws.totalShards)
         }, 1800000)
     }
 }
