@@ -1,6 +1,10 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js')
-const { registerFont, createCanvas, loadImage } = require('canvas')
-const convert = require('parse-ms')
+const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { registerFont, createCanvas, loadImage } = require('canvas');
+const ColorThief = require('color-thief');
+const colorThief = new ColorThief();
+const onecolor = require('onecolor');
+const fetch = require('node-fetch')
+const convert = require('parse-ms');
 module.exports = {
     name: "spotify",
     aliases: [""],
@@ -9,7 +13,7 @@ module.exports = {
     usage: "spotify [member<mention/id>]",
     options: ["--card"],
     cooldown: "8",
-    ownerOnly: false,
+    ownerOnly: true,
     guildOnly: true,
     async run(client, message, args) {
         const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
@@ -40,17 +44,34 @@ module.exports = {
 
         if (message.content.includes('--card')) {
             registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
+            registerFont(__dirname + '/data/regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
+            registerFont(__dirname + '/data/bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
+            const spotifylogo = await loadImage(__dirname +"/data/spotify-logo.png");
 
             const canvas = createCanvas(400, 120);
             const ctx = canvas.getContext("2d");
+            let hex = await GetColor(img)
 
-            const bg = await loadImage(
-                "https://cdn.discordapp.com/attachments/767235205202444309/786139633192927242/images.png"
-            );
-            ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+            //background
+            ctx.beginPath();
+            ctx.rect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = hex;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save()
+            ctx.globalAlpha = 0.7
+            roundRect(ctx, 50, 50, 1800, 260, 20, true, false, '#fff1e5')
+            ctx.restore()
+
+            // const bg = await loadImage(
+            //     "https://cdn.discordapp.com/attachments/767235205202444309/786139633192927242/images.png"
+            // );
+            // ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
             const img2 = await loadImage(img);
             ctx.drawImage(img2, 20, 10, 100, 100);
+
+            ctx.drawImage(spotifyLogo, 320, 40, 30, 30);
 
             ctx.font = "bold 20px Noto Serif JP";
             ctx.fillStyle = "#FFFFFF";
@@ -93,6 +114,67 @@ module.exports = {
                 .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
             message.channel.send(e)
+        }
+        async function GetColor(img) {
+            try {
+                const result = await fetch(img);
+                if (!result.ok) throw new Error("Failed to get the avatar.");
+                const a = await result.buffer();
+
+                var rgb = colorThief.getColor(a)
+                var rgbCode = 'rgb( ' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'
+                var hex = onecolor(rgbCode).hex() || member.displayHexColor
+
+                return hex    
+            } catch (e) {
+                console.error(e)
+                return 'Server Error'
+            }
+        }
+        async function roundRect(ctx, x, y, width, height, radius, fill, stroke, color) {
+            if (typeof stroke == 'undefined') {
+                stroke = true;
+            }
+            if (typeof radius === 'undefined') {
+                radius = 5;
+            }
+            if (typeof radius === 'number') {
+                radius = {
+                    tl: radius,
+                    tr: radius,
+                    br: radius,
+                    bl: radius
+                };
+            } else {
+                var defaultRadius = {
+                    tl: 0,
+                    tr: 0,
+                    br: 0,
+                    bl: 0
+                };
+                for (var side in defaultRadius) {
+                    radius[side] = radius[side] || defaultRadius[side];
+                }
+            }
+            ctx.beginPath();
+            ctx.fillStyle = color
+            ctx.moveTo(x + radius.tl, y);
+            ctx.lineTo(x + width - radius.tr, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+            ctx.lineTo(x + width, y + height - radius.br);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+            ctx.lineTo(x + radius.bl, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+            ctx.lineTo(x, y + radius.tl);
+            ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+            ctx.closePath();
+            if (fill) {
+                ctx.fill();
+            }
+            if (stroke) {
+                ctx.stroke();
+            }
+
         }
     }
 }
