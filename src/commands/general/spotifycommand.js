@@ -13,7 +13,7 @@ module.exports = {
     usage: "spotify [member<mention/id>]",
     options: ["--card"],
     cooldown: "8",
-    ownerOnly: true,
+    ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
         const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
@@ -21,7 +21,7 @@ module.exports = {
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
         if (!presence) return message.channel.send(`I can't find spotify presence, try again`)
 
-        const songname = presence.details.length <= 13 ? presence.details : presence.details.substr(0, 13).trim() + ' ...';
+        const songname = presence.details.length <= 15 ? presence.details : presence.details.substr(0, 15).trim() + ' ...';
         const album = presence.assets.largeText.length <= 20 ? presence.assets.largeText : presence.assets.largeText.substr(0, 20).trim() + " ...";
         const auth = presence.state.length <= 10 ? presence.state : presence.state.substr(0, 10).trim() + " ...";
         const title = `${presence.state} • ${presence.details}`
@@ -32,7 +32,7 @@ module.exports = {
         const end = presence.timestamps.end
         const time = end - start
         const duri = Date.now() - start
-        const timestampformatted = (duri / time) * 180
+        const timestampformatted = (duri / time) * 360
         const convirt = convert(time)
 
         let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
@@ -44,11 +44,11 @@ module.exports = {
 
         if (message.content.includes('--card')) {
             registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
-            registerFont(__dirname + '/data/regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
-            registerFont(__dirname + '/data/bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
-            const spotifylogo = await loadImage(__dirname +"/data/spotify-logo.png");
+            registerFont('regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
+            registerFont('bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
+            const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
 
-            const canvas = createCanvas(400, 120);
+            const canvas = createCanvas(800, 240);
             const ctx = canvas.getContext("2d");
             let hex = await GetColor(img)
 
@@ -60,41 +60,36 @@ module.exports = {
 
             ctx.save()
             ctx.globalAlpha = 0.7
-            roundRect(ctx, 50, 50, 1800, 260, 20, true, false, '#fff1e5')
+            roundRect(ctx, 100, 100, 3600, 520, 40, true, false, '#fff1e5')
             ctx.restore()
 
-            // const bg = await loadImage(
-            //     "https://cdn.discordapp.com/attachments/767235205202444309/786139633192927242/images.png"
-            // );
-            // ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-
             const img2 = await loadImage(img);
-            ctx.drawImage(img2, 20, 10, 100, 100);
+            ctx.drawImage(img2, 40, 20, 200, 200);
 
-            ctx.drawImage(spotifyLogo, 320, 40, 30, 30);
+            ctx.drawImage(spotifylogo, 683, 120, 40, 40);
 
-            ctx.font = "bold 20px Noto Serif JP";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText(songname, 130, 40);
+            ctx.font = "bold 40px Noto Serif JP";
+            ctx.fillStyle = "#000000";
+            ctx.fillText(songname, 260, 80);
 
-            ctx.font = "bold 11px Noto Serif JP";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText("By " + auth, 130, 60);
+            ctx.font = "bold 22px Noto Serif JP";
+            ctx.fillStyle = "#000000";
+            ctx.fillText("By " + auth, 260, 138);
 
-            ctx.font = "bold 8px Noto Serif JP";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText("On " + album, 130, 80);
+            ctx.font = "bold 16px Noto Serif JP";
+            ctx.fillStyle = "#000000";
+            ctx.fillText("On " + album, 260, 160);
 
-            ctx.rect(130, 90, 180, 4);
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(130, 90, 180, 4);
+            ctx.rect(260, 180, 360, 8);
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(260, 180, 360, 8);
 
             ctx.fillStyle = "#1DB954";
-            ctx.fillRect(130, 90, timestampformatted, 4);
+            ctx.fillRect(260, 180, timestampformatted, 8);
 
-            ctx.font = "bold 8px Noto Serif JP";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillText(timeleft, 320, 95);
+            ctx.font = "bold 16px Noto Serif JP";
+            ctx.fillStyle = "#000000";
+            ctx.fillText(timeleft, 640, 190);
 
             const image = canvas.toBuffer();
             const ath = new MessageAttachment(image, "spotify.png");
