@@ -3,10 +3,10 @@ require('dotenv').config()
 const Discord = require("discord.js");
 const Munari = require('./struct/Client');
 const client = new Munari({
-  token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
-  dblapi: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24',
-  alexapi: '93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb',
-  prefix: 'm!'
+  token: process.env.token,
+  dblapi: process.env.dblapi,
+  alexapi: process.env.alexapi,
+  prefix: process.env.prefix
 });
 const DBL = require('dblapi.js');
 client.dbl = new DBL(client.config.dblapi, client);
