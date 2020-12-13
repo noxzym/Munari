@@ -2,6 +2,7 @@
   "name": "munari-bot",
   "version": "5.8.0",
   "description": " - ",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -22,7 +23,6 @@
     "Munari"
   ],
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
     "alexflipnote.js": "^2.3.0",
     "ascii-table": "^0.0.9",
     "axios": "^0.21.0",
@@ -45,6 +45,7 @@
     "node-html-parser": "^2.0.0",
     "one-liner-joke": "^1.2.0",
     "onecolor": "^3.1.0",
+    "opusscript": "0.0.7",
     "os": "^0.1.1",
     "parse-ms": "^2.1.0",
     "path": "^0.12.7",
@@ -56,12 +57,16 @@
     "sodium": "^3.0.2",
     "string-progressbar": "^1.0.1",
     "superagent": "^6.1.0",
-    "user-instagram": "^2.1.8",
     "youtube-sr": "^2.0.4",
     "yt-search": "^2.5.1",
     "ytdl-core": "^4.1.4"
   },
   "optionalDependencies": {
-    "opusscript": "0.0.7"
+    "@discordjs/opus": "^0.3.3",
+    "bufferutil": "^4.0.2",
+    "erlpack": "github:discord/erlpack",
+    "libsodium-wrappers": "^0.7.8",
+    "utf-8-validate": "^5.0.3",
+    "zlib-sync": "^0.1.7"
   }
 }

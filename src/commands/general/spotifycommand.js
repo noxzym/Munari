@@ -16,7 +16,11 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
+        const member = 
+        message.guild.members.cache.get(args[0]) || 
+        message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) || 
+        message.mentions.members.first() || 
+        message.member
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
         if (!presence) return message.channel.send(`I can't find spotify presence, try again`)

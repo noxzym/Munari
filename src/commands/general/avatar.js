@@ -12,6 +12,7 @@ module.exports = {
   async run(client, message, args) {
     let member =
       message.guild.members.cache.get(args[0]) ||
+      message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
       message.mentions.members.first() ||
       message.member;
     let color = member.roles.cache
