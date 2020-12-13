@@ -49,7 +49,7 @@ module.exports = {
             });
         }
 
-      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-")}\n\`\`\``)
+      var output = await message.channel.send(`\`\`\`js\n${clean(code).replace(client.token, "-").replace(process.env, "-")}\n\`\`\``)
       await output.react('❎')
 
       const filter = (reaction, user) => {
