@@ -4,7 +4,7 @@ const axios = require("axios");
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],
-  category: "General",
+  category: "",
   descriptions: "Display instagram information",
   usage: "instagram <username>",
   options: [""],
