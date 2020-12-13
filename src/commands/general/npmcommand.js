@@ -29,32 +29,37 @@ module.exports = {
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
 
-    const latest = Object.keys(pkg.versions).pop()
-    const dependen = Object.keys(pkg.versions[latest].dependencies).join(', ')
-    const createdAt = new Date(pkg.time.created).toLocaleDateString()
-    const mod = new Date(pkg.time.modified).toLocaleDateString()
-    const license = pkg.license === undefined ? "NONE" : pkg.license
-    const maintainers = pkg.maintainers === undefined ? "NONE" : pkg.maintainers.map(i => i.name).join(' ,')
+    try {
+      const latest = Object.keys(pkg.versions).pop()
+      const dependen = Object.keys(pkg.versions[latest].dependencies).join(', ')
+      const createdAt = new Date(pkg.time.created).toLocaleDateString()
+      const mod = new Date(pkg.time.modified).toLocaleDateString()
+      const license = pkg.license === undefined ? "NONE" : pkg.license
+      const maintainers = pkg.maintainers === undefined ? "NONE" : pkg.maintainers.map(i => i.name).join(' ,')
 
-    embed.setDescription(pkg.description || null)
-    embed.addField("Package Version", latest || null, true)
-    embed.addField('CreatedAt', createdAt, true)
-    embed.addField('Last Modified', mod, true)
-    embed.addField('License', license, true)
-    embed.addField("Maintainers", maintainers)
-    embed.addField("Dependencies", `\`${dependen}\`` || null)
+      embed.setDescription(pkg.description || null)
+      embed.addField("Package Version", latest || null, true)
+      embed.addField('CreatedAt', createdAt, true)
+      embed.addField('Last Modified', mod, true)
+      embed.addField('License', license, true)
+      embed.addField("Maintainers", maintainers)
+      embed.addField("Dependencies", `\`${dependen}\`` || null)
 
-    const linkonly = await fetch(`http://registry.npmjs.com/-/v1/search?text=${query}&size=1`).then((res) => res.json());
-    const foundPackages = linkonly.objects.map(({ package: pkg }) => pkg);
+      const linkonly = await fetch(`http://registry.npmjs.com/-/v1/search?text=${query}&size=1`).then((res) => res.json());
+      const foundPackages = linkonly.objects.map(({ package: pkg }) => pkg);
 
-    foundPackages.forEach((pkg) => {
-      const npm = pkg.links.npm === undefined ? null : pkg.links.npm
-      const homepage = pkg.links.homepage === undefined ? null : pkg.links.homepage
-      const reposity = pkg.links.repository === undefined ? null : pkg.links.repository
-      const bugs = pkg.links.bugs === undefined ? null : pkg.links.bugs
-      embed.addField("Package Link", `**[[NPM LINK](${npm})]•[[HOMEPAGE](${homepage})]•[[REPOSITORY](${reposity})]•[[BUGS](${bugs})]**`)
-    });
-    message.channel.send({ embed });
-    fetchmsg.delete()
+      foundPackages.forEach((pkg) => {
+        const npm = pkg.links.npm === undefined ? null : pkg.links.npm
+        const homepage = pkg.links.homepage === undefined ? null : pkg.links.homepage
+        const reposity = pkg.links.repository === undefined ? null : pkg.links.repository
+        const bugs = pkg.links.bugs === undefined ? null : pkg.links.bugs
+        embed.addField("Package Link", `**[[NPM LINK](${npm})]•[[HOMEPAGE](${homepage})]•[[REPOSITORY](${reposity})]•[[BUGS](${bugs})]**`)
+      });
+      message.channel.send({ embed });
+      fetchmsg.delete()
+    } catch (e) {
+      message.channel.send(`Cannot fetch data`)
+      fetchmsg.delete()
+    }
   },
 };
