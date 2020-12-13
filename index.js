@@ -17,7 +17,7 @@ const shards = new ShardingManager(`${mainFile}`, {
     totalShards: 'auto',
     mode: 'process',
     respawn: true,
-    token: process.env.token
+    token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4'
 });
 
 shards.on('shardCreate', shard => {
