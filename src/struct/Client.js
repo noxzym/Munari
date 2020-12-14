@@ -37,5 +37,7 @@ module.exports = class extends Client {
 
         this.config = config;
 
+        this.snipes = new Map()
+
     }
 };
