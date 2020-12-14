@@ -11,18 +11,21 @@ module.exports = {
   guildOnly: true,
   async run(bot, message, args) {
     const prefix = 'm!'
-        if (!message.guild.me.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`I don't have permission \`MANAGE_NICKNAMES\``);
-        if(!message.member.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_NICKNAMES\``);
+    if (!message.guild.me.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`I don't have permission \`MANAGE_NICKNAMES\``);
+    if (!message.member.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_NICKNAMES\``);
 
-        let mentionMember = message.mentions.members.first() ;
-        if(!mentionMember) return message.channel.send(`Usage: ${prefix + this.usage}`);
-        let newNickname = args.slice(1).join(' ');
+    let mentionMember =
+      message.guild.members.cache.get(args[0]) ||
+      message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
+      message.mentions.members.first()
+    if (!mentionMember) return message.channel.send(`Usage: ${prefix + this.usage}`);
+    let newNickname = args.slice(1).join(' ');
     try {
       var react = await message.channel.send(`Are you sure to change nickname user **\`${mentionMember.user.tag}\`** to **${newNickname}**?`);
       await react.react('✅');
       await react.react('❎');
       const filter = (reaction, user) => user.id !== message.client.user.id && user.id === message.author.id;
-      var collector = react.createReactionCollector(filter, {time: 60000});
+      var collector = react.createReactionCollector(filter, { time: 60000 });
       collector.on('collect', (reaction, user) => {
         if (collector && !collector.ended) collector.stop();
         switch (reaction.emoji.name) {
@@ -48,4 +51,5 @@ module.exports = {
     } catch (e) {
       console.log(e)
     }
-}}
+  }
+}

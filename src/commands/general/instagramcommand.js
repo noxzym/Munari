@@ -33,16 +33,11 @@ module.exports = {
       const thm = get.profile_pic_url_hd
 
       let e = new MessageEmbed()
-        .setColor(
-          message.member.roles.cache
-            .sort((a, b) => b.position - a.position)
-            .first().color
-        )
+        .setColor(message.member.displayHexColor)
         .setTitle(`Instagram Account • ${fullname}`)
         .setURL(`https://www.instagram.com/${username}`)
         .setThumbnail(`${thm}`)
         .setDescription(`**Account Information\n\`\`\`asciidoc\n• Username  :: ${userig}\n• Fullname  :: ${fullname}\n• Biography :: ${bio}\n• Followers :: ${follower}\n• Following :: ${following}\n• Private   :: ${priv}\n\`\`\`**`);
-
       await message.channel.send(e);
       fetchmsg.delete()
     } catch (error) {

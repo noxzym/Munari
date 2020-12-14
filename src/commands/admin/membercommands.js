@@ -10,7 +10,10 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first()
+        const member =
+            message.guild.members.cache.get(args[0]) ||
+            message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
+            message.mentions.members.first()
         if (!member) {
             const e = new MessageEmbed()
                 .setColor('RED')
@@ -151,7 +154,7 @@ module.exports = {
             if (member.hasPermission('ADMINISTRATOR')) return message.channel.send(`This member has permission **\`ADMINISTRATOR\`**`)
 
             if (!member.kickable) return message.channel.send("This member is not kickable");
-            
+
             if (member.user.id === message.author.id) {
                 return message.channel.send(`You can't kicked yourself`)
             }
