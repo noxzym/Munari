@@ -9,9 +9,12 @@ module.exports = {
       content: message.content,
       author: message.author,
       image: message.attachments.first() ? message.attachments.first().proxyURL : null,
-      date: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleString(),
     });
     snipes.splice(1);
     message.client.snipes.set(message.channel.id, snipes);
+    setTimeout(() => {
+      message.client.snipes.delete(message.channel.id)
+    }, 120000)
   }
 }
