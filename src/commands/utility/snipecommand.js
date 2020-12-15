@@ -21,7 +21,7 @@ module.exports = {
             snipemsg = snipes[0]
             e.setColor(snipemsg.color)
             e.setAuthor(`Last MessageDelete by ${snipemsg.author.tag}`, snipemsg.author.avatarURL({ dynamic: true }))
-            e.setDescription(snipemsg.content)
+            e.setDescription(snipemsg.content.length <= 1091 ? snipemsg.content : snipemsg.content.substr(0, 1091).trim() + ' ...')
             e.setImage(snipemsg.image)
             e.setFooter(`Time: ${snipemsg.date} • #${channel.name}`)
             message.channel.send({ embed: e })
