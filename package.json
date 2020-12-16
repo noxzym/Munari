@@ -23,7 +23,7 @@
     "Munari"
   ],
   "dependencies": {
-    "alexflipnote.js": "^2.3.0",
+    "alexflipnote.js": "^2.3.2",
     "ascii-table": "^0.0.9",
     "axios": "^0.21.0",
     "boats.js": "^2.5.0",
