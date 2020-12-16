@@ -38,7 +38,7 @@ module.exports = {
       );
 
     if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-      return message.channel.send(`I has join channel **\`🔊${channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
+      return message.channel.send(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
     }
 
     const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
