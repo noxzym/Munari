@@ -1,3 +1,4 @@
+const axios = require('axios')
 module.exports = {
     name: 'ready',
     async run (client) {
@@ -19,6 +20,21 @@ module.exports = {
         }, 20000);
         setInterval(() => {
             client.dbl.postStats(client.guilds.cache.size, client.ws.shards.map(x => x)[0].id, client.ws.totalShards)
+            client.boat.postStats(client.guilds.cache.size, client.user.id)
+            await axios.post('https://discord.bots.gg/api/v1/bots/740112353483554858/stats', { 
+                guildCount: client.guilds.cache.size, shardCount: client.ws.totalShards 
+            }, {
+                headers: {
+                    Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjQzNzI4NTczNjI0NjE0OTEyIiwiaWF0IjoxNjA4MTI4OTYwfQ.AFqBCF0pWLsS7Nqf89hfBNpELzKyoLmlsN_d6Wp6Qa0'
+                }
+            })
+            await axios.post('https://discordbotlist.com/api/v1/bots/740112353483554858/stats', {
+                guilds: client.guilds.cache.size, users: client.users.cache.size
+            }, {
+                headers: {
+                    Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImlhdCI6MTYwODEyNzEyNn0.d5ikZ309UZspeFoDqkDuyoCK5_b4xir9fdD37zf2EoU'
+                }
+            })
         }, 1800000)
     }
 }

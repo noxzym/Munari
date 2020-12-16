@@ -1,4 +1,4 @@
-const { Discord, Util, MessageEmbed } = require("discord.js");
+const { Util, MessageEmbed } = require("discord.js");
 const { play } = require('../../struct/player')
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
@@ -25,13 +25,8 @@ module.exports = {
   guildOnly: true,
   run: async function (client, message, args) {
     const { channel } = message.member.voice;
-    if (!channel)
-      return message
-        .reply("Please join voice channel first!")
-        .catch(console.error)
-        .then(msg => {
-          msg.delete({ timeout: 8000 });
-        });
+    if (!channel) return message.reply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
+
     const permissions = channel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT"))
       return message.channel.send(
