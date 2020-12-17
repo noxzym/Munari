@@ -30,32 +30,54 @@ module.exports = {
         }
 
         queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
-        let streamtype = song.url.includes("youtube.com") ? "opus" : "ogg/opus"
+        let streamtype = song.url.includes("youtube.com") ? "opus" : "unknown"
+        let dispatcher;
         try {
-        const dispatcher = queue.connection
-            .play(
-                await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 , bitrate: 96000 }), { type: streamtype }
-            )
-            .on("finish", () => {
+            if (song.url.includes('youtube.com')) {
+                dispatcher = queue.connection
+                    .play(
+                        await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25, bitrate: 96000 }), { type: streamtype }
+                    )
+                    .on("finish", () => {
 
-                if (queue.loop) {
-                    let lastSong = queue.songs.shift();
-                    queue.songs.push(lastSong);
-                    module.exports.play(queue.songs[0], message);
-                } else {
-                    queue.songs.shift();
-                    module.exports.play(queue.songs[0], message);
-                }
-            })
-            .on("error", (error) => {
-                console.error(error);
-                queue.songs.shift();
-                module.exports.play(queue.songs[0], message);
-            })
+                        if (queue.loop) {
+                            let lastSong = queue.songs.shift();
+                            queue.songs.push(lastSong);
+                            module.exports.play(queue.songs[0], message);
+                        } else {
+                            queue.songs.shift();
+                            module.exports.play(queue.songs[0], message);
+                        }
+                    })
+                    .on("error", (error) => {
+                        console.error(error);
+                        queue.songs.shift();
+                        module.exports.play(queue.songs[0], message);
+                    })
 
-        dispatcher.setVolumeLogarithmic(queue.volume / 100);
+                dispatcher.setVolumeLogarithmic(queue.volume / 100);
+            } else {
+                dispatcher = queue.connection
+                    .play(song.url, { type: streamtype })
+                    .on("finish", () => {
 
-        try {
+                        if (queue.loop) {
+                            let lastSong = queue.songs.shift();
+                            queue.songs.push(lastSong);
+                            module.exports.play(queue.songs[0], message);
+                        } else {
+                            queue.songs.shift();
+                            module.exports.play(queue.songs[0], message);
+                        }
+                    })
+                    .on("error", (error) => {
+                        console.error(error);
+                        queue.songs.shift();
+                        module.exports.play(queue.songs[0], message);
+                    })
+
+                dispatcher.setVolumeLogarithmic(queue.volume / 100);
+            }
             let duras = song.duration === undefined ? '◉ LIVE' : song.duration
             let embed = new MessageEmbed()
                 .setColor('ff544b')
@@ -65,14 +87,10 @@ module.exports = {
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
             queue.textChannel.send(embed)
-        } catch (error) {
-            console.error(error);
-            message.channel.send(error.message);
+        } catch (e) {
+            console.error(e)
+            message.channel.send(e.message)
+            process.exit(1)
         }
-    } catch (e) {
-        console.error(e)
-        message.channel.send(e.message)
-        process.exit(1)
-    }
     }
 }
