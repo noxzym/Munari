@@ -2,6 +2,9 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: 'message',
     async run(client, message) {
+        if (message.channel.type === 'dm') return
+        if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return
+        if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return
         try {
             let embed = message.embeds[0];
             if (
