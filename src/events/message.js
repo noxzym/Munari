@@ -6,13 +6,6 @@ module.exports = {
         const prefix = client.config.prefix;
         const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
-        const embed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setAuthor(`Munari Help`)
-            .setThumbnail(`${client.user.avatarURL()}`)
-            .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
-        if (message.content.match(getpref)) return message.channel.send(embed);
-
         if (
             !message.content.startsWith(prefix) ||
             message.author.bot ||
@@ -20,6 +13,13 @@ module.exports = {
             (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
             !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')
         ) return
+
+        const embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setAuthor(`Munari Help`)
+            .setThumbnail(`${client.user.avatarURL()}`)
+            .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
+        // if (message.content.match(getpref)) return message.channel.send(embed);
 
         let args = message.content
             .slice(prefix.length)
