@@ -2,24 +2,22 @@ const { MessageEmbed, Collection } = require('discord.js')
 module.exports = {
     name: 'message',
     async run(client, message) {
+
         //Prefix In Here\\
         const prefix = client.config.prefix;
         const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
-
-        if (
-            !message.content.startsWith(prefix) ||
-            message.author.bot ||
-            message.channel.type === 'dm' ||
-            (message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES')) ||
-            !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')
-        ) return
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setAuthor(`Munari Help`)
             .setThumbnail(`${client.user.avatarURL()}`)
             .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
-        // if (message.content.match(getpref)) return message.channel.send(embed);
+        if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return
+        if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return
+        if (message.content.match(getpref)) return message.channel.send(embed);
+
+        if (!message.content.startsWith(prefix)) return
+        if (message.author.bot) return
 
         let args = message.content
             .slice(prefix.length)
@@ -57,15 +55,8 @@ module.exports = {
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                return message
-                    .reply(
-                        `please wait ${timeLeft.toFixed(
-                            1
-                        )} more second(s) before reusing the \`${command.name}\` command.`
-                    )
-                    .then(msg => {
-                        msg.delete({ timeout: 5000 });
-                    });
+                return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
+                    .then(msg => { msg.delete({ timeout: 5000 }); });
             }
         }
 
