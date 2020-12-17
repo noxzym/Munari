@@ -2,7 +2,10 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'messageDelete',
   async run(client, message) {
-    if (message.author.bot) return;
+    if (
+      message.author.bot ||
+      message.channel.type === 'dm'
+    ) return
     const snipes = message.client.snipes.get(message.channel.id) || [];
     snipes.unshift({
       color: message.member.displayHexColor,
