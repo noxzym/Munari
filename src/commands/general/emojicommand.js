@@ -25,6 +25,7 @@ module.exports = {
         const name = eminfo.name
         const ID = eminfo.id
         const createdAt = moment(client.emojis.cache.get(ID).createdAt).format('MMMM Do YYYY, h:mm:ss a');
+        if (!createdAt) return message.channel.send(`I can't get this emoji because i am not join server this emoji`)
         const animated = eminfo.animated ? 'True' : 'False'
         const information = eminfo.animated === false ? `<:${eminfo.name}:${eminfo.id}>` : `<a:${eminfo.name}:${eminfo.id}>`
         let e = new MessageEmbed()
