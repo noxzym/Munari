@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { readdirSync } = require("fs");
 module.exports = {
   name: "help",
-  aliases: ["h"],
+  aliases: ["h", "?"],
   category: "Utility",
   descriptions: "Display Help Commands",
   usage: "help [commands]",
@@ -34,16 +34,12 @@ module.exports = {
     }
 
     let commands = bot.commands
-    const Admin = commands
-      .filter(({ category }) => category === 'Administration')
-      .map(({ name }) => `**\`${name}\`**`)
-      .join(", ");
     const Developer = commands
       .filter(({ category }) => category === 'Developer')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
-    const fun = commands
-      .filter(({ category }) => category === 'Fun')
+    const animal = commands
+      .filter(({ category }) => category === 'Animal')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
     const actions = commands
@@ -54,38 +50,54 @@ module.exports = {
       .filter(({ category }) => category === 'Image')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
-    const animal = commands
-      .filter(({ category }) => category === 'Animal')
-      .map(({ name }) => `**\`${name}\`**`)
-      .join(", ");
     const general = commands
       .filter(({ category }) => category === 'General')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
-    const music = commands
-      .filter(({ category }) => category === 'Music')
+    const fun = commands
+      .filter(({ category }) => category === 'Fun')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
     const utility = commands
       .filter(({ category }) => category === 'Utility')
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
+    const music = commands
+      .filter(({ category }) => category === 'Music')
+      .map(({ name }) => `**\`${name}\`**`)
+      .join(", ");
+    const Admin = commands
+      .filter(({ category }) => category === 'Administration')
+      .map(({ name }) => `**\`${name}\`**`)
+      .join(", ");
+
+    const animalsize = bot.commands.filter(x => x.category === 'Animal').size
+    const actsize = bot.commands.filter(x => x.category === 'Actions').size
+    const imgsize = bot.commands.filter(x => x.category === 'Image').size
+    const gensize = bot.commands.filter(x => x.category === 'General').size
+    const funsize = bot.commands.filter(x => x.category === 'Fun').size
+    const utisize = bot.commands.filter(x => x.category === 'Utility').size
+    const musicsize = bot.commands.filter(x => x.category === 'Music').size
+    const adminsize = bot.commands.filter(x => x.category === 'Administration').size
+
+    const totalcmd = animalsize + actsize + imgsize + gensize + funsize + utisize + musicsize + adminsize
+
 
     let hembed = new Discord.MessageEmbed()
       .setAuthor('Munari Help Commands', bot.user.displayAvatarURL())
       .setColor(message.member.displayHexColor)
       .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
       .setThumbnail(bot.user.displayAvatarURL())
-      .addField('**\`【🐱】\` • Animal**', animal)
-      .addField('**\`【☺️】\` • Action**', actions)
-      .addField('**\`【🖼️】\` • Image**', image)
-      .addField('**\`【🎭】\` • General**', general)
-      .addField('**\`【🎲】\` • Fun Game**', fun)
-      .addField('**\`【🛠️】\` • Utility**', utility)
-      .addField('**\`【🎧】\` • Music**', music)
-      .addField('**\`【⚙️】\` • Moderation**', Admin)
+      .addField(`**\`【🐱】\` • Animal \`[${animalsize}]\`**`, animal)
+      .addField(`**\`【☺️】\` • Action \`[${actsize}]\`**`, actions)
+      .addField(`**\`【🖼️】\` • Image \`[${imgsize}]\`**`, image)
+      .addField(`**\`【🎭】\` • General \`[${gensize}]\`**`, general)
+      .addField(`**\`【🎲】\` • Fun Game \`[${funsize}]\`**`, fun)
+      .addField(`**\`【🛠️】\` • Utility \`[${utisize}]\`**`, utility)
+      .addField(`**\`【🎧】\` • Music \`[${musicsize}]\`**`, music)
+      .addField(`**\`【⚙️】\` • Moderation \`[${adminsize}]\`**`, Admin)
       .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】 • 【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**")
-      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+      .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()
     message.channel.send(hembed)
   }
