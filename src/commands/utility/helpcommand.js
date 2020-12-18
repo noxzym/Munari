@@ -17,7 +17,8 @@ module.exports = {
 
     if (cmdArgs) {
       const cmd = bot.commands.get(cmdArgs) || bot.commands.get(bot.aliases.get(cmdArgs));
-      if (!cmd) return message.channel.send("Command or alias not found");
+      if (cmd.category === 'Developer') return
+      if (!cmd) return
 
       const aliases = cmd.aliases ? cmd.aliases.map((alias) => alias) : "None";
       const options = cmd.options ? cmd.options.map((option) => option) : "None";

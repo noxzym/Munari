@@ -70,7 +70,7 @@ module.exports = {
             thumbnail: infoSong.all[0].thumbnail + "?size=4096",
             nowplaying: infoSong.all[0].seconds,
             requester: `${message.author.tag}`,
-            channel: infoSong.author.name
+            channel: infoSong.all[0].author.name
           };
         } catch (e) {
           console.log(e);
