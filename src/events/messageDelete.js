@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const moment = require('moment')
 module.exports = {
   name: 'messageDelete',
   async run(client, message) {
@@ -12,7 +13,7 @@ module.exports = {
       content: message.content,
       author: message.author,
       image: message.attachments.first() ? message.attachments.first().proxyURL : null,
-      date: new Date().toLocaleString(),
+      date: moment(new Date()).format('MMMM Do YYYY, h:mm:ss a'),
     });
     snipes.splice(1);
     message.client.snipes.set(message.channel.id, snipes);

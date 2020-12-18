@@ -90,7 +90,7 @@ module.exports = {
           var embedsearch = await message.channel.send(em)
           try {
             var response = await message.channel.awaitMessages(
-              message2 => ((message2.content > 0 && message2.content < 6) || (message2.content.includes('c')) || (message2.content.includes('C'))) && message2.author.id === message.author.id, {
+              message2 => /^(?:[1-4]|5|cancel|c)$/g.test(message2.content.toLowerCase()) && message2.author.id === message.author.id, {
               max: 1,
               time: 30000,
               errors: ["time"]
@@ -98,12 +98,13 @@ module.exports = {
             );
             embedsearch.delete()
             response.delete()
-            if ((response.first().content.includes('c') || response.first().content.includes('C'))) {
+            const input = response.first().content.substr(0,6).toLowerCase()
+            if (input === 'cancel' || input === 'c') {
               return message.channel.send(`<a:no:765207855506522173> | Request canceled`).then(x => { x.delete({ timeout: 3000 }) })
-            } else {
-              const videoIndex = parseInt(response.first().content);
-              var video = await searcher[videoIndex - 1];
             }
+            const videoIndex = parseInt(response.first().content);
+            var video = await searcher[videoIndex - 1];
+
           } catch (e) {
             return message.channel.send({
               embed: {
