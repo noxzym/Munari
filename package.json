@@ -24,7 +24,6 @@
   ],
   "dependencies": {
     "alexflipnote.js": "^2.3.2",
-    "ascii-table": "^0.0.9",
     "axios": "^0.21.0",
     "boats.js": "^2.5.0",
     "canvas": "^2.6.1",
@@ -53,7 +52,6 @@
     "random-puppy": "^1.1.0",
     "redis": "^3.0.2",
     "request": "^2.88.2",
-    "simple-youtube-api": "^5.2.1",
     "snekfetch": "^4.0.4",
     "sodium": "^3.0.2",
     "string-progressbar": "^1.0.1",
