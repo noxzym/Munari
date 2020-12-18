@@ -29,16 +29,15 @@ module.exports = {
       if (isNaN(amount))
         return message.reply('Please input number queue')
       
-      if (amount < 2) return;
       if(amount > queue.songs.length) return message.reply(`The queue only have ${queue.songs.length} Songs!`).then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
       
       queue.playing = true;
       if (queue.loop) {
-        for (let i = 0; i < amount - 2; i++) {
+        for (let i = 0; i < amount - 1; i++) {
           queue.songs.push(queue.songs.shift());
         }
       } else {
-        queue.songs = queue.songs.slice(amount - 2);
+        queue.songs = queue.songs.slice(amount - 1);
       }
       queue.connection.dispatcher.end();
       queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has skipped ${amount - 1} songs`).catch(console.error);

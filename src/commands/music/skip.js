@@ -5,7 +5,7 @@ module.exports = {
   descriptions: "Skip the currently playing song",
   usage: "skip",
   options: [""],
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {

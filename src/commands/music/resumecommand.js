@@ -5,7 +5,7 @@ module.exports = {
   descriptions: "Resume currently playing music",
   usage: "resume",
   options: [""],
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   run: async function(client, message, args) {
