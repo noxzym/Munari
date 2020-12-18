@@ -86,15 +86,24 @@ module.exports = {
             .setAuthor(`Youtube Client get Video`)
             .setTitle(`This is result for ${search}`)
             .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
+            .setFooter(`Type 'cancel' to cancel the song request`)
           var embedsearch = await message.channel.send(em)
           try {
             var response = await message.channel.awaitMessages(
-              message2 => message2.content > 0 && message2.content < 6 && message2.author.id === message.author.id, {
+              message2 => ((message2.content > 0 && message2.content < 6) || (message2.content.includes('c')) || (message2.content.includes('C'))) && message2.author.id === message.author.id, {
               max: 1,
               time: 30000,
               errors: ["time"]
             }
             );
+            embedsearch.delete()
+            response.delete()
+            if ((response.first().content.includes('c') || response.first().content.includes('C'))) {
+              return message.channel.send(`<a:no:765207855506522173> | Request canceled`).then(x => { x.delete({ timeout: 3000 }) })
+            } else {
+              const videoIndex = parseInt(response.first().content);
+              var video = await searcher[videoIndex - 1];
+            }
           } catch (e) {
             return message.channel.send({
               embed: {
@@ -103,10 +112,6 @@ module.exports = {
               }
             }).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
           }
-          embedsearch.delete()
-          response.delete()
-          const videoIndex = parseInt(response.first().content);
-          var video = await searcher[videoIndex - 1];
 
           const infoSong = await yts(video.title);
           const vid = infoSong.all[0];

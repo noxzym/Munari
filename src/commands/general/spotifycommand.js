@@ -7,7 +7,7 @@ const fetch = require('node-fetch')
 const convert = require('parse-ms');
 module.exports = {
     name: "spotify",
-    aliases: [""],
+    aliases: ["sp"],
     category: "General",
     descriptions: "Display spotify user",
     usage: "spotify [member<mention/id>]",
