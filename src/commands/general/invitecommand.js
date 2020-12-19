@@ -14,7 +14,7 @@ module.exports = {
       .setColor(message.member.displayHexColor)
       .setAuthor("Click This Website to Invite Me")
       // .setURL("https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639")
-      .setDescription(`**[[\`top.gg\`](https://top.gg/bot/740112353483554858/vote)] • [[\`discord.boats\`](https://discord.boats/bot/740112353483554858/vote)] • [[\`discordbotlist.com\`](https://discordbotlist.com/bots/munari-rose/upvote)]**`)
+      .setDescription(`**[[\`top.gg\`](https://top.gg/bot/740112353483554858)] • [[\`discord.boats\`](https://discord.boats/bot/740112353483554858)] • [[\`discordbotlist.com\`](https://discordbotlist.com/bots/munari-rose)]**`)
       .setThumbnail(client.user.avatarURL({ size: 1024 }))
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }));
