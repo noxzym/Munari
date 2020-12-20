@@ -96,12 +96,11 @@ module.exports = {
               errors: ["time"]
             }
             );
-            embedsearch.delete()
-            response.delete()
-            const input = response.first().content.substr(0,6).toLowerCase()
+            const input = response.first().content.substr(0, 6).toLowerCase()
             if (input === 'cancel' || input === 'c') {
-              return message.channel.send(`<a:no:765207855506522173> | Request canceled`).then(x => { x.delete({ timeout: 3000 }) })
+              return embedsearch.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) }).then(x => { x.delete({ timeout: 3000 }) })
             }
+            embedsearch.delete()
             const videoIndex = parseInt(response.first().content);
             var video = await searcher[videoIndex - 1];
 

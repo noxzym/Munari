@@ -15,7 +15,6 @@ module.exports = {
     if (!queue) return message.reply("There is nothing playing.").catch(console.error);
     const song = queue.songs[0];
     const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
-    const left = song.nowplaying - seek;
     const nowpl = createBar((song.nowplaying == 0 ? seek : song.nowplaying), seek, 15)[0]
 
     const duration = song.nowplaying

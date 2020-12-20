@@ -16,12 +16,13 @@ module.exports = {
                 .setColor('RED')
                 .setDescription(`\`\`\`md\nUsage: m!channel <channel[mention/id]> <argumen>\nArgumen Options: \n* <--lock>, <--unlock>, <--slowmode>, <--nuke>\nExample: m!channel #general <--lock>\n\`\`\``)
             return message.channel.send(e)
-        } 
+        }
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`)
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`)
 
         if (message.content.includes('--lock')) {
+            if (!channel.permissionsFor(message.guild.id).has('SEND_MESSAGES')) return message.channel.send(`<a:yes:765207711423004676> | Channel **\`${channel.name}\`** Already LockedDown`)
             try {
                 var react = await message.channel.send(`Are you sure to Lock Channel **\`${channel.name}\`**?`);
                 await react.react('✅');
@@ -34,11 +35,9 @@ module.exports = {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Locked Channel **\`${channel.name}\`** successful!`)
-                            channel.permissionOverwrites.map(x => {
-                                channel.updateOverwrite(x.id, {
-                                    SEND_MESSAGES: false,
-                                    ADD_REACTIONS: false
-                                })
+                            channel.updateOverwrite(message.guild.id, {
+                                SEND_MESSAGES: false,
+                                ADD_REACTIONS: false
                             })
                             break;
 
@@ -59,6 +58,7 @@ module.exports = {
                 console.log(e)
             }
         } else if (message.content.includes('--unlock')) {
+            if (channel.permissionsFor(message.guild.id).has('SEND_MESSAGES')) return message.channel.send(`<a:yes:765207711423004676> | Channel **\`${channel.name}\`** not Locked`)
             try {
                 var react = await message.channel.send(`Are you sure to Unlock Channel **\`${channel.name}\`**?`);
                 await react.react('✅');
@@ -71,11 +71,9 @@ module.exports = {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Unocked Channel **\`${channel.name}\`** successful!`)
-                            channel.permissionOverwrites.map(x => {
-                                channel.updateOverwrite(x.id, {
-                                    SEND_MESSAGES: true,
-                                    ADD_REACTIONS: true
-                                })
+                            channel.updateOverwrite(message.guild.id, {
+                                SEND_MESSAGES: null,
+                                ADD_REACTIONS: null
                             })
                             break;
 
@@ -146,7 +144,7 @@ module.exports = {
                         case "✅":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Nuke Channel **\`${channel.name}\`** successful!`)
-                            channel.clone().then(x => {message.guild.channels.cache.get(x.id).send(`Nothing in here, Nuke command successful!`)})
+                            channel.clone().then(x => { message.guild.channels.cache.get(x.id).send(`Nothing in here, Nuke command successful!`) })
                             setTimeout(() => {
                                 channel.delete(`Nuke Command Successful!`)
                             }, 2000);
