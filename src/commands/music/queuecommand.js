@@ -69,8 +69,8 @@ module.exports = {
         const inf = current.map((x) => `**${++j} • [${x.title}](${x.url}) \`【${x.requester}】\`**`).join('\n')
 
         let e = new MessageEmbed()
-          .setColor('ff544b')
-          .setAuthor("Youtube Client Queue")
+          .setColor('ff0000')
+          .setAuthor("Youtube Client Queue", 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
           .setThumbnail(queue[0].thumbnail)
           .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${inf}`)
           .setTimestamp();

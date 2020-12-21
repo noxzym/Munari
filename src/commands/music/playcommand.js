@@ -82,8 +82,8 @@ module.exports = {
           if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
           let index = 0;
           let em = new MessageEmbed()
-            .setColor('ff544b')
-            .setAuthor(`Youtube Client get Video`)
+            .setColor('ff0000')
+            .setAuthor(`Youtube Client get Video`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
             .setTitle(`This is result for ${search}`)
             .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
             .setFooter(`Type 'cancel' to cancel the song request`)

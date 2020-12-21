@@ -16,6 +16,7 @@ module.exports = {
     const song = queue.songs[0];
     const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
     const nowpl = createBar((song.nowplaying == 0 ? seek : song.nowplaying), seek, 15)[0]
+    const status = queue.playing ? '▶️' : '⏸️'
 
     const duration = song.nowplaying
 
@@ -36,11 +37,11 @@ module.exports = {
     const date = `${dur}/${(song.nowplaying == 0 ? " ◉ LIVE" : song.duration)}`
 
     let nowPlaying = new MessageEmbed()
-      .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-      .setAuthor(`Youtube Client Now Playing`)
+      .setColor('#ff0000')
+      .setAuthor(`Youtube Client Now Playing`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
       .setTitle(`${song.title}`)
     await nowPlaying.setURL(client.queue.get(message.guild.id).songs[0].url)
-      .setDescription(`➤ **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester}】\`**`)
+      .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
     return message.channel.send(nowPlaying);

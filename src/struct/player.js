@@ -80,8 +80,8 @@ module.exports = {
             }
             let duras = song.duration === undefined ? '◉ LIVE' : song.duration
             let embed = new MessageEmbed()
-                .setColor('ff544b')
-                .setAuthor(`Youtube Client`)
+                .setColor('ff0000')
+                .setAuthor(`Youtube Client`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
                 .setThumbnail(song.thumbnail)
                 .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
