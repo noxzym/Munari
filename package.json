@@ -23,6 +23,7 @@
     "Munari"
   ],
   "dependencies": {
+    "@top-gg/sdk": "^3.0.5",
     "alexflipnote.js": "^2.3.2",
     "axios": "^0.21.0",
     "boats.js": "^2.5.0",
@@ -31,7 +32,6 @@
     "common-tags": "^1.8.0",
     "cors": "^2.8.5",
     "cpu-stat": "^2.0.1",
-    "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "erit-ytdl": "^0.1.2",

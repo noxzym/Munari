@@ -10,8 +10,8 @@ const client = new Munari({
   prefix: 'm!'
 });
 
-const DBL = require('dblapi.js');
-client.dbl = new DBL(client.config.dblapi, client);
+const { Api } = require('@top-gg/sdk')
+client.dbl = new Api(client.config.dblapi);
 
 const BOATS = require('boats.js');
 client.boat = new BOATS(client.config.boatsapi);
