@@ -20,8 +20,10 @@ module.exports = {
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`)
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`)
+        if (message.channel.activateCollector === true) return message.channel.send("please wait until the timeout over or response has given").then(msg => { msg.delete({ timeout: 5000 }) });
 
         if (message.content.includes('--lock')) {
+            message.channel.activateCollector = true
             if (!channel.permissionsFor(message.guild.id).has('SEND_MESSAGES')) return message.channel.send(`<a:yes:765207711423004676> | Channel **\`${channel.name}\`** Already LockedDown`)
             try {
                 var react = await message.channel.send(`Are you sure to Lock Channel **\`${channel.name}\`**?`);
@@ -39,11 +41,13 @@ module.exports = {
                                 SEND_MESSAGES: false,
                                 ADD_REACTIONS: false
                             })
+                            return message.channel.activateCollector = false
                             break;
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:no:765207855506522173> | Locked Channel **\`${channel.name}\`** has canceled!`)
+                            return message.channel.activateCollector = false
                             break;
 
                         default:
@@ -53,11 +57,15 @@ module.exports = {
                 })
                 collector.on('end', () => {
                     react.reactions.removeAll().catch(console.error);
+                    return message.channel.activateCollector = false
                 })
             } catch (e) {
                 console.log(e)
+                react.reactions.removeAll().catch(console.error);
+                return message.channel.activateCollector = false
             }
         } else if (message.content.includes('--unlock')) {
+            message.channel.activateCollector = true
             if (channel.permissionsFor(message.guild.id).has('SEND_MESSAGES')) return message.channel.send(`<a:yes:765207711423004676> | Channel **\`${channel.name}\`** not Locked`)
             try {
                 var react = await message.channel.send(`Are you sure to Unlock Channel **\`${channel.name}\`**?`);
@@ -75,11 +83,13 @@ module.exports = {
                                 SEND_MESSAGES: null,
                                 ADD_REACTIONS: null
                             })
+                            return message.channel.activateCollector = false
                             break;
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:no:765207855506522173> | Unlocked Channel **\`${channel.name}\`** has canceled!`)
+                            return message.channel.activateCollector = false
                             break;
 
                         default:
@@ -89,11 +99,15 @@ module.exports = {
                 })
                 collector.on('end', () => {
                     react.reactions.removeAll().catch(console.error);
+                    return message.channel.activateCollector = false
                 })
             } catch (e) {
                 console.log(e)
+                react.reactions.removeAll().catch(console.error);
+                return message.channel.activateCollector = false
             }
         } else if (message.content.includes('--slowmode')) {
+            message.channel.activateCollector = true
             const number = args[1]
             if (!number) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`)
             if (isNaN(number)) return message.channel.send(`Please input the correct number in second`)
@@ -113,11 +127,13 @@ module.exports = {
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:yes:765207711423004676> | Set slowmode Channel **\`${channel.name}\`** successful!`)
                             channel.setRateLimitPerUser(number)
+                            return message.channel.activateCollector = false
                             break;
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:no:765207855506522173> | Set slowmode Channel **\`${channel.name}\`** has canceled!`)
+                            return message.channel.activateCollector = false
                             break;
 
                         default:
@@ -127,11 +143,15 @@ module.exports = {
                 })
                 collector.on('end', () => {
                     react.reactions.removeAll().catch(console.error);
+                    return message.channel.activateCollector = false
                 })
             } catch (e) {
                 console.log(e)
+                react.reactions.removeAll().catch(console.error);
+                return message.channel.activateCollector = false
             }
         } else if (message.content.includes('--nuke')) {
+            message.channel.activateCollector = true
             try {
                 var react = await message.channel.send(`Are you sure to Nuke Channel **\`${channel.name}\`**?`);
                 await react.react('✅');
@@ -148,11 +168,13 @@ module.exports = {
                             setTimeout(() => {
                                 channel.delete(`Nuke Command Successful!`)
                             }, 2000);
+                            return message.channel.activateCollector = false
                             break;
 
                         case "❎":
                             reaction.users.remove(user).catch(console.error)
                             react.edit(`<a:no:765207855506522173> | Nuke Channel **\`${channel.name}\`** has canceled!`)
+                            return message.channel.activateCollector = false
                             break;
 
                         default:
@@ -162,9 +184,12 @@ module.exports = {
                 })
                 collector.on('end', () => {
                     react.reactions.removeAll().catch(console.error);
+                    return message.channel.activateCollector = false
                 })
             } catch (e) {
                 console.log(e)
+                react.reactions.removeAll().catch(console.error);
+                return message.channel.activateCollector = false
             }
         }
     }
