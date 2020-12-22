@@ -1,5 +1,6 @@
 const { Util, MessageEmbed } = require("discord.js");
 const { play } = require('../../struct/player')
+const { playlist } = require('../../struct/playlist')
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
 const ytsr = require('youtube-sr')
@@ -41,10 +42,11 @@ module.exports = {
       return message.channel.send(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
     }
 
-    const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
+    const playlistPattern = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
 
     if (playlistPattern.test(args[0])) {
-      return message.channel.send("I can`t play video from playlist");
+      let url = args[0].match(playlistPattern)
+      return playlist(url[0], channel, message, client);
     }
 
     const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
