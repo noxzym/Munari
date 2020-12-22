@@ -1,8 +1,5 @@
-const Discord = require('discord.js-light')
+const Discord = require('discord.js')
 const { readdirSync } = require("fs");
-const ascii = require("ascii-table");
-let table = new ascii("Commands");
-table.setHeading("Command", "Load status");
 
 module.exports = (client) => {
 
@@ -16,7 +13,7 @@ module.exports = (client) => {
                 client.commands.set(pull.name, pull);
                 // table.addRow(file, `✔️  -> command berhasil di load`);
             } else {
-                table.addRow(file, `❎  -> command.name atau help.name tidak dapat ditemukan`);
+                console.log(file, `❎  -> command.name atau help.name tidak dapat ditemukan`);
                 continue;
             } 
     
@@ -24,5 +21,4 @@ module.exports = (client) => {
         }
   
     });
-    console.log(table.toString());
 }

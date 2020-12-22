@@ -1,4 +1,4 @@
-const Discord = require("discord.js-light");
+const Discord = require("discord.js");
 const superagent = require("superagent");
 module.exports = {
   name: "fact",
