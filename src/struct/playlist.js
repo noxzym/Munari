@@ -25,10 +25,6 @@ module.exports = {
             playing: true
         };
 
-        const queue = client.queue.get(message.guild.id)
-        queue ? queue.songs.push(...newsong) : queueConstruct.songs.push(...newsong)
-        const songs = queue ? queue.songs : queueConstruct.songs
-
         let e = new MessageEmbed()
             .setColor('ff0000')
             .setAuthor(`Youtube Client Playlist`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
@@ -36,11 +32,17 @@ module.exports = {
             .setURL(g.url)
             .setDescription(`**\`\`\`asciidoc\n• Title       :: ${g.title}\n• Video       :: ${g.videoCount} Videos\n• View        :: ${g.views} Views\n• Last Update :: ${g.lastUpdate.replace('Updated', '').trim()}\`\`\`**`)
             .setThumbnail(g.thumbnail)
-        message.channel.send(e)
 
-        if (!queue) {
-            client.queue.set(message.guild.id, queueConstruct)
+        const queue = client.queue.get(message.guild.id)
+
+        if (queue) {
+            queue.songs.push(...newsong)
+            return queue.textChannel.send(e)
         }
+
+        message.client.queue.set(message.guild.id, queueConstruct);
+        queueConstruct.songs.push(...newsong);
+        message.channel.send(e)
 
         try {
             const connection = await channel.join();

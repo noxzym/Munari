@@ -42,21 +42,20 @@ module.exports = {
       return message.channel.send(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
     }
 
-    const playlistPattern = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
-
-    if (playlistPattern.test(args[0])) {
-      let url = args[0].match(playlistPattern)
-      return playlist(url[0], channel, message, client);
-    }
-
-    const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
-
-    const urlv = videoPattern.test(args[0]);
-    const url = args[0];
     const search = args.join(" ");
+    const videoPattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$gi/;
+    const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
+    const url = args[0];
+    const urlv = videoPattern.test(args[0]);
+
     if (!search) {
       return message.channel.send(client.config.prefix + this.usage);
     }
+
+    if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
+      return playlist(url, channel, message, client);
+    }
+
     let songInfo;
     let song;
 

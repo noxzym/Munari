@@ -11,13 +11,13 @@ module.exports = {
             .setColor('#0099ff')
             .setAuthor(`Munari Help`)
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setDescription(`My global prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
+            .setDescription(`My prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
         if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return
         if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return
+        if (message.author.bot) return
         if (message.content.match(getpref)) return message.channel.send(embed);
 
         if (!message.content.startsWith(prefix)) return
-        if (message.author.bot) return
 
         let args = message.content
             .slice(prefix.length)

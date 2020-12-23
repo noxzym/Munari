@@ -78,7 +78,9 @@ module.exports = {
 
                 dispatcher.setVolumeLogarithmic(queue.volume / 100);
             }
+
             let duras = song.duration === undefined ? '◉ LIVE' : song.duration
+
             let embed = new MessageEmbed()
                 .setColor('ff0000')
                 .setAuthor(`Youtube Client`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
@@ -86,7 +88,17 @@ module.exports = {
                 .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
-            queue.textChannel.send(embed)
+
+            let embedunk = new MessageEmbed()
+                .setColor('1d1f2b')
+                .setAuthor(`Listen.moe`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
+                .setThumbnail('https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
+                .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
+                .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+                .setTimestamp();
+
+            song.url.includes("youtube.com") ? queue.textChannel.send(embed) : queue.textChannel.send(embedunk)
+
         } catch (e) {
             console.error(e)
             message.channel.send(e.message)
