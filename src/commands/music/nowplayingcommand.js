@@ -49,7 +49,7 @@ module.exports = {
       .setColor('1d1f2b')
       .setAuthor(`Listen.moe Now Playing`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
       .setTitle(`${song.title}`)
-    await nowPlaying.setURL(client.queue.get(message.guild.id).songs[0].url)
+    await listenmoenoeplaying.setURL(client.queue.get(message.guild.id).songs[0].url)
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
