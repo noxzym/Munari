@@ -45,7 +45,7 @@ module.exports = {
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
 
-    let nowPlaying = new MessageEmbed()
+    let listenmoenoeplaying = new MessageEmbed()
       .setColor('1d1f2b')
       .setAuthor(`Listen.moe Now Playing`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
       .setTitle(`${song.title}`)
@@ -53,6 +53,7 @@ module.exports = {
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
-    return message.channel.send(nowPlaying);
-  }
+
+    song.url.includes("youtube.com") ? message.channel.send(nowPlaying) : message.channel.send(listenmoenoeplaying)
+    }
 };
