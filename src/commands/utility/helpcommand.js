@@ -17,7 +17,7 @@ module.exports = {
 
     if (cmdArgs) {
       const cmd = bot.commands.get(cmdArgs) || bot.commands.get(bot.aliases.get(cmdArgs));
-      if (cmd.category === 'Developer') return
+      if (( cmd.category === 'Developer' || cmd.category === '' )) return
       if (!cmd) return
 
       const aliases = cmd.aliases ? cmd.aliases.map((alias) => alias) : "None";

@@ -2,12 +2,12 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: "respect",
     aliases: ["f"],
-    category: "General",
+    category: "",
     descriptions: "Pay the respect",
     usage: "respect [user]",
     options: [""],
     cooldown: "10",
-    ownerOnly: false,
+    ownerOnly: true,
     guildOnly: true,
     async run(client, message, args) {
         let member = message.mentions.members.first()
