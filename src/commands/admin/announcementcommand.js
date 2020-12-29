@@ -16,7 +16,7 @@ module.exports = {
     try {
       data = JSON.parse(args.slice(1).join(' ').toString())
     } catch (e) {
-      return message.channel.send({ embed: { color: 'ff0000', description: `Please input like **[\`this\`](https://hastebin.com/sutekoluya.rb)**` } }).then(x => { x.delete({ timeout: 10000 }) })
+      return message.channel.send({ embed: { color: 'ff0000', description: `Please input like **[\`this\`](https://raw.githubusercontent.com/BlazeDexX/blazedexx.github.io/master/index.html)**` } }).then(x => { x.delete({ timeout: 10000 }) })
     }
 
     let channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first()
