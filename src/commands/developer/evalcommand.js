@@ -49,10 +49,10 @@ module.exports = {
 
       if (outputcode.length >= 1024) {
 
-        const { body } = await req.post('https://hastebin.com/documents').send(outputcode)
+        const { body } = await req.post('https://paste.mod.gg/documents').send(outputcode)
         let withhaste = new MessageEmbed()
           .addField("Input", `\`\`\`js\n${codein}\`\`\``)
-          .addField(`Output`, `https://hastebin.com/${body.key}.js`)
+          .addField(`Output`, `https://paste.mod.gg/${body.key}`)
           .addField(`Typecode`, typeof code)
         output = await message.channel.send(withhaste)
 
@@ -86,10 +86,10 @@ module.exports = {
       var output;
 
       if (error.length > 1024) {
-        const { body } = await req.post('https://hastebin.com/documents').send(error)
+        const { body } = await req.post('https://paste.mod.gg/documents').send(error)
         let hastewith = new MessageEmbed()
           .addField("Input", `\`\`\`js\n${codein}\`\`\``)
-          .addField(`Error`, `https://hastebin.com/${body.key}.js`)
+          .addField(`Error`, `https://paste.mod.gg/${body.key}.js`)
         output = await message.channel.send(hastewith)
       } else {
         let nohaste = new MessageEmbed()
