@@ -43,7 +43,7 @@
     "mal-scraper": "^2.11.2",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
-    "node-html-parser": "^2.0.0",
+    "node-html-parser": "^2.0.1",
     "one-liner-joke": "^1.2.0",
     "onecolor": "^3.1.0",
     "opusscript": "0.0.7",
@@ -57,7 +57,7 @@
     "sodium": "^3.0.2",
     "string-progressbar": "^1.0.1",
     "superagent": "^6.1.0",
-    "ws": "^7.4.1",
+    "ws": "^7.4.2",
     "youtube-sr": "^2.0.5",
     "yt-search": "^2.5.1",
     "ytdl-core": "^4.2.1"
