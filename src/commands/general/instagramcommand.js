@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const axios = require("axios");
+const fetch = require('node-fetch')
 
 module.exports = {
   name: "instagram",
@@ -17,9 +17,10 @@ module.exports = {
       if (!username) return message.channel.send(`You must input some instagram username`)
 
       var fetchmsg = await message.channel.send(`Fetching Data <a:LoadingFetch:785715659727175731>`)
+      message.channel.startTyping()
 
-      const response = await axios.get(`https://api.hansputera.me/instagram/${username}`);
-      const { data } = response;
+      const { results } = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
+      const data = results;
 
       const get = data.graphql.user;
 
@@ -40,9 +41,11 @@ module.exports = {
         .setDescription(`**Account Information\n\`\`\`asciidoc\n• Username  :: ${userig}\n• Fullname  :: ${fullname}\n• Biography :: ${bio}\n• Followers :: ${follower}\n• Following :: ${following}\n• Private   :: ${priv}\n\`\`\`**`);
       await message.channel.send(e);
       fetchmsg.delete()
+      message.channel.stopTyping()
     } catch (error) {
       message.channel.send("Cannot find that username or the service maintenance");
       fetchmsg.delete()
+      message.channel.stopTyping
     }
   }
 };
