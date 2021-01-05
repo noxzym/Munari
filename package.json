@@ -23,8 +23,8 @@
     "Munari"
   ],
   "dependencies": {
-    "@top-gg/sdk": "^3.0.5",
-    "alexflipnote.js": "^2.3.3",
+    "@top-gg/sdk": "^3.0.6",
+    "alexflipnote.js": "^2.3.4",
     "axios": "^0.21.1",
     "boats.js": "^2.5.0",
     "canvas": "^2.6.1",
@@ -60,14 +60,14 @@
     "ws": "^7.4.2",
     "youtube-sr": "^2.0.5",
     "yt-search": "^2.5.1",
-    "ytdl-core": "^4.3.1"
+    "ytdl-core": "^4.4.0"
   },
   "optionalDependencies": {
     "@discordjs/opus": "^0.3.3",
     "bufferutil": "^4.0.3",
     "erlpack": "github:discord/erlpack",
     "libsodium-wrappers": "^0.7.8",
-    "utf-8-validate": "^5.0.3",
+    "utf-8-validate": "^5.0.4",
     "zlib-sync": "^0.1.7"
   }
 }
