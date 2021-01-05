@@ -4,12 +4,12 @@ const axios = require("axios");
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],
-  category: "",
+  category: "General",
   descriptions: "Display instagram information",
   usage: "instagram <username>",
   options: [""],
   cooldown: "8",
-  ownerOnly: true,
+  ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
     try {
@@ -18,7 +18,7 @@ module.exports = {
 
       var fetchmsg = await message.channel.send(`Fetching Data <a:LoadingFetch:785715659727175731>`)
 
-      const response = await axios.get(`https://lab.hanifdwyputra.xyz/api/instagram/${username}`);
+      const response = await axios.get(`https://api.hansputera.me/instagram/${username}`);
       const { data } = response;
 
       const get = data.graphql.user;
