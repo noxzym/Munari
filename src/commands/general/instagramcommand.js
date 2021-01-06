@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
-const { createCanvas, loadImage } = require('canvas');
+const { registerFont, createCanvas, loadImage } = require('canvas');
 
 module.exports = {
   name: "instagram",
@@ -19,7 +19,7 @@ module.exports = {
 
       message.channel.startTyping()
 
-      const { results } = await fetch(`https://api.hansputera.me/instagram/${username.replace('--nocanvas', '')}`).then(x => x.json())
+      const { results } = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
       const data = results;
 
       const get = data.graphql.user;
@@ -135,6 +135,7 @@ module.exports = {
 
       }
     } catch (error) {
+      console.log(error)
       message.channel.send("Cannot find that username or the service maintenance");
       message.channel.stopTyping()
     }
