@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
-const { createCanvas, loadImage } = require('canvas');
+const { registerFont, createCanvas, loadImage } = require('canvas');
 
 module.exports = {
   name: "instagram",
