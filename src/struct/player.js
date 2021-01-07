@@ -97,7 +97,7 @@ module.exports = {
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
 
-            song.url.includes("youtube.com") ? client.channels.cache.get(queue.textChannel).send(embed) : client.channels.cache.get(queue.textChannel).send(embedunk)
+            song.url.includes("youtube.com") ? await message.client.channels.cache.get(queue.textChannel).send(embed) : await message.client.channels.cache.get(queue.textChannel).send(embedunk)
 
         } catch (e) {
             console.error(e)

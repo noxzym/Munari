@@ -39,7 +39,7 @@ module.exports = {
 
         if (queue) {
             queue.songs.push(...newsong)
-            return queue.textChannel.send(e)
+            return client.channels.cache.get(queue.textChannel).send(e)
         }
 
         message.client.queue.set(message.guild.id, queueConstruct);

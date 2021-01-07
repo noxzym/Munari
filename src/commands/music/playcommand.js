@@ -155,7 +155,7 @@ module.exports = {
 
       if (serverQueue) {
         serverQueue.songs.push(song);
-        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester}\`** Has been added to queue!`);
+        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`);
       }
 
       const queueConstruct = {
