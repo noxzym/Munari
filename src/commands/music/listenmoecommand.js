@@ -22,36 +22,59 @@ module.exports = {
         if (message.content.includes('--kpop')) {
             song = {
                 title: 'Korean pop by Listen.Moe',
-                url: 'https://listen.moe/kpop/stream',
+                identifier: 'Kpop',
+                author: 'Listen.Moe',
                 duration: "◉ LIVE",
-                thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
                 nowplaying: 0,
-                requester: `${message.author.tag}`,
-                channel: 'Listen.Moe'
+                url: 'https://listen.moe/kpop/stream',
+                thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
+                requester: {
+                    id: message.author.id,
+                    flags: message.author.flags,
+                    username: message.author.username,
+                    bot: message.author.bot,
+                    discriminator: message.author.discriminator,
+                    tag: message.author.tag,
+                    avatar: message.author.avatar,
+                    lastMessageID: message.author.lastMessageID,
+                    lastMessageChannelID: message.author.lastMessageChannelID
+                },
             };
         } else {
             song = {
                 title: 'Japanese pop by Listen.Moe',
-                url: 'https://listen.moe/stream',
+                identifier: 'Jpop',
+                channel: 'Listen.Moe',
                 duration: "◉ LIVE",
-                thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
                 nowplaying: 0,
-                requester: `${message.author.tag}`,
-                channel: 'Listen.Moe'
+                url: 'https://listen.moe/stream',
+                thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
+                requester: {
+                    id: message.author.id,
+                    flags: message.author.flags,
+                    username: message.author.username,
+                    bot: message.author.bot,
+                    discriminator: message.author.discriminator,
+                    tag: message.author.tag,
+                    avatar: message.author.avatar,
+                    lastMessageID: message.author.lastMessageID,
+                    lastMessageChannelID: message.author.lastMessageChannelID
+                },
             };
         }
 
         if (queue) {
             queue.songs.push(song)
-            return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester}\`** Has been added to queue!`);
+            return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`);
         }
 
         const queueConstruct = {
-            textChannel: message.channel,
-            voiceChannel: channel,
+            textChannel: message.channel.id,
+            voiceChannel: channel.id,
+            guildId: message.guild.id,
+            songs: [],
             connection: null,
             loop: false,
-            songs: [],
             volume: 100,
             playing: true
         };

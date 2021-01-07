@@ -66,18 +66,18 @@ module.exports = {
         const current = queue.slice(i + 1, k + 1);
         let j = i
         k += 5
-        const inf = current.map((x) => `**${++j} • [${x.title}](${x.url}) \`【${x.requester}】\`**`).join('\n')
+        const inf = current.map((x) => `**${++j} • [${x.title}](${x.url}) \`【${x.requester.username}】\`**`).join('\n')
 
         let e = new MessageEmbed()
           .setColor('ff0000')
           .setAuthor("Youtube Client Queue", 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
           .setThumbnail(queue[0].thumbnail)
-          .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${inf}`)
+          .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester.username}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${inf}`)
           .setTimestamp();
 
         if (queue.length === 1) {
           e.setDescription(
-            `** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo song in here? use **\`m!play <song[title/url]>\`**`
+            `** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester.username}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\nNo song in here? use **\`m!play <song[title/url]>\`**`
           )
         }
         embeds.push(e)

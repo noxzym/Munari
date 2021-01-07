@@ -10,7 +10,7 @@ module.exports = {
                     message.guild.me.voice.channel
                 ) {
                     message.guild.me.voice.channel.leave();
-                    queue.textChannel
+                    client.channels.cache.get(queue.textChannel)
                         .send("I have disconnected")
                         .then(msg => {
                             msg.delete({ timeout: 5000 });
@@ -19,7 +19,7 @@ module.exports = {
                 } else return;
             }, 120000);
             message.client.queue.delete(message.guild.id);
-            return queue.textChannel
+            return client.channels.cache.get(queue.textChannel)
                 .send(
                     "Music queue ended, I'll disconnect in 2 minutes if no songs are playing"
                 )
@@ -97,7 +97,7 @@ module.exports = {
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
 
-            song.url.includes("youtube.com") ? queue.textChannel.send(embed) : queue.textChannel.send(embedunk)
+            song.url.includes("youtube.com") ? client.channels.cache.get(queue.textChannel).send(embed) : client.channels.cache.get(queue.textChannel).send(embedunk)
 
         } catch (e) {
             console.error(e)

@@ -20,7 +20,7 @@ module.exports = {
 
       queue.songs = [];
       queue.connection.dispatcher.end();
-      queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has stopped the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+      client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has stopped the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
     } catch (e) {
       console.log(e)

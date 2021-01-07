@@ -24,7 +24,7 @@ module.exports = {
 
         queue.playing = true
         await queue.connection.dispatcher.resume(true);
-        return queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has resumed the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+        return client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has resumed the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
       } catch (e) {
         console.error();
         message.channel.send(`Sorry i get ${e} when execute this command`)

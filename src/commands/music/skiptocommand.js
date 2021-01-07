@@ -25,6 +25,8 @@ module.exports = {
       if (isNaN(amount))
         return message.reply('Please input number queue')
 
+      if ( amount < 1 ) return message.channel.send(`Please input the correct song number`)
+
       if (amount > queue.songs.length) return message.reply(`The queue only have ${queue.songs.length} Songs!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
       queue.playing = true;
@@ -36,7 +38,7 @@ module.exports = {
         queue.songs = queue.songs.slice(amount - 1);
       }
       queue.connection.dispatcher.end();
-      queue.textChannel.send(`<a:yes:765207711423004676> | ${message.author} has skipped ${amount - 1} songs`).catch(console.error);
+      client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has skipped ${amount - 1} songs`).catch(console.error);
     } catch (e) {
       console.log(e)
     }

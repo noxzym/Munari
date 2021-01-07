@@ -18,7 +18,7 @@ module.exports = {
       if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
       queue.loop = !queue.loop;
-      return queue.textChannel
+      return client.channels.cache.get(queue.textChannel)
         .send(`<a:yes:765207711423004676> | Loop is now ${queue.loop ? `**\`On\`**` : `**\`Off\`**`}`).then(msg => { msg.delete({ timeout: 5000 }) })
         .catch(console.error);
     } catch (e) {

@@ -29,7 +29,7 @@ module.exports = {
       queue.volume = args[0];
       queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
 
-      queue.textChannel.send(`Volume set to: **${args[0]}%**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+      client.channels.cache.get(queue.textChannel).send(`Volume set to: **${args[0]}%**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
     } catch (e) {
       console.log(e)

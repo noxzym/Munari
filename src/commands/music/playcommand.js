@@ -66,12 +66,22 @@ module.exports = {
           const infoSong = await yts(songInfo.videoDetails.title)
           song = {
             title: Util.escapeMarkdown(infoSong.all[0].title),
-            url: infoSong.all[0].url,
+            identifier: infoSong.all[0].videoId,
+            author: infoSong.all[0].author.name,
             duration: infoSong.all[0].timestamp,
-            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
             nowplaying: infoSong.all[0].seconds,
-            requester: `${message.author.tag}`,
-            channel: infoSong.all[0].author.name
+            url: infoSong.all[0].url,
+            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
+            requester: {
+              id: message.author.id,
+              flags: message.author.flags,
+              username: message.author.username,
+              bot: message.author.bot,
+              discriminator: message.author.discriminator,
+              avatar: message.author.avatar,
+              lastMessageID: message.author.lastMessageID,
+              lastMessageChannelID: message.author.lastMessageChannelID
+            },
           };
         } catch (e) {
           console.log(e);
@@ -118,12 +128,22 @@ module.exports = {
           const vid = infoSong.all[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
-            url: vid.url,
+            identifier: vid.videoId,
+            author: vid.author.name,
             duration: vid.timestamp,
             nowplaying: vid.seconds,
+            url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: `${message.author.tag}`,
-            channel: vid.author.name
+            requester: {
+              id: message.author.id,
+              flags: message.author.flags,
+              username: message.author.username,
+              bot: message.author.bot,
+              discriminator: message.author.discriminator,
+              avatar: message.author.avatar,
+              lastMessageID: message.author.lastMessageID,
+              lastMessageChannelID: message.author.lastMessageChannelID
+            },
           };
         } catch (e) {
           console.log(e);
@@ -135,12 +155,22 @@ module.exports = {
           const vid = infoSong.all[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
-            url: vid.url,
+            identifier: vid.videoId,
+            author: vid.author.name,
             duration: vid.timestamp,
-            nowplaying: vid.seconds,
+            nowplaying:vid.seconds,
+            url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: `${message.author.tag}`,
-            channel: vid.author.name
+            requester: {
+              id: message.author.id,
+              flags: message.author.flags,
+              username: message.author.username,
+              bot: message.author.bot,
+              discriminator: message.author.discriminator,
+              avatar: message.author.avatar,
+              lastMessageID: message.author.lastMessageID,
+              lastMessageChannelID: message.author.lastMessageChannelID
+            },
           };
         } catch (e) {
           console.error();
@@ -156,11 +186,12 @@ module.exports = {
       }
 
       const queueConstruct = {
-        textChannel: message.channel,
-        voiceChannel: channel,
+        textChannel: message.channel.id,
+        voiceChannel: channel.id,
+        guildId: message.guild.id,
+        songs: [],
         connection: null,
         loop: false,
-        songs: [],
         volume: 100,
         playing: true
       };
