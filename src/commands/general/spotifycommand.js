@@ -48,8 +48,6 @@ module.exports = {
 
         if (message.content.includes('--card')) {
             registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
-            registerFont('regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
-            registerFont('bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
             const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
 
             const canvas = createCanvas(800, 240);

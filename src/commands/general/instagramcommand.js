@@ -1,6 +1,7 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
+registerFont('nishiki-teki.ttf', { family: 'Open Sans' })
 
 module.exports = {
   name: "instagram",
@@ -33,7 +34,6 @@ module.exports = {
       const thm = get.profile_pic_url_hd
 
       if (!message.content.includes('--nocanvas')) {
-        registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
         const canvas = createCanvas(1200, 1200)
         const ctx = canvas.getContext('2d')
 
@@ -70,42 +70,42 @@ module.exports = {
         ctx.strokeStyle = '#7e7e7e';
         ctx.stroke();
 
-        ctx.font = "bold 45px Noto Serif JP";
+        ctx.font = "bold 45px Open Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(fullname, 100, 520);
 
-        ctx.font = "40px Noto Serif JP";
+        ctx.font = "40px Open Sans";
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillText(bio, 100, 650);
+        await wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 80)
 
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        ctx.font = "bold 45px Noto Serif JP";
+        ctx.font = "bold 45px Open Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(userig, 600, 80);
 
-        ctx.font = "bold 50px Noto Serif JP";
+        ctx.font = "bold 50px Open Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(post), 500, 330);
 
-        ctx.font = "30px Noto Serif JP";
+        ctx.font = "30px Open Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Posts", 500, 400);
 
-        ctx.font = "bold 50px Noto Serif JP";
+        ctx.font = "bold 50px Open Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(follower), 725, 330);
 
-        ctx.font = "30px Noto Serif JP";
+        ctx.font = "30px Open Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Followers", 725, 400);
 
-        ctx.font = "bold 50px Noto Serif JP";
+        ctx.font = "bold 50px Open Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(following), 1000, 330);
 
-        ctx.font = "30px Noto Serif JP";
+        ctx.font = "30px Open Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Following", 1000, 400);
 
@@ -141,6 +141,7 @@ module.exports = {
     }
   }
 };
+
 function numberformat(num) {
   var si = [
     { value: 1, symbol: "" },
@@ -161,3 +162,20 @@ function numberformat(num) {
   return (num / si[i].value).toFixed(1).replace(rx, "$1") + si[i].symbol;
 }
 
+function wraptext(ctx, text, x, y, max, height) {
+  let words = text.split(' ');
+  let line = '';
+  for (var n = 0; n < words.length; n++) {
+    var testLine = line + words[n] + ' ';
+    var metrics = ctx.measureText(testLine);
+    var testWidth = metrics.width;
+    if (testWidth > max && n > 0) {
+      ctx.fillText(line, x, y);
+      line = words[n] + ' ';
+      y += height
+    } else {
+      line = testLine
+    }
+  }
+  ctx.fillText(line, x, y)
+}
