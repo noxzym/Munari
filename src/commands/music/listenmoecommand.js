@@ -28,38 +28,18 @@ module.exports = {
                 nowplaying: 0,
                 url: 'https://listen.moe/kpop/stream',
                 thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
-                requester: {
-                    id: message.author.id,
-                    flags: message.author.flags,
-                    username: message.author.username,
-                    bot: message.author.bot,
-                    discriminator: message.author.discriminator,
-                    tag: message.author.tag,
-                    avatar: message.author.avatar,
-                    lastMessageID: message.author.lastMessageID,
-                    lastMessageChannelID: message.author.lastMessageChannelID
-                },
+                requester: message.author
             };
         } else {
             song = {
                 title: 'Japanese pop by Listen.Moe',
                 identifier: 'Jpop',
-                channel: 'Listen.Moe',
+                author: 'Listen.Moe',
                 duration: "◉ LIVE",
                 nowplaying: 0,
                 url: 'https://listen.moe/stream',
                 thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
-                requester: {
-                    id: message.author.id,
-                    flags: message.author.flags,
-                    username: message.author.username,
-                    bot: message.author.bot,
-                    discriminator: message.author.discriminator,
-                    tag: message.author.tag,
-                    avatar: message.author.avatar,
-                    lastMessageID: message.author.lastMessageID,
-                    lastMessageChannelID: message.author.lastMessageChannelID
-                },
+                requester: message.author
             };
         }
 
