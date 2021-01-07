@@ -7,20 +7,22 @@ module.exports = {
         const newsong = g.videos.map((x) => {
             return (song = {
                 title: Util.escapeMarkdown(x.title),
-                url: `https://youtube.com/watch?v=${x.id}`,
+                identifier: x.id,
+                author: x.channel.name,
                 duration: x.durationFormatted,
                 nowplaying: x.duration / 1000,
+                url: `https://youtube.com/watch?v=${x.id}`,
                 thumbnail: `https://i.ytimg.com/vi/${x.thumbnail.id}/hq720.jpg?size=4096`,
-                requester: `${message.author.tag}`,
-                channel: x.channel.name
+                requester: message.author
             })
         })
         const queueConstruct = {
-            textChannel: message.channel,
-            voiceChannel: channel,
+            textChannel: message.channel.id,
+            voiceChannel: channel.id,
+            guildId: message.guild.id,
+            songs: [],
             connection: null,
             loop: false,
-            songs: [],
             volume: 100,
             playing: true
         };

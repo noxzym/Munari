@@ -85,7 +85,7 @@ module.exports = {
                 .setColor('ff0000')
                 .setAuthor(`Youtube Client`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
+                .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.author}\`**`)
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
 
@@ -93,7 +93,7 @@ module.exports = {
                 .setColor('1d1f2b')
                 .setAuthor(`Listen.moe`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
                 .setThumbnail('https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
-                .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.channel}\`**`)
+                .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.author}\`**`)
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
 

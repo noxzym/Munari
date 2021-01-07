@@ -72,16 +72,7 @@ module.exports = {
             nowplaying: infoSong.all[0].seconds,
             url: infoSong.all[0].url,
             thumbnail: infoSong.all[0].thumbnail + "?size=4096",
-            requester: {
-              id: message.author.id,
-              flags: message.author.flags,
-              username: message.author.username,
-              bot: message.author.bot,
-              discriminator: message.author.discriminator,
-              avatar: message.author.avatar,
-              lastMessageID: message.author.lastMessageID,
-              lastMessageChannelID: message.author.lastMessageChannelID
-            },
+            requester: message.author
           };
         } catch (e) {
           console.log(e);
@@ -134,16 +125,7 @@ module.exports = {
             nowplaying: vid.seconds,
             url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: {
-              id: message.author.id,
-              flags: message.author.flags,
-              username: message.author.username,
-              bot: message.author.bot,
-              discriminator: message.author.discriminator,
-              avatar: message.author.avatar,
-              lastMessageID: message.author.lastMessageID,
-              lastMessageChannelID: message.author.lastMessageChannelID
-            },
+            requester: message.author
           };
         } catch (e) {
           console.log(e);
@@ -161,16 +143,7 @@ module.exports = {
             nowplaying:vid.seconds,
             url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: {
-              id: message.author.id,
-              flags: message.author.flags,
-              username: message.author.username,
-              bot: message.author.bot,
-              discriminator: message.author.discriminator,
-              avatar: message.author.avatar,
-              lastMessageID: message.author.lastMessageID,
-              lastMessageChannelID: message.author.lastMessageChannelID
-            },
+            requester: message.author
           };
         } catch (e) {
           console.error();
