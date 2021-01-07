@@ -26,7 +26,7 @@ module.exports = {
         message.client.queue.set(message.guild.id, queue);
 
         await client.channels.cache.get(queue.textChannel)
-            .send(`<a:yes:765207711423004676> | ${user} has shuffled the queue!`)
+            .send(`<a:yes:765207711423004676> | ${songs[0].requester.username} has shuffled the queue!`)
             .then(msg => { msg.delete({ timeout: 5000 }); })
             .catch(console.error);
     }
