@@ -9,7 +9,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const { channel } = message.mmember.voice;
+        const { channel } = message.member.voice;
         if (!channel) return message.reply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
 
         const queue = client.queue.get(message.guild.id)
