@@ -2,6 +2,9 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "guildCreate",
   async run(client, guild) {
+
+    if (guild.members.cache.filter(x => !x.user.bot).size < 30) return await guild.leave()
+
     const sname = guild.name
       .toLowerCase()
       .split(" ")
