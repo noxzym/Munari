@@ -3,7 +3,7 @@ module.exports = {
     name: 'messageUpdate',
     run: async function (client, oldMessage, newMessage) {
         if (newMessage === oldMessage) return
-        if (oldMessage.guild.id !== '770540956163899423') return
+        if (newMessage === undefined) return
 
         let getfirst = newMessage.content,
             filterfirst = getfirst.split(' ')[0],
