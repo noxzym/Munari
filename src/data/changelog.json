@@ -1,0 +1,42 @@
+{
+    "data": {
+        "all": [
+            {
+                "date": "9 January 2021",
+                "content": [
+                    "- Support execute command by edited message",
+                    "- Add changelog command to see latest update"
+                ]
+            },
+            {
+                "date": "8 Januari 2021",
+                "content": [
+                    "- Fix emoji command",
+                    "- To invite this bot, the server must have minimal have 30 user (not bot)",
+                    "- Fix error in shufflecommand"
+                ]
+            },
+            {
+                "date": "7 January 2021",
+                "content": [
+                    "- Update listenmoecommand",
+                    "- Fix unsupported fonts",
+                    "- Add canvas service in Instagramcommand, you can add '--nocanvas' to display without canvas"
+                ]
+            },
+            {
+                "date": "5 January 2021",
+                "content": [
+                    "- Change structure of Instagramcommand",
+                    "- Reactivate Instagramcommand"
+                ]
+            },
+            {
+                "date": "1 January 2021",
+                "content": [
+                    "- Happy new year!"
+                ]
+            }
+        ]
+    }
+}
