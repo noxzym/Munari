@@ -11,8 +11,7 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(bot, message, args) {
-
-    const prefix = 'm!';
+    const prefix = bot.config.prefix
     const cmdArgs = args.join(" ")
 
     if (cmdArgs) {

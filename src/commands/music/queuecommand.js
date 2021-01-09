@@ -16,7 +16,6 @@ module.exports = {
       try {
         let page = 0;
         const embeds = geneembed(message, queue.songs);
-        let e = new MessageEmbed()
         const embed = await message.channel.send(embeds[page])
         await embed.react("⬅️");
         await embed.react("❎");
