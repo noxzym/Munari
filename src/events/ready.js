@@ -17,7 +17,7 @@ module.exports = {
             let random = Math.floor(Math.random() * status.length)
             let randomtp = Math.floor(Math.random() * type.length)
             client.user.setActivity(status[random], { type: type[randomtp] });
-        }, 20000);
+        }, 60 * 1000 * 30);
         setInterval(() => {
 
             client.dbl.postStats({

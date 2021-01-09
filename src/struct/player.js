@@ -4,13 +4,13 @@ module.exports = {
     async play(song, message, client) {
         const queue = message.client.queue.get(message.guild.id);
         if (!song) {
-            setTimeout(function () {
+            setTimeout(async function () {
                 if (
                     !queue.connection.dispatcher &&
                     message.guild.me.voice.channel
                 ) {
                     message.guild.me.voice.channel.leave();
-                    client.channels.cache.get(queue.textChannel)
+                    await message.client.channels.cache.get(queue.textChannel)
                         .send("I have disconnected")
                         .then(msg => {
                             msg.delete({ timeout: 5000 });
@@ -19,7 +19,7 @@ module.exports = {
                 } else return;
             }, 120000);
             message.client.queue.delete(message.guild.id);
-            return client.channels.cache.get(queue.textChannel)
+            return await message.client.channels.cache.get(queue.textChannel)
                 .send(
                     "Music queue ended, I'll disconnect in 2 minutes if no songs are playing"
                 )

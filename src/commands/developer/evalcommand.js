@@ -47,7 +47,7 @@ module.exports = {
 
       var output;
 
-      if (outputcode.length >= 1024) {
+      if (outputcode.length > 1024) {
 
         const { body } = await req.post('https://paste.mod.gg/documents').send(outputcode)
         let withhaste = new MessageEmbed()
