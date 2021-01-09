@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
-registerFont('nishiki-teki.ttf', { family: 'Open Sans' })
-
+registerFont('src/data/fonts/nishiki-teki.ttf', { family: 'Open Sans' })
+// registerFont('/users/user/Desktop/Munari Bot/MunariHeroku/src/data/fonts/nishiki-teki.ttf', { family: 'Open Sans' })
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],

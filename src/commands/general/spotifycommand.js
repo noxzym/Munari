@@ -5,6 +5,8 @@ const colorThief = new ColorThief();
 const onecolor = require('onecolor');
 const fetch = require('node-fetch')
 const convert = require('parse-ms');
+registerFont('src/data/fonts/nishiki-teki.ttf', { family: 'Noto Serif JP' })
+// registerFont('/users/user/Desktop/Munari Bot/MunariHeroku/src/data/fonts/nishiki-teki.ttf', { family: 'Noto Serif JP' })
 module.exports = {
     name: "spotify",
     aliases: ["sp"],
@@ -47,7 +49,6 @@ module.exports = {
         const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
 
         if (message.content.includes('--card')) {
-            registerFont('notoserifblack.otf', { family: 'Noto Serif JP' })
             const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
 
             const canvas = createCanvas(800, 240);
