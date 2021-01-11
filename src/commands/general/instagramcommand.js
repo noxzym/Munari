@@ -2,7 +2,7 @@ const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
 const path = require('path')
-// registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
+registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],
