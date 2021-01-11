@@ -1,7 +1,8 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~PACKAGE REQUIREMENT CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
 require('dotenv').config()
-const Discord = require("discord.js");
-const Munari = require('./struct/Client');
+require('./extended/InlineReply')
+require('./extended/Message')
+const Munari = require('./extended/Client');
 const client = new Munari({
   token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
   // token: 'NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM',

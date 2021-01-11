@@ -2,6 +2,7 @@ const { run } = require('./message')
 module.exports = {
     name: 'messageUpdate',
     run: async function (client, oldMessage, newMessage) {
+        // if ((newMessage.guild.id || oldMessage.guild.id) !== '770540956163899423') return
         if (newMessage === oldMessage) return
         if (newMessage === undefined) return
 
@@ -22,15 +23,7 @@ module.exports = {
             let message = newMessage || newMessage.member.voice;
             let args = join.replace(filter, '');
 
-            let messageid = await run(client, message, args);
-            // console.log(messageid)
-
-            // let messages = await newMessage.channel.messages.fetch()
-            // if (!messages) return
-            // let deleteit = messages.filter(x => x.author.id === client.user.id && x.id === messageid.id).first()
-            // if (!deleteit) return
-            // console.log(`${messages}, ${deleteit}`)
-            // deleteit.suppressEmbeds().then(x => { x.delete() })
+            await run(client, message, args);
         }
     }
 }

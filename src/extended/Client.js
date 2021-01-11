@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 
-module.exports = class extends Client {
+module.exports = class MunariClient extends Client {
     constructor(config) {
         super({
             disableMentions: "everyone",
@@ -32,8 +32,6 @@ module.exports = class extends Client {
         this.cooldowns = new Collection();
 
         this.queue = new Map();
-
-        this.vote = new Map();
 
         this.config = config;
 
