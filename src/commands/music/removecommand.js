@@ -14,18 +14,17 @@ module.exports = {
       const botChannel = message.member.guild.me.voice.channel;
 
       if (channel !== botChannel) {
-        return message.reply("You need to join the voice channel first!").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
+        return message.inlineReply("You need to join the voice channel first!").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
       }
       const queue = client.queue.get(message.guild.id);
-      if (!queue) return message.reply("There is nothing playing.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
+      if (!queue) return message.inlineReply("There is nothing playing.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
         
-    const prefix = 'm!'
-    if (!queue) return message.channel.send("There is no queue.").then(msg=>{msg.delete({timeout: 5000})}).catch(console.error);
+    const prefix = client.config.prefix
     
-    if (!args.length && isNaN(args[0])) return message.reply(prefix + this.usage);
-    if (args[0] < 1) return (`Please input the correct song number`)
+    if (!args.length && isNaN(args[0])) return message.inlineReply(prefix + this.usage);
+    if (args[0] < 1) return message.inlineReply(`Please input the correct song number`)
     const song = queue.songs.splice(args[0], 1);
-    queue.textChannel.send(`<a:yes:765207711423004676> | Remove ${song[0].title} from queue Successful!`).then(msg=>{msg.delete({timeout: 5000})});
+    client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | Remove ${song[0].title} from queue Successful!`).then(msg=>{msg.delete({timeout: 5000})});
       
       }catch (e) {
         console.log(e)
