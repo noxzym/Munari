@@ -7,7 +7,7 @@ module.exports = {
   category: "Utility",
   descriptions: "Display server informations",
   usage: "serverinfo",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

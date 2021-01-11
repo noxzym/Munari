@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require("discord.js");
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "color",
-  aliases: [""],
+  aliases: null,
   category: "General",
   descriptions: "Show you color of hexcolor code",
   usage: "color [hexcode]",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
@@ -14,7 +14,7 @@ module.exports = {
     const { others } = new alex(client.config.alexapi)
 
     const input = args.join(' ')
-    if(!input) return message.channel.send(`Usage: **\`m!color hex\`**`)
+    if (!input) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const data = await others.color(input.replace('#', ''))
     const hex = data.hex

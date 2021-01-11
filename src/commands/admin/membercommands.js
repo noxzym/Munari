@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: "member",
-    aliases: [""],
+    aliases: null,
     category: "Administration",
     descriptions: "Setting member",
     usage: "member <member[mention/id]> <argumen>",
@@ -21,8 +21,8 @@ module.exports = {
                 .setFooter(`Note: Don't input <> or []. It's meaning <> is required and [] is optional`)
             return message.channel.send(e)
         }
-        if (!message.guild.me.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
-        if (!message.member.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`)
+        if (!message.guild.me.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (!message.member.hasPermission('KICK_MEMBERS' || 'BAN_MEMBERS' || 'MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`MANANGE_ROLES\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         let reason = args.slice(1).join(' ');
         if (!reason) {
@@ -37,11 +37,11 @@ module.exports = {
         ) {
             return message.channel.send(
                 `My Highest role must be higher than **\`${member.user.username}\`** highest role!`
-            );
+            ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
 
         if (message.content.includes('--mute')) {
-            if (member.hasPermission('ADMINISTRATOR')) return message.channel.send(`This member has permission **\`ADMINISTRATOR\`**`)
+            if (member.hasPermission('ADMINISTRATOR')) return message.channel.send(`This member has permission **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
             try {
                 let muteRole = message.guild.roles.cache.find(r => r.name === "MunaMute");
                 if (!muteRole) {
@@ -70,7 +70,7 @@ module.exports = {
                 });
 
                 if (member.roles.cache.some(r => muteRole.id === r.id)) {
-                    return message.channel.send(`${member} Has been muted`);
+                    return message.channel.send(`${member} Has been muted`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
                 }
                 try {
                     var react = await message.channel.send(

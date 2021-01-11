@@ -2,11 +2,11 @@ const Discord = require("discord.js");
 const superagent = require("superagent");
 module.exports = {
   name: "fact",
-  aliases: [""],
+  aliases: null,
   category: "Fun",
   descriptions: "fact command",
   usage: "fact",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

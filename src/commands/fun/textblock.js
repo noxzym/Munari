@@ -1,12 +1,10 @@
-const { MessageEmbed } = require("discord.js");
-
 module.exports = {
   name: "textblock",
-  aliases: [""],
+  aliases: null,
   category: "Fun",
   descriptions: "change text/number to textblokc",
   usage: "textblock [text/number]",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

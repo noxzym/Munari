@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlazeDexX/MunariHeroku.git"
+    "url": "https://github.com/BlazeDexX/MunariHeroku.git"
   },
   "license": "MIT",
   "author": "DexX",
@@ -50,7 +50,6 @@
     "os": "^0.1.1",
     "parse-ms": "^2.1.0",
     "path": "^0.12.7",
-    "random-puppy": "^1.1.0",
     "redis": "^3.0.2",
     "request": "^2.88.2",
     "snekfetch": "^4.0.4",

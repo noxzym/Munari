@@ -32,11 +32,11 @@ module.exports = {
     if (!permissions.has("CONNECT"))
       return message.channel.send(
         "I cannot connect to your voice channel"
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     if (!permissions.has("SPEAK"))
       return message.channel.send(
         "I cannot speak in this voice channel"
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
       return message.inlineReply(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
@@ -76,12 +76,12 @@ module.exports = {
           };
         } catch (e) {
           console.log(e);
-          return message.channel.send("I could not find any videos that match that link");
+          return message.channel.send("I could not find any videos that match that link").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       } else if (message.content.includes('--find')) {
         try {
           var searcher = await ytsr.search(search, { limit: 5 });
-          if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`)
+          if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
           let index = 0;
           let em = new MessageEmbed()
             .setColor('ff0000')
@@ -129,7 +129,7 @@ module.exports = {
           };
         } catch (e) {
           console.log(e);
-          return message.channel.send("I could not find any videos that match that title");
+          return message.channel.send("I could not find any videos that match that title").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       } else {
         try {
@@ -147,7 +147,7 @@ module.exports = {
           };
         } catch (e) {
           console.error();
-          message.channel.send(`I could not find any videos that match that title`)
+          message.channel.send(`I could not find any videos that match that title`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       }
 
@@ -155,7 +155,7 @@ module.exports = {
 
       if (serverQueue) {
         serverQueue.songs.push(song);
-        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`);
+        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`)
       }
 
       const queueConstruct = {
@@ -178,7 +178,7 @@ module.exports = {
         await queueConstruct.connection.voice.setSelfDeaf(true);
         play(queueConstruct.songs[0], message, client);
       } catch (error) {
-        console.error(`I could not join the voice channel: ${error}`);
+        console.error(`I could not join the voice channel: ${error}`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         message.client.queue.delete(message.guild.id);
         await channel.leave();
         return message.channel

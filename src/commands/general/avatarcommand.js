@@ -5,7 +5,7 @@ module.exports = {
   category: "General",
   descriptions: "Display avatar of use",
   usage: "avatar [user]",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

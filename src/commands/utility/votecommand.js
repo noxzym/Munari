@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const { get } = require('axios')
 module.exports = {
     name: "vote",
-    aliases: [""],
+    aliases: null,
     category: "Utility",
     descriptions: "Vote me",
     usage: "vote",
-    options: [""],
+    options: null,
     cooldown: "",
     ownerOnly: false,
     guildOnly: true,

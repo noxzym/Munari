@@ -5,7 +5,7 @@ module.exports = {
     category: "",
     descriptions: "Pay the respect",
     usage: "respect [user]",
-    options: [""],
+    options: null,
     cooldown: "10",
     ownerOnly: true,
     guildOnly: true,

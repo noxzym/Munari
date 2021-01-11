@@ -7,7 +7,7 @@ module.exports = {
   category: "Utility",
   descriptions: "Display user informations",
   usage: "userinfo [user]",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

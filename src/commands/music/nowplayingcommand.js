@@ -6,13 +6,14 @@ module.exports = {
   category: "Music",
   descriptions: "UNDER CONSTRUCTION",
   usage: "nowplaying",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
   run: async function (client, message, args) {
     const queue = client.queue.get(message.guild.id);
     if (!queue) return message.reply("There is nothing playing.").catch(console.error);
+    
     const song = queue.songs[0];
     const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
     const nowpl = createBar((song.nowplaying == 0 ? seek : song.nowplaying), seek, 15)[0]

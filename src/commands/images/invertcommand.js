@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
     name: "invert",
-    aliases: [""],
+    aliases: null,
     category: "Image",
     descriptions: "Invert avatar color",
     usage: "invert [user]",
-    options: [""],
+    options: null,
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,

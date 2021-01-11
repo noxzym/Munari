@@ -3,11 +3,11 @@ const superagent = require("superagent");
 
 module.exports = {
   name: "bird",
-  aliases: [""],
+  aliases: null,
   category: "Animal",
   descriptions: "Give you random a bird picture",
   usage: "bird",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

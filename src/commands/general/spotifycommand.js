@@ -25,7 +25,7 @@ module.exports = {
         message.member
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
-        if (!presence) return message.channel.send(`I can't find spotify presence, try again`)
+        if (!presence) return message.channel.send(`I can't find spotify presence, try again`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         const songname = presence.details.length <= 15 ? presence.details : presence.details.substr(0, 15).trim() + ' ...';
         const album = presence.assets.largeText.length <= 20 ? presence.assets.largeText : presence.assets.largeText.substr(0, 20).trim() + " ...";

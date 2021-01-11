@@ -5,12 +5,12 @@ module.exports = {
   category: "Administration",
   descriptions: "Send Announcement message to specific channel",
   usage: "announcement <#channel> <json embed>",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
-    if (!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_MESSAGES")) return message.channel.send(`You don't have permissions \`ADMINISTRATOR\``);
+    if (!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_MESSAGES")) return message.channel.send(`You don't have permissions \`ADMINISTRATOR\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     let data;
     try {
@@ -20,7 +20,7 @@ module.exports = {
     }
 
     let channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first()
-    if (!channel) return message.channel.send(`Please input channel first`)
+    if (!channel) return message.channel.send(`Please mentions channel first`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     channel.send({
       embed: data
     });

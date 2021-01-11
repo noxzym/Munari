@@ -2,11 +2,11 @@ const { MessageEmbed } = require("discord.js");
 const superagent = require("superagent");
 module.exports = {
   name: "blurple",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Brightniess avatar",
   usage: "blurple [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
@@ -15,8 +15,7 @@ module.exports = {
       message.guild.members.cache.get(args[0]) ||
       message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
       message.mentions.members.first() ||
-      message.member
-    if (!member) return message.channel.send(`Please mention members first`)
+      message.member;
     const { body } = await superagent.get(`https://neko-love.xyz/api/v2/blurple?url=${member.user.avatarURL({
       dynamic: false, size: 4096
     })}`

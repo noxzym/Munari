@@ -4,18 +4,18 @@ module.exports = {
     category: "Music",
     descriptions: "Shuffle queue",
     usage: "shuffle",
-    options: [""],
+    options: null,
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
         const { channel } = message.member.voice;
-        if (!channel) return message.reply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
+        if (!channel) return message.inlineReply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
 
         const queue = client.queue.get(message.guild.id)
         const songs = queue.songs
 
-        if (message.guild.me.voice.channel !== null && channel.id !== queue.voiceChannel) return message.channel.send(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
+        if (message.guild.me.voice.channel !== null && channel.id !== queue.voiceChannel) return message.inlineReply(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
 
         for (let i = songs.length - 1; i > 1; i--) {
             let j = 1 + Math.floor(Math.random() * i);

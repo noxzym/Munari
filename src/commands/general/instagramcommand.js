@@ -16,7 +16,7 @@ module.exports = {
   async run(client, message, args) {
     try {
       const username = args[0];
-      if (!username) return message.channel.send(`You must input some instagram username`)
+      if (!username) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
       message.channel.startTyping()
 
@@ -136,7 +136,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error)
-      message.channel.send("Cannot find that username or the service maintenance");
+      message.channel.send("Cannot find that username or the service maintenance").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
       message.channel.stopTyping()
     }
   }

@@ -2,11 +2,11 @@ const fetch = require("node-fetch");
 const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: "dadjoke",
-  aliases: [""],
+  aliases: null,
   category: "Fun",
   descriptions: "dadjoke Command",
   usage: "dadjoke",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

@@ -2,11 +2,11 @@ const Discord = require('discord.js')
 const joke = require('one-liner-joke').getRandomJoke
 module.exports = {
   name: "joke",
-  aliases: [""],
+  aliases: null,
   category: "Fun",
   descriptions: "Generate joke",
   usage: "joke",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

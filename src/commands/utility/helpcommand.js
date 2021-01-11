@@ -6,7 +6,7 @@ module.exports = {
   category: "Utility",
   descriptions: "Display Help Commands",
   usage: "help [commands]",
-  options: [""],
+  options: null,
   cooldown: "3",
   ownerOnly: false,
   guildOnly: true,
@@ -19,11 +19,11 @@ module.exports = {
       if (( cmd.category === 'Developer' || cmd.category === '' )) return
       if (!cmd) return
 
-      const aliases = cmd.aliases ? cmd.aliases.map((alias) => alias) : "None";
-      const options = cmd.options ? cmd.options.map((option) => option) : "None";
-      const cooldown = cmd.cooldown ? `${cmd.cooldown}s` : "None";
+      const aliases = cmd.aliases ? cmd.aliases.map((x) => x) : "-";
+      const options = cmd.options ? cmd.options.map((x) => x) : "-";
+      const cooldown = cmd.cooldown ? `${cmd.cooldown}s` : "Nothing";
       const usage = cmd.usage ? `${prefix}${cmd.usage}` : "Not specified"
-      const description = cmd.description ? cmd.description : "Not specified"
+      const description = cmd.descriptions ? cmd.descriptions : "Not specified"
 
       const embed = new Discord.MessageEmbed()
         .setColor(message.member.displayHexColor)

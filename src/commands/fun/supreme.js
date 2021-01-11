@@ -2,7 +2,7 @@ const { MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
     name: "supreme",
-    aliases: [""],
+    aliases: null,
     category: "Fun",
     descriptions: "Generate supreme message",
     usage: "supreme text",
@@ -14,8 +14,8 @@ module.exports = {
         const { image } = new alex(client.config.alexapi)
         const input = args.slice(0).join(' ')
 
-        if (!input) message.channel.send(`Please provide some text.`)
-        if (input.length > 15) return message.channel.send(`You provide text oversize`)
+        if (!input) client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (input.length > 15) return message.channel.send(`You provide text oversize`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         let img;
         if (input.includes('--dark')) {

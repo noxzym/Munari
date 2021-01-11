@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { getInfoFromName, search } = require("mal-scraper");
 module.exports = {
   name: "anime",
-  aliases: [""],
+  aliases: null,
   category: "General",
   descriptions: "Search anime by title",
   usage: "anime <title>",
@@ -12,7 +12,7 @@ module.exports = {
   guildOnly: true,
   async run(client, message, args) {
     const title = args.join(" ");
-    if (!title) return message.channel.send("Please input anime title");
+    if (!title) return message.channel.send("Please input anime title").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     var fetchmsg = await message.channel.send(`Fetching Data <a:LoadingFetch:785715659727175731>`)
 
     if (message.content.includes('--search')) {

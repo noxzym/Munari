@@ -3,11 +3,11 @@ const alex = require('alexflipnote.js')
 const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
   name: "pixel",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Make avatar picture to pixelate",
   usage: "pixel [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

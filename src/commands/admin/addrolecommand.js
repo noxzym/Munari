@@ -1,20 +1,20 @@
 const Discord = require("discord.js");
 module.exports = {
   name: "addrole",
-  aliases: [""],
+  aliases: null,
   category: "Administration",
   descriptions: "Give someone role",
   usage: "addrole [user] [role]",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
     if (!message.guild.me.permissions.has("MANAGE_ROLES"))
-      return message.channel.send(`I don't Have permissions \`MANAGE_ROLES\``);
+      return message.channel.send(`I don't Have permissions \`MANAGE_ROLES\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
-      return message.channel.send("You don't have permissions for that!");
+      return message.channel.send("You don't have permissions for that!").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const needsRole =
       message.guild.member(message.mentions.users.first()) ||
@@ -22,7 +22,7 @@ module.exports = {
       message.guild.members.cache.get(args[0]);
 
     if (!needsRole) {
-      return message.channel.send("User not found");
+      return message.channel.send("User not found").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     const role =
@@ -32,19 +32,19 @@ module.exports = {
 
 
     if (!role) {
-      return message.channel.send("Please input a valid role");
+      return message.channel.send("Please input a valid role").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (message.guild.me.roles.highest.comparePositionTo(role) < 0) {
       return message.channel.send(
         `My Highest role must be higher than **\`${role.name}\`**!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (message.member.roles.highest.comparePositionTo(role) < 0) {
       return message.channel.send(
         `Your role must be higher than **${role.name}** role!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (
@@ -54,10 +54,10 @@ module.exports = {
     )
       return message.channel.send(
         `My Highest role must be higher than **\`${needsRole.user.tag}\`** highest role!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     if (needsRole.roles.cache.some(r => role.id === r.id)) {
-      return message.channel.send("User already has that role");
+      return message.channel.send("User already has that role").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
     
     try {

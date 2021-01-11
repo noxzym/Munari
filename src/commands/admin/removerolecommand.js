@@ -5,7 +5,7 @@ module.exports = {
   category: "Administration",
   descriptions: "Remove someone role by mention or id",
   usage: "removerole <user> <role>",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
@@ -13,14 +13,14 @@ module.exports = {
     if (!message.guild.me.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
       return message.channel.send(
         `I don't Have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     if (!message.guild.me.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
       return message.channel.send(
         `I don't Have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
-      return message.channel.send("You don't have permissions for that!");
+      return message.channel.send("You don't have permissions for that!").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const needsRole =
       message.guild.member(message.mentions.users.first()) ||
@@ -28,34 +28,32 @@ module.exports = {
       message.guild.members.cache.get(args[0]);
 
     if (!needsRole) {
-      return message.channel.send("User not found");
+      return message.channel.send("User not found").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     const role =
-      message.guild.roles.cache.find(
-        role => role.name === args.join(" ").slice(23)
-      ) ||
+      message.guild.roles.cache.find(role => role.name === args.join(" ").slice(23)) ||
       message.mentions.roles.first() ||
       message.guild.roles.cache.get(args.join(" ").slice(23));
 
     if (!needsRole) {
-      return message.channel.send("User not found");
+      return message.channel.send("User not found").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (!role) {
-      return message.channel.send("Please input a valid role");
+      return message.channel.send("Please input a valid role").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (message.guild.me.roles.highest.comparePositionTo(role) < 0) {
       return message.channel.send(
         `My Highest role must be higher than **\`${role.name}\`**!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (message.member.roles.highest.comparePositionTo(role) < 0) {
       return message.channel.send(
         `Your role must be higher than **${role.name}** role!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     }
 
     if (
@@ -65,7 +63,7 @@ module.exports = {
     )
       return message.channel.send(
         `My Highest role must be higher than **\`${needsRole.user.tag}\`** highest role!`
-      );
+      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     try {
       var react = await message.channel.send(

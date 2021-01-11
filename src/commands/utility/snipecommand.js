@@ -1,11 +1,11 @@
 const { MessageEmbed, MessageAttachment, Message } = require('discord.js')
 module.exports = {
     name: "snipe",
-    aliases: [""],
+    aliases: null,
     category: "Utility",
     descriptions: "Get last message delete",
     usage: "snipe [channel[mention/id]]",
-    options: [""],
+    options: null,
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
@@ -16,7 +16,7 @@ module.exports = {
         let e = new MessageEmbed()
         let snipemsg;
         if (snipes === undefined) {
-            return message.channel.send(e.setDescription(`I can't get last message delete in channel **\`${channel.name}\`**`).setColor('RED'))
+            return message.channel.send(e.setDescription(`I can't get last message delete in channel **\`${channel.name}\`**`).setColor('RED')).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         } else {
             snipemsg = snipes[0]
             e.setColor(snipemsg.color)

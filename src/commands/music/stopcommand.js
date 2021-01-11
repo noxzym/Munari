@@ -1,21 +1,21 @@
 module.exports = {
   name: "stop",
-  aliases: [""],
+  aliases: null,
   category: "Music",
   descriptions: "Stop the music and clear queue",
   usage: "stop",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
   run: async function (client, message, args) {
     const { channel } = message.member.voice;
     const queue = client.queue.get(message.guild.id);
-    if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+    if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
     try {
       if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.channel.send(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to stop the song`).then(msg => { msg.delete({ timeout: 8000 }); });
+        return message.inlineReply(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to stop the song`).then(msg => { msg.delete({ timeout: 8000 }); });
       }
 
       queue.songs = [];

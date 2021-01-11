@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "sepia",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Make avatar compotition color to sepia",
   usage: "sepia [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

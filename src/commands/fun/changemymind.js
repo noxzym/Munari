@@ -5,15 +5,15 @@ module.exports = {
   category: "Fun",
   descriptions: "generati image of change my mind",
   usage: "changemymind",
-  options: [""],
+  options: null,
   cooldown: "10",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
     const text = args.join(" ");
 
-    if (!text) return message.channel.send(`Please input some word`);
-    if (text.length > 20) return message.channel.send('You provide text oversize')
+    if (!text) return message.channel.send(`Please input some word`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    if (text.length > 20) return message.channel.send('You provide text oversize').then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     const msg = `https://vacefron.nl/api/changemymind?text=${text}`
     const ath = new MessageAttachment(msg, "chm.png")
     const e = new MessageEmbed()

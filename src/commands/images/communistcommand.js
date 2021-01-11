@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
     name: "communist",
-    aliases: [""],
+    aliases: null,
     category: "Image",
     descriptions: "Are you communist?",
     usage: "communist [user]",
-    options: [""],
+    options: null,
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,

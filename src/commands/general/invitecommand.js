@@ -5,7 +5,7 @@ module.exports = {
   category: "General",
   descriptions: "Give link invite bot",
   usage: "invite",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

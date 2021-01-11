@@ -2,11 +2,11 @@ const alex = require('alexflipnote.js')
 const { MessageAttachment } = require('discord.js')
 module.exports = {
     name: "sadcat",
-    aliases: [""],
+    aliases: null,
     category: "Animal",
     descriptions: "Give you a random picture about sad cat",
     usage: "sadcat",
-    options: [""],
+    options: null,
     cooldown: "5",
     ownerOnly: false,
     guildOnly: true,

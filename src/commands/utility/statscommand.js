@@ -1,21 +1,20 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js"), { version } = require('discord.js')
 const os = require('os')
 const cpuStat = require("cpu-stat");
 const moment = require("moment")
 module.exports = {
   name: "stats",
-  aliases: [""],
+  aliases: null,
   category: "Utility",
   descriptions: "Display statistic bot",
   usage: "stats",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
 
     const bot = client
-    let { version } = require("discord.js");
 
     cpuStat.usagePercent(function (err, percent, seconds) {
       if (err) {

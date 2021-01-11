@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "gay",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Add gay filter to avatar",
   usage: "gay [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

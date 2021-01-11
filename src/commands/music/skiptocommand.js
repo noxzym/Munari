@@ -4,7 +4,7 @@ module.exports = {
   category: "Music",
   descriptions: "Skip to the selected queue number",
   usage: "skiptp <number queue>",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
@@ -12,20 +12,20 @@ module.exports = {
     try {
       const { channel } = message.member.voice;
       if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.channel.send(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to skip the song`).then(msg => { msg.delete({ timeout: 8000 }); });
+        return message.inlineReply(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to skip the song`).then(msg => { msg.delete({ timeout: 8000 }); });
       }
       const queue = client.queue.get(message.guild.id);
       if (!queue)
-        return message.reply("There is nothing playing that I could skip for you.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+        return message.inlineReply("There is nothing playing that I could skip for you.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
       const amount = args.join(' ')
       if (!args.length)
-        return message.reply(client.config.prefix + this.usage)
+        return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
       if (isNaN(amount))
-        return message.reply('Please input number queue')
+        return message.inlineReply('Please input number queue')
 
-      if ( amount < 1 ) return message.channel.send(`Please input the correct song number`)
+      if (amount < 1) return message.channel.send(`Please input the correct song number`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
       if (amount > queue.songs.length) return message.reply(`The queue only have ${queue.songs.length} Songs!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 

@@ -2,11 +2,11 @@ const { MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch");
 module.exports = {
   name: "compliment",
-  aliases: [""],
+  aliases: null,
   category: "Fun",
   descriptions: "compliment command",
   usage: "compliment",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

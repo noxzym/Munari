@@ -5,7 +5,7 @@ module.exports = {
   category: "Developer",
   descriptions: "",
   usage: "execute <code>",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: true,
   async run(client, message, args) {

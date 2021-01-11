@@ -6,7 +6,7 @@ module.exports = {
     category: "Utility",
     descriptions: "Get information about latest update",
     usage: "changelog",
-    options: [""],
+    options: null,
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,

@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 module.exports = {
   name: "ping",
-  aliases: [""],
+  aliases: null,
   category: "Utility",
   descriptions: "to give latency and websocket ping",
   usage: "ping",
-  options: [""],
+  options: null,
   cooldown: "1",
   ownerOnly: false,
   guildOnly: true,

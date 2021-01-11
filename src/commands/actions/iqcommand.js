@@ -1,11 +1,11 @@
 const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: "iq",
-  aliases: [""],
+  aliases: null,
   category: "Actions",
   descriptions: "Gacha Iq",
   usage: "iq [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

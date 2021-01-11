@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "blur",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Make avatar blur",
   usage: "blur [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,

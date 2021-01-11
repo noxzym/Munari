@@ -5,19 +5,18 @@ module.exports = {
   category: "Music",
   descriptions: "Display queuelist of song",
   usage: "queue",
-  options: [""],
+  options: null,
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
   run: async function (client, message, args) {
     const queue = client.queue.get(message.guild.id)
-    if (!queue) return message.inlineReply(`Nothing are playing now`)
+    if (!queue) return message.inlineReply(`Nothing are playing now`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const embeds = geneembed(message, queue.songs);
 
     let page = 0;
     var embed = await message.channel.send(embeds[page])
-    console.log(embeds.length)
     await embed.react('❌');
     if (queue.songs.length > 6) await embed.react('➡️');
 
@@ -36,7 +35,6 @@ module.exports = {
           await embed.react('❌');
           if (page !== 0) await embed.react('⬅️');
           if (page + 1 < embeds.length) await embed.react('➡️')
-          console.log(page)
           break;
 
         case '➡️':
@@ -45,7 +43,6 @@ module.exports = {
           await embed.react('❌');
           if (page !== 0) await embed.react('⬅️');
           if (page + 1 < embeds.length) await embed.react('➡️')
-          console.log(page)
           break;
 
         default:

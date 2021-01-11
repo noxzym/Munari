@@ -2,11 +2,11 @@ const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
   name: "b&w",
-  aliases: [""],
+  aliases: null,
   category: "Image",
   descriptions: "Make avatar color to b&w",
   usage: "b&w [user]",
-  options: [""],
+  options: null,
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
