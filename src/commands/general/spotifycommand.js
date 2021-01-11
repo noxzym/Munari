@@ -5,6 +5,7 @@ const colorThief = new ColorThief();
 const onecolor = require('onecolor');
 const fetch = require('node-fetch')
 const convert = require('parse-ms');
+const path = require('path');
 registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
 module.exports = {
     name: "spotify",
