@@ -5,8 +5,7 @@ const colorThief = new ColorThief();
 const onecolor = require('onecolor');
 const fetch = require('node-fetch')
 const convert = require('parse-ms');
-registerFont('src/data/fonts/nishiki-teki.ttf', { family: 'Noto Serif JP' })
-// registerFont('/users/user/Desktop/Munari Bot/MunariHeroku/src/data/fonts/nishiki-teki.ttf', { family: 'Noto Serif JP' })
+// registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
 module.exports = {
     name: "spotify",
     aliases: ["sp"],
@@ -71,15 +70,15 @@ module.exports = {
 
             ctx.drawImage(spotifylogo, 683, 120, 40, 40);
 
-            ctx.font = "bold 40px Noto Serif JP";
+            ctx.font = "bold 40px Sans";
             ctx.fillStyle = "#000000";
             ctx.fillText(songname, 260, 80);
 
-            ctx.font = "bold 22px Noto Serif JP";
+            ctx.font = "bold 22px Sans";
             ctx.fillStyle = "#000000";
             ctx.fillText("By " + auth, 260, 138);
 
-            ctx.font = "bold 16px Noto Serif JP";
+            ctx.font = "bold 16px Sans";
             ctx.fillStyle = "#000000";
             ctx.fillText("On " + album, 260, 160);
 
@@ -90,7 +89,7 @@ module.exports = {
             ctx.fillStyle = "#1DB954";
             ctx.fillRect(260, 180, timestampformatted, 8);
 
-            ctx.font = "bold 16px Noto Serif JP";
+            ctx.font = "bold 16px Sans";
             ctx.fillStyle = "#000000";
             ctx.fillText(timeleft, 640, 190);
 

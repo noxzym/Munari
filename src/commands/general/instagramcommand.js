@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
-registerFont('src/data/fonts/nishiki-teki.ttf', { family: 'Open Sans' })
-// registerFont('/users/user/Desktop/Munari Bot/MunariHeroku/src/data/fonts/nishiki-teki.ttf', { family: 'Open Sans' })
+const path = require('path')
+// registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],
@@ -70,42 +70,42 @@ module.exports = {
         ctx.strokeStyle = '#7e7e7e';
         ctx.stroke();
 
-        ctx.font = "bold 45px Open Sans";
+        ctx.font = "bold 45px Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(fullname, 100, 520);
 
-        ctx.font = "40px Open Sans";
+        ctx.font = "40px Sans";
         ctx.fillStyle = "#FFFFFF";
         await wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 80)
 
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        ctx.font = "bold 45px Open Sans";
+        ctx.font = "bold 45px Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(userig, 600, 80);
 
-        ctx.font = "bold 50px Open Sans";
+        ctx.font = "bold 50px Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(post), 500, 330);
 
-        ctx.font = "30px Open Sans";
+        ctx.font = "30px Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Posts", 500, 400);
 
-        ctx.font = "bold 50px Open Sans";
+        ctx.font = "bold 50px Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(follower), 725, 330);
 
-        ctx.font = "30px Open Sans";
+        ctx.font = "30px Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Followers", 725, 400);
 
-        ctx.font = "bold 50px Open Sans";
+        ctx.font = "bold 50px Sans";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(numberformat(following), 1000, 330);
 
-        ctx.font = "30px Open Sans";
+        ctx.font = "30px Sans";
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Following", 1000, 400);
 
@@ -120,7 +120,7 @@ module.exports = {
 
         let img = canvas.toBuffer()
         const ath = new MessageAttachment(img, "instagram.png")
-        message.channel.send(ath)
+        message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath]})
         message.channel.stopTyping()
       } else {
 
