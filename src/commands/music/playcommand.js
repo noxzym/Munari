@@ -26,7 +26,7 @@ module.exports = {
   guildOnly: true,
   run: async function (client, message, args) {
     const { channel } = message.member.voice;
-    if (!channel) return message.reply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
+    if (!channel) return message.inlineReply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
 
     const permissions = channel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT"))
@@ -39,7 +39,7 @@ module.exports = {
       );
 
     if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-      return message.channel.send(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
+      return message.inlineReply(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
     }
 
     const search = args.join(" ");

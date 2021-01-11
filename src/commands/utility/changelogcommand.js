@@ -16,25 +16,47 @@ module.exports = {
             const current = data.all.slice(start, start + 5);
             let e = new MessageEmbed()
                 .setAuthor(`Update Changelog`, client.user.avatarURL({ size: 4096, format: 'png' }))
+                .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+                .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }));
             current.forEach(x => e.addField(x.date, x.content));
             return e
         }
-        const author = message.author
-        message.channel.send(generate(0)).then(message => {
-            if (data.all.length <= 5) return
-            message.react('➡️')
-            const collector = message.createReactionCollector((reaction, user) => ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === author.id, { time: 60000 })
 
-            let currentIndex = 0
-            collector.on('collect', reaction => {
-                message.reactions.removeAll().then(async () => {
-                    reaction.emoji.name === '⬅️' ? currentIndex -= 5 : currentIndex += 5
-                    message.edit(generate(currentIndex))
-                    if (currentIndex !== 0) await message.react('⬅️')
-                    if (currentIndex + 5 < data.all.length) message.react('➡️')
-                })
-            })
+        var send = await message.channel.send(generate(0))
+        await send.react('❌');
+        if (data.all.length > 5) await send.react('➡️');
+
+        let currentIndex = 0
+        var collector = send.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id, { time: 60000, errors: ['time'] });
+        collector.on('collect', async reaction => {
+            send.reactions.removeAll().catch(console.error)
+            switch (reaction.emoji.name) {
+
+                case '❌':
+                    await send.delete({timeout: 3000})
+                    break;
+
+                case '⬅️':
+                    currentIndex -= 5;
+                    send.edit(generate(currentIndex));
+                    await send.react('❌');
+                    if (currentIndex !== 0) await send.react('⬅️');
+                    if (currentIndex + 5 < data.all.length) await send.react('➡️')
+                    break;
+
+                case '➡️':
+                    currentIndex += 5;
+                    send.edit(generate(currentIndex));
+                    await send.react('❌');
+                    if (currentIndex !== 0) await send.react('⬅️');
+                    if (currentIndex + 5 < data.all.length) await send.react('➡️')
+                    break;
+
+                default:
+                    break;
+                    
+            }
         })
     }
 }

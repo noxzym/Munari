@@ -10,54 +10,50 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   run: async function (client, message, args) {
-    try {
-      const queue = client.queue.get(message.guild.id)
-      if (!queue) return message.channel.send(`Nothing are playing now`)
-      try {
-        let page = 0;
-        const embeds = geneembed(message, queue.songs);
-        const embed = await message.channel.send(embeds[page])
-        await embed.react("⬅️");
-        await embed.react("❎");
-        await embed.react("➡️");
-        const filter = (reaction, user) => user.id !== message.client.user.id;
-        var collector = embed.createReactionCollector(filter, { time: 60000 });
-        collector.on("collect", (reaction, user) => {
+    const queue = client.queue.get(message.guild.id)
+    if (!queue) return message.inlineReply(`Nothing are playing now`)
 
-          switch (reaction.emoji.name) {
-            case "⬅️":
-              reaction.users.remove(user).catch(console.error);
-              if (page !== 0) {
-                --page;
-                embed.edit(embeds[page]);
-              }
-              break;
+    const embeds = geneembed(message, queue.songs);
 
-            case "❎":
-              reaction.users.remove(user).catch(console.error);
-              collector.stop()
-              reaction.message.reactions.removeAll()
-              break;
+    let page = 0;
+    var embed = await message.channel.send(embeds[page])
+    console.log(embeds.length)
+    await embed.react('❌');
+    if (queue.songs.length > 6) await embed.react('➡️');
 
-            case "➡️":
-              reaction.users.remove(user).catch(console.error);
-              if (page < embeds.length - 1) {
-                page++;
-                embed.edit(embeds[page]);
-              }
-              break;
+    var collector = embed.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id, { time: 60000, errors: ['time'] });
+    collector.on('collect', async reaction => {
+      embed.reactions.removeAll().catch(console.error)
+      switch (reaction.emoji.name) {
 
-            default:
-              reaction.users.remove(user).catch(console.error);
-              break;
-          }
-        })
-      } catch (e) {
-        console.log(e)
+        case '❌':
+          await embed.delete({ timeout: 3000 })
+          break;
+
+        case '⬅️':
+          --page;
+          embed.edit(embeds[page]);
+          await embed.react('❌');
+          if (page !== 0) await embed.react('⬅️');
+          if (page + 1 < embeds.length) await embed.react('➡️')
+          console.log(page)
+          break;
+
+        case '➡️':
+          page++;
+          embed.edit(embeds[page]);
+          await embed.react('❌');
+          if (page !== 0) await embed.react('⬅️');
+          if (page + 1 < embeds.length) await embed.react('➡️')
+          console.log(page)
+          break;
+
+        default:
+          break;
+
       }
-    } catch (e) {
-      console.log(e)
-    }
+    })
+    
     function geneembed(message, queue) {
       const embeds = [];
       let k = 5
