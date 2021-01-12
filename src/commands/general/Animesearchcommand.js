@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { getInfoFromName, search } = require("mal-scraper");
+const createEmbed = require("../../struct/createEmbed");
 module.exports = {
   name: "anime",
   aliases: null,
@@ -35,6 +36,7 @@ module.exports = {
           .setDescription(datamap)
           .setFooter(`Type 'cancel' to cancel the song request`)
         var embeds = await message.channel.send(e)
+        fetchmsg.delete()
 
         try {
           var response = await message.channel.awaitMessages(
@@ -47,20 +49,15 @@ module.exports = {
           const input = response.first().content.substr(0, 6).toLowerCase()
 
           if (input === 'cancel' || input === 'c') {
-            fetchmsg.delete()
-            return embeds.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) }).then(() => { embeds.delete({ timeout: 3000 }) })
+            embeds.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) })
+            return embeds.delete({timeout: 3000})
           }
 
           embeds.delete()
           const dataanime = parseInt(response.first().content);
           var getanime = await x[dataanime - 1]
         } catch (e) {
-          return message.channel.send({
-            embed: {
-              color: "RED",
-              description: 'The request has canceled because no response'
-            }
-          }).then(x => x.delete({ timeout: 5000 }) && embeds.delete())
+          return message.channel.send(createEmbed("error", 'The request has canceled because no response')).then(x => x.delete({ timeout: 5000 }) && embeds.delete())
         }
 
         await getInfoFromName(getanime.title).then(x => {
@@ -80,7 +77,6 @@ module.exports = {
         }
       }
 
-      fetchmsg.delete()
     } else {
 
       await getInfoFromName(title.replace('--search', '')).then(x => {

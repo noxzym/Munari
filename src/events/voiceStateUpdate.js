@@ -1,32 +1,103 @@
-const { MessageEmbed } = require('discord.js')
+const createEmbed = require("../struct/createEmbed");
+const convert = require('../struct/formatMs')
 module.exports = {
     name: 'voiceStateUpdate',
     async run(client, oldState, newState) {
-        // if (oldState.channel === null) return newState.setSelfDeaf(true);
-        // let change = false;
-        // const queue = client.queue.get(newState.guild.id);
-        // if (!queue) return;
-        // if (newState.member.id === client.user.id && oldState.member.id === client.user.id) {
-        //     if (newState.member.voice.channel === null) {
-        //         queue.songs = [];
-        //         queue.loop = false;
-        //         return client.queue.delete(newState.guild.id);
-        //     }
-        //     if (newState.member.voice.channel !== queue.voiceChannel) {
-        //         change = true;
-        //         queue.voiceChannel = newState.member.voice.channel;
-        //         queue.connection = newState.connection;
-        //     }
-        // }
-        // if (oldState.channel.members.size === 1 && oldState.channel === queue.voiceChannel || change) {
-        //     queue.textChannel.send(`I will disconnect if i alone in my voice channel`)
-        //     setTimeout(() => {
-        //         if (!queue || !queue.connection.dispatcher || queue.connection.dispatcher === null) return;
-        //         if (queue.voiceChannel.members.size === 1) {
-        //             queue.textChannel.send(`I have left the channel as i was left alone.`);
-        //             queue.connection.dispatcher.end();
-        //         }
-        //     }, 60000);
-        // }
+        const queue = client.queue.get(newState.guild.id);
+        if (!queue) return;
+
+        const newVc = newState.channel,
+            oldVc = oldState.channel,
+            oldVcId = oldVc ? oldVc.id : null,
+            newVcId = newVc ? newVc.id : null,
+            queueVc = client.channels.cache.get(queue.voiceChannel),
+            oldMember = oldState.member,
+            member = newState.member,
+            queueVcMember = queueVc.members.filter(x => !x.user.bot),
+            newVcMember = newVc ? newVc.members.filter(x => !x.user.bot) : null,
+            botId = client.user.id;
+
+        if (member ? member.id === botId && oldVcId === queueVc.id && newVcId !== queueVc.id && newVcId !== undefined : null) {
+
+            if (!newVcMember) return;
+
+            if (newVcMember.size === 0 && queue.timeout === null) {
+
+                toTimeout(newVcMember, queue, newState);
+
+            } else if (newVcMember.size !== 0 && queue.timeout !== null) {
+
+                resumeTimeout(newVcMember, queue, newState)
+
+            }
+
+            queue.voiceChannel === newVc;
+
+        }
+
+        if (oldVcId === queueVc.id && newVcId !== queueVc && member ? !member.user.bot : member && queue.timeout === null) {
+
+            toTimeout(queueVcMember, queue, newState);
+
+        }
+
+        if (newVcId === queueVc.id && member ? !member.user.bot : member) {
+
+            resumeTimeout(queueVcMember, queue, newState)
+
+        }
+
+        function toTimeout(vcMembers, queue, newState) {
+
+            if (vcMembers.size !== 0) return;
+
+            clearTimeout(queue.timeout);
+            client.queue.get(newState.guild.id).timeout = null;
+            client.queue.get(newState.guild.id).playing = false;
+            queue.connection ? queue.connection.dispatcher.pause(true) : null;
+
+            const timeout = 120000;
+            const duration = convert(timeout);
+
+            client.queue.get(newState.guild.id).timeout = setTimeout(() => {
+
+                client.channels.cache.get(queue.voiceChannel).leave();
+                client.channels.cache.get(queue.textChannel).send(
+                    createEmbed("error", `⏹ | Queue Deleted because in **\`${duration}\`** no one who join my voice channel!`)
+                ).then(x => { x.delete({ timeout: 10000 }) }).catch((e) => { console.log(e) })
+            }, timeout);
+
+            client.channels.cache.get(queue.textChannel).send(
+
+                createEmbed("warn", `⏸ | Queue Paused because the voice channel is empty!.\nQueue will be deleted if in **\`${duration}\`** Nothing join the voice channel!`)
+            ).then(x => { x.delete({ timeout: 10000 }) }).catch((e) => { console.log(e) })
+
+        }
+
+        function resumeTimeout(vcMembers, queue, newState) {
+
+            if (vcMembers.size > 0) {
+
+                if (queue.playing) return;
+
+                try {
+
+                    clearTimeout(queue.timeout);
+                    client.queue.get(newState.guild.id).songs.timeout = null;
+
+                    const song = queue.songs[0]
+                    client.channels.cache.get(queue.textChannel).send(
+                        createEmbed("info", `▶ | Someone has joined the voice channel. Queue Resumed!`)
+                    ).then(x => { x.delete({ timeout: 10000 }) }).catch((e) => {console.log(e)})
+
+                    client.queue.get(newState.guild.id).playing = true;
+                    client.queue.get(newState.guild.id).connection.dispatcher.resume(true)
+
+                } catch (e) {
+                    console.log(e)
+                }
+
+            }
+        }
     }
 }

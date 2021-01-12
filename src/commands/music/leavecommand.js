@@ -28,7 +28,7 @@ module.exports = {
       serverQueue.connection.dispatcher.destroy();
       channel.leave();
       message.client.queue.delete(message.guild.id);
-      message.channel.send.send('I have disconnected!').then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+      message.channel.send('I have disconnected!').then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
       return
 
     } else {

@@ -1,6 +1,7 @@
 const { MessageEmbed, Util } = require('discord.js')
 const { play } = require('./player')
 const ytsr = require('youtube-sr')
+const createEmbed = require('./createEmbed')
 module.exports = {
     async playlist(url, channel, message, client) {
         const g = await ytsr.getPlaylist(url, { part: 'snippet' })
@@ -27,8 +28,7 @@ module.exports = {
             playing: true
         };
 
-        let e = new MessageEmbed()
-            .setColor('ff0000')
+        let e = createEmbed("yt")
             .setAuthor(`Youtube Client Playlist`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
             .setTitle(`Playlist Informations • ${g.title}`)
             .setURL(g.url)

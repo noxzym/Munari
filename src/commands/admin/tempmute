@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const ms = require("ms");
 module.exports = {
   name: "temporarymute",
   aliases: ["tmute"],
@@ -97,5 +96,5 @@ module.exports = {
   .setColor('#fc0000')
   .setDescription(`**${tomute.user.tag} Has Been Unmuted!**`)
     message.channel.send(unmute).then(msg => {msg.delete({  timeout: 8000  })});
-  }, ms(mutetime));
+  }, mutetime);
 }}

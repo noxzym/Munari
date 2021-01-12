@@ -3,7 +3,8 @@ const { play } = require('../../struct/player')
 const { playlist } = require('../../struct/playlist')
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
-const ytsr = require('youtube-sr')
+const ytsr = require('youtube-sr');
+const createEmbed = require("../../struct/createEmbed");
 // const YouTubeAPI = require("simple-youtube-api");
 
 // let ytapk;
@@ -76,15 +77,14 @@ module.exports = {
           };
         } catch (e) {
           console.log(e);
-          return message.channel.send("I could not find any videos that match that link").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          return message.channel.send(createEmbed("error", "I could not find any videos that match that link")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       } else if (message.content.includes('--find')) {
         try {
           var searcher = await ytsr.search(search, { limit: 5 });
-          if (searcher[0] === undefined) return message.channel.send(`I can't to find related video`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          if (searcher[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
           let index = 0;
-          let em = new MessageEmbed()
-            .setColor('ff0000')
+          let em = createEmbed('yt')
             .setAuthor(`Youtube Client get Video`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
             .setTitle(`This is result for ${search}`)
             .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
@@ -100,19 +100,15 @@ module.exports = {
             );
             const input = response.first().content.substr(0, 6).toLowerCase()
             if (input === 'cancel' || input === 'c') {
-              return embedsearch.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) }).then(x => { x.delete({ timeout: 3000 }) })
+              embedsearch.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) })
+              return embedsearch.delete({timeout: 3000})
             }
             embedsearch.delete()
             const videoIndex = parseInt(response.first().content);
             var video = await searcher[videoIndex - 1];
 
           } catch (e) {
-            return message.channel.send({
-              embed: {
-                color: "RED",
-                description: 'The request has canceled because no response'
-              }
-            }).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
+            return message.channel.send(createEmbed("error", "The request has been canceled because no respond!")).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
           }
 
           const infoSong = await yts(video.title);
@@ -129,7 +125,7 @@ module.exports = {
           };
         } catch (e) {
           console.log(e);
-          return message.channel.send("I could not find any videos that match that title").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          return message.channel.send(createEmbed("error", "I could not find any videos that match that title")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       } else {
         try {
@@ -140,14 +136,14 @@ module.exports = {
             identifier: vid.videoId,
             author: vid.author.name,
             duration: vid.timestamp,
-            nowplaying:vid.seconds,
+            nowplaying: vid.seconds,
             url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
             requester: message.author
           };
         } catch (e) {
           console.error();
-          message.channel.send(`I could not find any videos that match that title`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          message.channel.send(createEmbed("error", "I could not find any videos that match that title")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
       }
 
@@ -155,7 +151,7 @@ module.exports = {
 
       if (serverQueue) {
         serverQueue.songs.push(song);
-        return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`)
+        return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`))
       }
 
       const queueConstruct = {
@@ -166,7 +162,8 @@ module.exports = {
         connection: null,
         loop: false,
         volume: 100,
-        playing: true
+        playing: true,
+        timeout: null
       };
 
       message.client.queue.set(message.guild.id, queueConstruct);
@@ -178,20 +175,15 @@ module.exports = {
         await queueConstruct.connection.voice.setSelfDeaf(true);
         play(queueConstruct.songs[0], message, client);
       } catch (error) {
-        console.error(`I could not join the voice channel: ${error}`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+
         message.client.queue.delete(message.guild.id);
         await channel.leave();
-        return message.channel
-          .send(`I could not join the voice channel: ${error}`)
-          .then(msg => {
-            msg.delete({ timeout: 5000 });
-          });
+        return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 5000 }); });
+
       }
     } catch (err) {
       console.log(err);
-      message.channel.send(`Cannot play this song because ${err}`).then(msg => {
-        msg.delete({ timeout: 2000 });
-      });
+      message.channel.send(createEmbed("error", `Cannot play this song because ${err}`)).then(msg => { msg.delete({ timeout: 2000 }); });
     }
   }
 };

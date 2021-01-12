@@ -3,7 +3,7 @@ module.exports = {
   name: "guildDelete",
   async run(client, guild) {
 
-    if (guild.members.cache.filter(x => !x.user.bot).size < 30) return
+    // if (guild.members.cache.filter(x => !x.user.bot).size < 30) return
 
     const sname = guild.name
       .toLowerCase()

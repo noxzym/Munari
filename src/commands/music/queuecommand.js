@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const createEmbed = require("../../struct/createEmbed");
 module.exports = {
   name: "queue",
   aliases: ["q"],
@@ -60,8 +61,7 @@ module.exports = {
         k += 5
         const inf = current.map((x) => `**${++j} • [${x.title}](${x.url}) \`【${x.requester.username}】\`**`).join('\n')
 
-        let e = new MessageEmbed()
-          .setColor('ff0000')
+        let e = createEmbed("yt")
           .setAuthor("Youtube Client Queue", 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
           .setThumbnail(queue[0].thumbnail)
           .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester.username}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${inf}`)

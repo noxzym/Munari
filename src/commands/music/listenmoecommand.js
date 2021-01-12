@@ -56,7 +56,8 @@ module.exports = {
             connection: null,
             loop: false,
             volume: 100,
-            playing: true
+            playing: true,
+            timeout: null
         };
 
         message.client.queue.set(message.guild.id, queueConstruct);

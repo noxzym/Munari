@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js')
+const createEmbed = require('../struct/createEmbed')
 const erityt = require('erit-ytdl')
 module.exports = {
     async play(song, message, client) {
@@ -81,16 +82,14 @@ module.exports = {
 
             let duras = song.duration === undefined ? '◉ LIVE' : song.duration
 
-            let embed = new MessageEmbed()
-                .setColor('ff0000')
+            let embed = createEmbed("yt")
                 .setAuthor(`Youtube Client`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
                 .setThumbnail(song.thumbnail)
                 .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.author}\`**`)
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp();
 
-            let embedunk = new MessageEmbed()
-                .setColor('1d1f2b')
+            let embedunk = createEmbed("listen")
                 .setAuthor(`Listen.moe`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
                 .setThumbnail('https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
                 .setDescription(`**[${song.title}](${song.url})\nDuration: \`${duras}\`     Channel: \`${song.author}\`**`)
