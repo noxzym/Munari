@@ -1,5 +1,9 @@
-const { Client, Collection } = require("discord.js");
-
+require('dotenv').config()
+require('./InlineReply')
+require('./Message')
+const { Client } = require("discord.js");
+const { queue, Commando } = require('./renameClasses')
+const bot = require('./discordbotlist')
 module.exports = class MunariClient extends Client {
     constructor(config) {
         super({
@@ -25,17 +29,14 @@ module.exports = class MunariClient extends Client {
                 ]
             }
         });
-        this.commands = new Collection();
-
-        this.aliases = new Collection();
-
-        this.cooldowns = new Collection();
-
-        this.queue = new Map();
+        this.commandmanager = new Commando()
+       
+        this.queue = new queue();
 
         this.config = config;
 
-        this.snipes = new Map()
+        this.snipes = new Map();
 
+        this.botlist = new bot();
     }
 };

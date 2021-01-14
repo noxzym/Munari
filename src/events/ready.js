@@ -20,15 +20,15 @@ module.exports = {
         }, 60 * 1000 * 30);
         setInterval(() => {
 
-            client.dbl.postStats({
+            client.botlist.dbl.postStats({
                 serverCount: client.guilds.cache.size,
                 shardId: client.shard.ids[0],
                 shardCount: client.ws.totalShards
             })
 
-            client.boat.postStats(
+            client.botlist.boat.postStats(
                 client.guilds.cache.size, client.user.id
-                )
+            )
 
             axios.post('https://discord.bots.gg/api/v1/bots/740112353483554858/stats', {
                 guildCount: client.guilds.cache.size, shardCount: client.ws.totalShards
@@ -45,7 +45,7 @@ module.exports = {
                     Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImlhdCI6MTYwODEyNzEyNn0.d5ikZ309UZspeFoDqkDuyoCK5_b4xir9fdD37zf2EoU'
                 }
             })
-            
+
         }, 1800000)
     }
 }

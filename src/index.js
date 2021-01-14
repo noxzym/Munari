@@ -1,8 +1,5 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~PACKAGE REQUIREMENT CODE IN HERE~~~~~~~~~~~~~~~~~~~~~~~~~\\
-require('dotenv').config()
-require('./extended/InlineReply')
-require('./extended/Message')
-const Munari = require('./extended/Client');
+const Munari = require('./extended/MunariClient');
 const client = new Munari({
   token: 'NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.EDydgpK7SRPYBC3fPicAmvP1eh4',
   // token: 'NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM',
@@ -11,12 +8,6 @@ const client = new Munari({
   alexapi: '93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb',
   prefix: 'm!'
 });
-
-const { Api } = require('@top-gg/sdk')
-client.dbl = new Api(client.config.dblapi);
-
-const BOATS = require('boats.js');
-client.boat = new BOATS(client.config.boatsapi);
 
 ["command"].forEach(handler => {
   require(`./utils/${handler}`)(client);

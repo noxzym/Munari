@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { Message, Guild, TextChannel, VoiceChannel, MessageEmbed, MessageAttachment, DMChannel, NewsChannel, VoiceConnection, Collection, ClientEvents, VoiceState, Util } = require('discord.js');
 const req = require('snekfetch')
 const util = require('util')
 module.exports = {

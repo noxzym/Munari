@@ -1,0 +1,28 @@
+{           const canvas = createCanvas(1280, 423);
+            const ctx = canvas.getContext("2d");
+            const data = await fetch(img);
+            const a = await data.buffer()
+
+            let rgb = await colorThief.getColor(a);
+            let get = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'
+            let getone = onecolor(get).hex();
+
+            var lingrad = ctx.createLinearGradient(1280, 0, 920, 0)
+            lingrad.addColorStop(0, `transparent`)
+            lingrad.addColorStop(1, `${getone}`)
+            ctx.restore()
+
+            const img2 = await loadImage(img);
+
+            ctx.fillStyle = lingrad
+            ctx.drawImage(img2, 860, 0, 423, 423);
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+            const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
+            ctx.drawImage(spotifylogo, 50, 50, 40, 40);
+            
+            const image = canvas.toBuffer();
+            const ath = new MessageAttachment(image, "spotify.png");
+
+            message.channel.send(ath)
+}

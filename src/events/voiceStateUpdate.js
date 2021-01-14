@@ -1,5 +1,4 @@
-const createEmbed = require("../struct/createEmbed");
-const convert = require('../struct/formatMs')
+const { createEmbed, formatMs } = require("../utils/Function");
 module.exports = {
     name: 'voiceStateUpdate',
     async run(client, oldState, newState) {
@@ -57,7 +56,7 @@ module.exports = {
             queue.connection ? queue.connection.dispatcher.pause(true) : null;
 
             const timeout = 120000;
-            const duration = convert(timeout);
+            const duration = formatMs(timeout);
 
             client.queue.get(newState.guild.id).timeout = setTimeout(() => {
 

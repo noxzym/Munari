@@ -28,7 +28,7 @@ module.exports = {
 
         //Command Files in HERE
         let command =
-            client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+            client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
         if (!command) return;
 
         //Owner Only
@@ -42,7 +42,7 @@ module.exports = {
         }
 
         //Cooldown command in here
-        const cooldowns = client.cooldowns
+        const cooldowns = client.commandmanager.cooldown
         if (!cooldowns.has(command.name)) {
             cooldowns.set(command.name, new Collection());
         }

@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const { readdirSync } = require("fs");
 
 module.exports = (client) => {
@@ -10,14 +9,14 @@ module.exports = (client) => {
             let pull = require(`../commands/${dir}/${file}`);
     
             if (pull.name) {
-                client.commands.set(pull.name, pull);
+                client.commandmanager.command.set(pull.name, pull);
                 // table.addRow(file, `✔️  -> command berhasil di load`);
             } else {
                 console.log(file, `❎  -> command.name atau help.name tidak dapat ditemukan`);
                 continue;
             } 
     
-            if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => client.aliases.set(alias, pull.name));
+            if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => client.commandmanager.aliases.set(alias, pull.name));
         }
   
     });
