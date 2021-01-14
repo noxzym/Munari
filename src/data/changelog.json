@@ -2,6 +2,14 @@
     "data": {
         "all": [
             {
+                "date": "13 Januari 2021",
+                "content": [
+                    "- Refactor Command",
+                    "- Optimizing Command",
+                    "- Bug Fixed"
+                ]
+            },
+            {
                 "date": "11 January 2021",
                 "content": [
                     "- Update pagination",
