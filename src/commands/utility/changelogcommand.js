@@ -14,11 +14,12 @@ module.exports = {
 
         const generate = start => {
             const current = data.all.slice(start, start + 5);
+            const page = (current/5).toFixed(0) !== current/5 ? parseFloat((current/5).toFixed(0)) + 1 : current/5
             let e = new MessageEmbed()
                 .setAuthor(`Update Changelog`, client.user.avatarURL({ size: 4096, format: 'png' }))
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp()
-                .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }));
+                .setFooter(`Commanded by ${message.author.tag}, Total ${page} page`, message.author.avatarURL({ dynamic: true }));
             current.forEach(x => e.addField(x.date, x.content));
             return e
         }

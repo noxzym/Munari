@@ -14,7 +14,7 @@ module.exports = {
         const { image } = new alex(client.config.alexapi)
         const input = args.slice(0).join(' ')
 
-        if (!input) client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (!input) client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         if (input.length > 15) return message.channel.send(`You provide text oversize`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         let img;

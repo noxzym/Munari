@@ -1,5 +1,4 @@
-const { MessageEmbed } = require("discord.js");
-const createEmbed = require("../../struct/createEmbed");
+const { createEmbed, formatMs, pagination } = require("../../utils/Function");
 module.exports = {
   name: "queue",
   aliases: ["q"],
@@ -18,42 +17,12 @@ module.exports = {
 
     let page = 0;
     var embed = await message.channel.send(embeds[page])
-    await embed.react('❌');
-    if (queue.songs.length > 6) await embed.react('➡️');
-
-    var collector = embed.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id, { time: 60000, errors: ['time'] });
-    collector.on('collect', async reaction => {
-      embed.reactions.removeAll().catch(console.error)
-      switch (reaction.emoji.name) {
-
-        case '❌':
-          await embed.delete({ timeout: 3000 })
-          break;
-
-        case '⬅️':
-          --page;
-          embed.edit(embeds[page]);
-          await embed.react('❌');
-          if (page !== 0) await embed.react('⬅️');
-          if (page + 1 < embeds.length) await embed.react('➡️')
-          break;
-
-        case '➡️':
-          page++;
-          embed.edit(embeds[page]);
-          await embed.react('❌');
-          if (page !== 0) await embed.react('⬅️');
-          if (page + 1 < embeds.length) await embed.react('➡️')
-          break;
-
-        default:
-          break;
-
-      }
-    })
+    pagination(embed, page, embeds, message, queue)
     
     function geneembed(message, queue) {
       const embeds = [];
+      const track = queue.slice(1).length;
+      const estimate = formatMs(eval(queue.slice(1).map(x => x.nowplaying).join('+'))* 1000);
       let k = 5
       for (let i = 0; i < queue.length; i += 5) {
         const current = queue.slice(i + 1, k + 1);
@@ -66,6 +35,8 @@ module.exports = {
           .setThumbnail(queue[0].thumbnail)
           .setDescription(`** • [${queue[0].title}](${queue[0].url}) \`【${queue[0].requester.username}】\` • \n\n▬▬▬▬▬▬▬▬ List of Queue ▬▬▬▬▬▬▬▬**\n${inf}`)
           .setTimestamp();
+
+        queue.slice(1).length === 0 ? e.setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true })) : e.setFooter(`Total ${track} songs in ${estimate}`, message.author.avatarURL({ dynamic: true }))
 
         if (queue.length === 1) {
           e.setDescription(

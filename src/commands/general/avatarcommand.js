@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { createEmbed } = require("../../utils/Function");
 module.exports = {
   name: "avatar",
   aliases: ["av"],
@@ -16,8 +16,7 @@ module.exports = {
       message.mentions.members.first() ||
       message.member;
     let color = message.member.displayHexColor
-    let exampleEmbed = new Discord.MessageEmbed()
-
+    let exampleEmbed = createEmbed()
       .setTitle(`${member.user.tag}`)
       .setURL(`${member.user.displayAvatarURL({ dynamic: true, size: 4096 })}`)
       .setImage(member.user.displayAvatarURL({ dynamic: true, size: 4096 }))

@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { createEmbed } = require("../../utils/Function");
 module.exports = {
   name: "invite",
   aliases: ["inv"],
@@ -10,7 +10,7 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
-    let inviteEmbed = new Discord.MessageEmbed()
+    let inviteEmbed = createEmbed()
       .setColor(message.member.displayHexColor)
       .setAuthor("Click This Website to Invite Me")
       // .setURL("https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639")

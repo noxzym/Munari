@@ -12,7 +12,7 @@ module.exports = {
     async run(client, message, args) {
         
         const input = args.join(' ')
-        if (!input) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (!input) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(input)}`)
             .then(res => res.json())

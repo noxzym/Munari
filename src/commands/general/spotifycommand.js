@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 const { registerFont, createCanvas, loadImage } = require('canvas');
 const ColorThief = require('color-thief');
 const colorThief = new ColorThief();
@@ -6,6 +6,7 @@ const onecolor = require('onecolor');
 const fetch = require('node-fetch')
 const convert = require('parse-ms');
 const path = require('path');
+const { createEmbed } = require('../../utils/Function');
 registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
 module.exports = {
     name: "spotify",
@@ -18,11 +19,11 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const member = 
-        message.guild.members.cache.get(args[0]) || 
-        message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) || 
-        message.mentions.members.first() || 
-        message.member
+        const member =
+            message.guild.members.cache.get(args[0]) ||
+            message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
+            message.mentions.members.first() ||
+            message.member
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
         if (!presence) return message.channel.send(`I can't find spotify presence, try again`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
@@ -102,7 +103,7 @@ module.exports = {
             const songnameuncard = presence.details
             const albumnocard = presence.assets.largeText
             const authnocard = presence.state
-            let e = new MessageEmbed()
+            let e = createEmbed()
                 .setColor('18d869 ')
                 .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png')
                 .setTitle(`${title}`)
@@ -123,7 +124,7 @@ module.exports = {
                 var rgbCode = 'rgb( ' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'
                 var hex = onecolor(rgbCode).hex() || member.displayHexColor
 
-                return hex    
+                return hex
             } catch (e) {
                 console.error(e)
                 return 'Server Error'

@@ -14,7 +14,7 @@ module.exports = {
   async run(client, message, args) {
 
     const query = args.join(" ");
-    if (!query) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    if (!query) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const data = await fetch(`http://registry.npmjs.com/${query}`).then(i => i);
     if (!data.ok) return message.channel.send(`Owch, i got ${data.status} ${data.statusText}, maybe you typo?`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

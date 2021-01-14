@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { getInfoFromName, search } = require("mal-scraper");
-const createEmbed = require("../../struct/createEmbed");
+const { createEmbed } = require("../../utils/Function");
 module.exports = {
   name: "anime",
   aliases: null,
@@ -30,7 +30,7 @@ module.exports = {
         let j = 1
         let datamap = x.map((x) => `**${j++} • [${x.title}](${x.url})**`).join('\n');
 
-        let e = new MessageEmbed()
+        let e = createEmbed()
           .setColor('#2e51a2')
           .setAuthor(`MyAnimeList Search • ${get}`, 'https://cdn.discordapp.com/attachments/795512730940735508/798055553757610024/MyAnimeList_Logo.png')
           .setDescription(datamap)
@@ -85,7 +85,7 @@ module.exports = {
       fetchmsg.delete()
 
       function data(x) {
-        let e = new MessageEmbed()
+        let e = createEmbed()
           .setColor('#2e51a2')
           .setAuthor(`MyAnimeList • ${x.title}`, 'https://cdn.discordapp.com/attachments/795512730940735508/798055553757610024/MyAnimeList_Logo.png')
           .setURL(`${x.url}`)

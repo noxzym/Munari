@@ -20,7 +20,7 @@ module.exports = {
 
       const amount = args.join(' ')
       if (!args.length)
-        return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
       if (isNaN(amount))
         return message.inlineReply('Please input number queue')

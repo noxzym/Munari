@@ -22,15 +22,13 @@ module.exports = {
     const duration = song.nowplaying
 
     let dur;
-    if (duration === undefined) {
-      dur = "▬"
-    } else if ((duration >= 3600)) {
+    if ((duration >= 3600)) {
       dur = new Date(((queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(11, 8)
     } else {
       dur = new Date(((queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000).toFixed(0) * 1000).toISOString().substr(14, 5)
     }
 
-    const date = `${dur}/${(song.nowplaying === undefined ? " ◉ LIVE" : song.duration)}`
+    const date = duration !== undefined ? `${dur}/${song.duration}` : " ◉ LIVE " 
 
     let nowPlaying = new MessageEmbed()
       .setColor('#ff0000')

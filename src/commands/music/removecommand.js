@@ -19,7 +19,7 @@ module.exports = {
       if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
 
     const count = args.join(' ');
-    if (!count) return client.commands.get('help').run(client, message, [this.name])
+    if (!count) return client.commandmanager.command.get('help').run(client, message, [this.name])
     
     if (isNaN(count)) return;
     if (count < 1 || count > queue.songs.length - 1) return;

@@ -1,4 +1,4 @@
-const { play } = require('../../struct/player')
+const { play } = require('../../utils/Function')
 module.exports = {
     name: "listenmoe",
     aliases: ["listen", "moe"],
@@ -24,8 +24,8 @@ module.exports = {
                 title: 'Korean pop by Listen.Moe',
                 identifier: 'Kpop',
                 author: 'Listen.Moe',
-                duration: "◉ LIVE",
-                nowplaying: 0,
+                duration: "◉ LIVE ",
+                nowplaying: undefined,
                 url: 'https://listen.moe/kpop/stream',
                 thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
                 requester: message.author
@@ -35,8 +35,8 @@ module.exports = {
                 title: 'Japanese pop by Listen.Moe',
                 identifier: 'Jpop',
                 author: 'Listen.Moe',
-                duration: "◉ LIVE",
-                nowplaying: 0,
+                duration: "◉ LIVE ",
+                nowplaying: undefined,
                 url: 'https://listen.moe/stream',
                 thumbnail: 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png',
                 requester: message.author

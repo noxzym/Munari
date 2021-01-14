@@ -3,6 +3,7 @@ const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
 const path = require('path')
 registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
+
 module.exports = {
   name: "instagram",
   aliases: ["insta", "ig"],
@@ -16,7 +17,7 @@ module.exports = {
   async run(client, message, args) {
     try {
       const username = args[0];
-      if (!username) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+      if (!username) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
       message.channel.startTyping()
 

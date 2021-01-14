@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { createEmbed } = require('../../utils/Function');
 module.exports = {
   name: "say",
   aliases: [""],
@@ -13,7 +13,7 @@ module.exports = {
     message.delete()
     const sayMessage = args.join(" ");
     if (message.content.includes('--embed')) {
-      let e = new Discord.MessageEmbed()
+      let e = createEmbed()
         .setDescription(sayMessage.replace('--embed', ''))
         .setColor(message.member.displayHexColor)
       message.channel.send(e)

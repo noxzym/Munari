@@ -13,7 +13,7 @@ module.exports = {
   async run(client, message, args) {
     const { image } = new alex(client.config.alexapi)
     const input = args[0];
-    if (!input) return client.commands.get('help').run(client, commands, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    if (!input) return client.commandmanager.command.get('help').run(client, commands, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     if (input.length > 20) return message.channel.send(`You provide text oversize`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     let img = await image.achievement({ text: `${input}` })

@@ -12,7 +12,7 @@ module.exports = {
     guildOnly: true,
     async run(client, message, args) {
         const em = args[0]
-        if (!em) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (!em) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
         const eminfo = await Util.parseEmoji(em)
         if (eminfo.id === null) return message.channel.send(`I can't get this emoji`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

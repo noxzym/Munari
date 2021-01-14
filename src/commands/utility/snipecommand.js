@@ -16,7 +16,7 @@ module.exports = {
         let e = new MessageEmbed()
         let snipemsg;
         if (snipes === undefined) {
-            return message.channel.send(e.setDescription(`I can't get last message delete in channel **\`${channel.name}\`**`).setColor('RED')).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+            return message.channel.send(e.setDescription(`I can't get last message delete in channel **\`${channel.name}\`**`).setColor('RED')).then(msg => { msg.delete({ timeout: 5000 }) })
         } else {
             snipemsg = snipes[0]
             e.setColor(snipemsg.color)

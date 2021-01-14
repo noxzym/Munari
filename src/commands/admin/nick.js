@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 module.exports = {
   name: "nick",
   aliases: null,
@@ -9,8 +8,7 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
-  async run(bot, message, args) {
-    const prefix = 'm!'
+  async run(client, message, args) {
     if (!message.guild.me.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`I don't have permission \`MANAGE_NICKNAMES\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     if (!message.member.hasPermission('MANAGE_NICKNAMES' || 'ADMINISTRATOR')) return message.channel.send(`You don't have permissions \`MANAGE_NICKNAMES\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
@@ -19,7 +17,7 @@ module.exports = {
       message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || 
       x.user.username === `${args[0]}`) ||
       message.mentions.members.first()
-    if (!mentionMember) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    if (!mentionMember) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
     let newNickname = args.slice(1).join(' ');
     try {
       var react = await message.channel.send(`Are you sure to change nickname user **\`${mentionMember.user.tag}\`** to **${newNickname}**?`);

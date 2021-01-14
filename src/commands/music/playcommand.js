@@ -1,10 +1,10 @@
-const { Util, MessageEmbed } = require("discord.js");
-const { play } = require('../../struct/player')
-const { playlist } = require('../../struct/playlist')
+const { Util } = require("discord.js");
+const { play, playlist, createEmbed } = require('../../utils/Function')
+
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
 const ytsr = require('youtube-sr');
-const createEmbed = require("../../struct/createEmbed");
+
 // const YouTubeAPI = require("simple-youtube-api");
 
 // let ytapk;
@@ -15,6 +15,7 @@ const createEmbed = require("../../struct/createEmbed");
 // }
 
 // const youtube = new YouTubeAPI(ytapk);
+
 module.exports = {
   name: "play",
   aliases: ["p"],
@@ -101,7 +102,7 @@ module.exports = {
             const input = response.first().content.substr(0, 6).toLowerCase()
             if (input === 'cancel' || input === 'c') {
               embedsearch.suppressEmbeds(true).then(x => { x.edit(`<a:no:765207855506522173> | Request canceled`) })
-              return embedsearch.delete({timeout: 3000})
+              return embedsearch.delete({ timeout: 3000 })
             }
             embedsearch.delete()
             const videoIndex = parseInt(response.first().content);
@@ -150,8 +151,19 @@ module.exports = {
       const serverQueue = message.client.queue.get(message.guild.id);
 
       if (serverQueue) {
+
+        const filterbefore = serverQueue.songs;
+        const identifierfilter = filterbefore.slice(1).filter(x => song.identifier.includes(x.identifier))
+        
+        if (Boolean(identifierfilter.map(x => x.identifier === song.identifier).join())) {
+
+          return message.channel.send(createEmbed("error", `Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
+
+        }
+
         serverQueue.songs.push(song);
         return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`))
+
       }
 
       const queueConstruct = {
@@ -178,12 +190,12 @@ module.exports = {
 
         message.client.queue.delete(message.guild.id);
         await channel.leave();
-        return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 5000 }); });
+        return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 8000 }); });
 
       }
     } catch (err) {
       console.log(err);
-      message.channel.send(createEmbed("error", `Cannot play this song because ${err}`)).then(msg => { msg.delete({ timeout: 2000 }); });
+      message.channel.send(createEmbed("error", `Cannot play this song because ${err}`)).then(msg => { msg.delete({ timeout: 8000 }); });
     }
   }
 };

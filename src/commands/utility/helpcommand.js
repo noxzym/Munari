@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const { readdirSync } = require("fs");
 module.exports = {
   name: "help",
   aliases: ["h", "?"],
@@ -10,12 +9,12 @@ module.exports = {
   cooldown: "3",
   ownerOnly: false,
   guildOnly: true,
-  async run(bot, message, args) {
-    const prefix = bot.config.prefix
+  async run(client, message, args) {
+    const prefix = client.config.prefix
     const cmdArgs = args.join(" ")
 
     if (cmdArgs) {
-      const cmd = bot.commands.get(cmdArgs) || bot.commands.get(bot.aliases.get(cmdArgs));
+      const cmd = client.commandmanager.command.get(cmdArgs) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmdArgs));
       if (( cmd.category === 'Developer' || cmd.category === '' )) return
       if (!cmd) return
 
@@ -28,12 +27,12 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
         .setColor(message.member.displayHexColor)
         .setDescription(`**__Help Commands__**\n**\`\`\`asciidoc\n• Name        :: ${cmd.name}\n• Aliases     :: ${aliases}\n• Category    :: ${cmd.category}\n• Options     :: ${options}\n• Description :: ${description}\n• Usage       :: ${usage}\n• Cooldowns   :: ${cooldown}\n\`\`\`**`)
-        .setThumbnail(bot.user.displayAvatarURL())
+        .setThumbnail(client.user.displayAvatarURL())
         .setFooter(`Don't include <> or []. It's mean, <> is required and [] is optional`)
       return message.channel.send(embed);
     }
 
-    let commands = bot.commands
+    let commands = client.commandmanager.command
     const Developer = commands
       .filter(({ category }) => category === 'Developer')
       .map(({ name }) => `**\`${name}\`**`)
@@ -71,23 +70,23 @@ module.exports = {
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
 
-    const animalsize = bot.commands.filter(x => x.category === 'Animal').size
-    const actsize = bot.commands.filter(x => x.category === 'Actions').size
-    const imgsize = bot.commands.filter(x => x.category === 'Image').size
-    const gensize = bot.commands.filter(x => x.category === 'General').size
-    const funsize = bot.commands.filter(x => x.category === 'Fun').size
-    const utisize = bot.commands.filter(x => x.category === 'Utility').size
-    const musicsize = bot.commands.filter(x => x.category === 'Music').size
-    const adminsize = bot.commands.filter(x => x.category === 'Administration').size
+    const animalsize = client.commandmanager.command.filter(x => x.category === 'Animal').size
+    const actsize = client.commandmanager.command.filter(x => x.category === 'Actions').size
+    const imgsize = client.commandmanager.command.filter(x => x.category === 'Image').size
+    const gensize = client.commandmanager.command.filter(x => x.category === 'General').size
+    const funsize = client.commandmanager.command.filter(x => x.category === 'Fun').size
+    const utisize = client.commandmanager.command.filter(x => x.category === 'Utility').size
+    const musicsize = client.commandmanager.command.filter(x => x.category === 'Music').size
+    const adminsize = client.commandmanager.command.filter(x => x.category === 'Administration').size
 
     const totalcmd = animalsize + actsize + imgsize + gensize + funsize + utisize + musicsize + adminsize
 
 
     let hembed = new Discord.MessageEmbed()
-      .setAuthor('Munari Help Commands', bot.user.displayAvatarURL())
+      .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
       .setColor(message.member.displayHexColor)
       .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
-      .setThumbnail(bot.user.displayAvatarURL())
+      .setThumbnail(client.user.displayAvatarURL())
       .addField(`**\`【🐱】\` • Animal \`[${animalsize}]\`**`, animal)
       .addField(`**\`【☺️】\` • Action \`[${actsize}]\`**`, actions)
       .addField(`**\`【🖼️】\` • Image \`[${imgsize}]\`**`, image)

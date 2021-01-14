@@ -14,7 +14,7 @@ module.exports = {
     const { others } = new alex(client.config.alexapi)
 
     const input = args.join(' ')
-    if (!input) return client.commands.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    if (!input) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
 
     const data = await others.color(input.replace('#', ''))
     const hex = data.hex

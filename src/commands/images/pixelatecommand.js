@@ -1,6 +1,5 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
-const { image } = new alex('93jQYsGpTm_Jz44_fxV2VlsL9t6Uk36zfHq3buCb')
 module.exports = {
   name: "pixel",
   aliases: null,
