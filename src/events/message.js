@@ -1,4 +1,5 @@
 const { MessageEmbed, Collection } = require('discord.js')
+const { formatMs, createEmbed } = require('../utils/Function')
 module.exports = {
     name: 'message',
     async run(client, message) {
@@ -27,44 +28,33 @@ module.exports = {
         if (!cmd) return
 
         //Command Files in HERE
-        let command =
-            client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
+        let command = client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
         if (!command) return;
 
         //Owner Only
-        if (command.ownerOnly && message.author.id !== "243728573624614912") {
-            return
-        }
+        if (command.ownerOnly && message.author.id !== "243728573624614912") return
 
         //GuildOwnly
-        if (command.guildOnly && message.channel.type === 'dm') {
-            return
-        }
+        if (command.guildOnly && message.channel.type === 'dm') return
 
         //Cooldown command in here
-        const cooldowns = client.commandmanager.cooldown
-        if (!cooldowns.has(command.name)) {
-            cooldowns.set(command.name, new Collection());
-        }
+        const cooldown = client.commandmanager.cooldown;
+        !cooldown.has(command.name) ? cooldown.set(command.name, new Collection()) : null
+
         const now = Date.now();
-        const timestamps = cooldowns.get(command.name);
-        const cooldownAmount = command.cooldown * 1000;
+        const timestamps = cooldown.get(command.name);
+        const cooldownamount = command.cooldown * 1000;
 
         if (timestamps.has(message.author.id)) {
-            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
-                    .then(msg => { msg.delete({ timeout: 5000 }); });
+            const expiration = timestamps.get(message.author.id) + cooldownamount;
+            if (now < expiration) {
+                const timeleft = formatMs((expiration - now));
+                return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => {x.delete({timeout: 5000})});
             }
-        }
+        };
 
         timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-        if (message.member.id === "243728573624614912") {
-            timestamps.delete(message.author.id, now);
-        }
+        message.author.id === "243728573624614912" ? timestamps.delete(message.author.id) : setTimeout(() => {timestamps.delete(message.author.id)}, cooldownamount);
 
         //Execute command in here
         if (command)
@@ -73,7 +63,7 @@ module.exports = {
             } catch (err) {
             } finally {
                 console.log(
-                    `${message.author.tag} menggunakan command ${prefix}${cmd} di server ${message.guild.name} channel #${message.channel.name}`
+                    `${message.author.tag} •> ${command.name} <•> ${message.guild.name} <•> #${message.channel.name}`
                 );
             }
     }
