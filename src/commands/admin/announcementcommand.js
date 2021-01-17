@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: "announcement",
   aliases: ["anc"],
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Send Announcement message to specific channel",
   usage: "announcement <#channel> <json embed>",
   options: null,

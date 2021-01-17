@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: "member",
     aliases: null,
-    category: "Administration",
+    category: "Moderation",
     descriptions: "Setting member",
     usage: "member <member[mention/id]> <argumen>",
     options: ["--mute", "--unmute", "--kick", "--ban"],

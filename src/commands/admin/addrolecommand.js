@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "addrole",
   aliases: null,
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Give someone role",
   usage: "addrole [user] [role]",
   options: null,

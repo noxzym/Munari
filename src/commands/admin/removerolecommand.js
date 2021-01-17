@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "removerole",
   aliases: ["rrole"],
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Remove someone role by mention or id",
   usage: "removerole <user> <role>",
   options: null,

@@ -26,3 +26,48 @@
 
             message.channel.send(ath)
 }
+
+        if (song.url.includes('youtube.com')) {
+            dispatcher = queue.connection
+                .play(
+                    await erityt(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25, bitrate: 96000 }), { type: streamtype }
+                )
+                .on("finish", () => {
+                    if (queue.loop) {
+                        queue.songs.delete(song.identifier)
+                        queue.songs.set(song.identifier, song)
+                        play(queue.songs.first(), message);
+                    } else {
+                        queue.songs.delete(song.identifier)
+                        play(queue.songs.first(), message);
+                    }
+                })
+                .on("error", (error) => {
+                    console.error(error);
+                    queue.songs.delete(queue.songs.first().identifier)
+                    play(queue.songs.first(), message);
+                })
+
+            dispatcher.setVolumeLogarithmic(queue.volume / 100);
+        } else {
+            dispatcher = queue.connection
+                .play(song.url, { type: streamtype })
+                .on("finish", () => {
+
+                    if (queue.loop) {
+                        queue.songs.delete(song.identifier)
+                        queue.songs.set(song.identifier, song)
+                        play(queue.songs.first(), message);
+                    } else {
+                        queue.songs.delete(song.identifier)
+                        play(queue.songs.first(), message);
+                    }
+                })
+                .on("error", (error) => {
+                    console.error(error);
+                    queue.songs.delete(song.identifier)
+                    play(queue.songs.first(), message);
+                })
+
+            dispatcher.setVolumeLogarithmic(queue.volume / 100);
+        }

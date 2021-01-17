@@ -1,7 +1,7 @@
 module.exports = {
   name: "nick",
   aliases: null,
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Manage nickname user",
   usage: "nick <user> [newnickname]",
   options: null,

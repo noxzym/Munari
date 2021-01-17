@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "prune",
   aliases: null,
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Delete message up to 99",
   usage: "prune <message count>",
   options: null,

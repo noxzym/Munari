@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: "channel",
     aliases: ["ch"],
-    category: "Administration",
+    category: "Moderation",
     descriptions: "Setting channel",
     usage: "ch <channel[mention/id]> <argumen>",
     options: ["--lock", "--unlock", "--slowmode", "--nuke"],

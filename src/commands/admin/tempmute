@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "temporarymute",
   aliases: ["tmute"],
-  category: "Administration",
+  category: "Moderation",
   descriptions: "Make a user temporary can't send message",
   usage: "temporarymute <user> <time[s, m, h]>",
   options: [""],
