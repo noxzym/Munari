@@ -3,9 +3,7 @@ const { play, playlist, createEmbed } = require('../../utils/Function')
 
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
-const ytsr = require('youtube-sr');
-
-// const YouTubeAPI = require("simple-youtube-api");
+const songdata = require('../../extended/BaseQueue')
 
 // let ytapk;
 // try {
@@ -46,7 +44,7 @@ module.exports = {
 
     const search = args.join(" ");
     const videoPattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$gi/;
-    const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
+    const playlistPattern = /^.*(list=)([^#\&\?]*).*/;
     const url = args[0];
     const urlv = videoPattern.test(args[0]);
 
@@ -55,7 +53,8 @@ module.exports = {
     }
 
     if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
-      return playlist(url, channel, message, client);
+      const dataid = search.match(playlistPattern)
+      return playlist(dataid[2], channel, message, client);
     }
 
     let songInfo;
@@ -74,21 +73,20 @@ module.exports = {
             nowplaying: infoSong.all[0].seconds,
             url: infoSong.all[0].url,
             thumbnail: infoSong.all[0].thumbnail + "?size=4096",
-            requester: message.author
           };
         } catch (e) {
           console.log(e);
           return message.channel.send(createEmbed("error", "I could not find any videos that match that link")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         }
-      } else if (message.content.includes('--find')) {
+      } else if ((message.content.includes('--find') || message.content.includes("--search"))) {
         try {
-          var searcher = await ytsr.search(search, { limit: 5 });
-          if (searcher[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          var searcher = await yts.search(search)
+          if (searcher.all[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
           let index = 0;
           let em = createEmbed('yt')
             .setAuthor(`Youtube Client get Video`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
             .setTitle(`This is result for ${search}`)
-            .setDescription(`${searcher.map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.durationFormatted}]\`**`).join('\n')}`)
+            .setDescription(`${searcher.all.slice(0, 5).map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.timestamp}]\`**`).join('\n')}`)
             .setFooter(`Type 'cancel' to cancel the song request`)
           var embedsearch = await message.channel.send(em)
           try {
@@ -106,7 +104,7 @@ module.exports = {
             }
             embedsearch.delete()
             const videoIndex = parseInt(response.first().content);
-            var video = await searcher[videoIndex - 1];
+            var video = await searcher.all[videoIndex - 1];
 
           } catch (e) {
             return message.channel.send(createEmbed("error", "The request has been canceled because no respond!")).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
@@ -122,7 +120,6 @@ module.exports = {
             nowplaying: vid.seconds,
             url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: message.author
           };
         } catch (e) {
           console.log(e);
@@ -140,7 +137,6 @@ module.exports = {
             nowplaying: vid.seconds,
             url: vid.url,
             thumbnail: vid.thumbnail + "?size=4096",
-            requester: message.author
           };
         } catch (e) {
           console.error();
@@ -148,22 +144,17 @@ module.exports = {
         }
       }
 
+      const track = new songdata(song, message.author)
       const serverQueue = message.client.queue.get(message.guild.id);
 
       if (serverQueue) {
-
         const filterbefore = serverQueue.songs;
-        const identifierfilter = filterbefore.slice(1).filter(x => song.identifier.includes(x.identifier))
-        
+        const identifierfilter = filterbefore.map(x => x).filter(x => song.identifier.includes(x.identifier))
         if (Boolean(identifierfilter.map(x => x.identifier === song.identifier).join())) {
-
-          return message.channel.send(createEmbed("error", `Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
-
+          return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
         }
-
-        serverQueue.songs.push(song);
+        serverQueue.songs.push(track);
         return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`))
-
       }
 
       const queueConstruct = {
@@ -179,7 +170,7 @@ module.exports = {
       };
 
       message.client.queue.set(message.guild.id, queueConstruct);
-      queueConstruct.songs.push(song);
+      queueConstruct.songs.push(track)
 
       try {
         const connection = await channel.join();
@@ -187,11 +178,9 @@ module.exports = {
         await queueConstruct.connection.voice.setSelfDeaf(true);
         play(queueConstruct.songs[0], message, client);
       } catch (error) {
-
         message.client.queue.delete(message.guild.id);
         await channel.leave();
         return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 8000 }); });
-
       }
     } catch (err) {
       console.log(err);

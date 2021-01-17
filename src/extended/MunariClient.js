@@ -2,8 +2,10 @@ require('dotenv').config()
 require('./InlineReply')
 require('./Message')
 const { Client } = require("discord.js");
-const { queue, Commando } = require('./renameClasses')
-const bot = require('./discordbotlist')
+const { queue } = require('./BaseClasses')
+const { Commando } = require('./MunariCommando');
+const bot = require('./discordbotlist');
+
 module.exports = class MunariClient extends Client {
     constructor(config) {
         super({

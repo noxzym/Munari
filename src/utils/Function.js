@@ -1,8 +1,10 @@
 const MunariClient = require('../extended/MunariClient');
 const { Util, MessageEmbed } = require('discord.js');
+const songdata = require('../extended/BaseQueue');
+
 const prettyMilliseconds = require("pretty-ms");
 const erityt = require('erit-ytdl');
-const ytsr = require('youtube-sr');
+const yts = require('yt-search');
 const color = {
     spotify: "#18d869",
     yt: "#ff0000",
@@ -13,7 +15,7 @@ const color = {
 }
 
 //Pagination
-const pagination = async(send, page, datae, message, option) => {
+const pagination = async (send, page, datae, message, option) => {
     await send.react('❌');
     if (option.songs.length > 6) await send.react('➡️');
 
@@ -175,19 +177,19 @@ const play = async (song, message, client) => {
 
 //playlist
 const playlist = async (url, channel, message, client) => {
-    const g = await ytsr.getPlaylist(url, { part: 'snippet' })
-    const newsong = g.videos.map((x) => {
-        return (song = {
-            title: Util.escapeMarkdown(x.title),
-            identifier: x.id,
-            author: x.channel.name,
-            duration: x.durationFormatted,
-            nowplaying: x.duration / 1000,
-            url: `https://youtube.com/watch?v=${x.id}`,
-            thumbnail: `https://i.ytimg.com/vi/${x.thumbnail.id}/hq720.jpg?size=4096`,
-            requester: message.author
-        })
-    })
+    const getdata = await yts({ listId: url })
+    const songgetdata = await getdata.videos.map((vid) => {
+        return new songdata(song = {
+            title: Util.escapeMarkdown(vid.title),
+            identifier: vid.videoId,
+            author: vid.author.name,
+            duration: vid.duration.timestamp,
+            nowplaying: vid.duration.seconds,
+            url: `https://www.youtube.com/watch?v=${vid.videoId}`,
+            thumbnail: vid.thumbnail + "?size=4096",
+        }, message.author)
+    });
+
     const queueConstruct = {
         textChannel: message.channel.id,
         voiceChannel: channel.id,
@@ -199,22 +201,23 @@ const playlist = async (url, channel, message, client) => {
         playing: true
     };
 
-    let e = createEmbed("yt")
-        .setAuthor(`Youtube Client Playlist`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
-        .setTitle(`Playlist Informations • ${g.title}`)
-        .setURL(g.url)
-        .setDescription(`**\`\`\`asciidoc\n• Title       :: ${g.title}\n• Video       :: ${g.videoCount} Videos\n• View        :: ${g.views} Views\n• Last Update :: ${g.lastUpdate.replace('Updated', '').trim()}\`\`\`**`)
-        .setThumbnail(g.thumbnail)
-
     const queue = client.queue.get(message.guild.id)
 
+    let e = createEmbed("yt")
+        .setAuthor(`Youtube Client Playlist`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
+        .setTitle(`Playlist Informations • ${getdata.title}`)
+        .setURL(getdata.url)
+        .setDescription(`**\`\`\`asciidoc\n• Title       :: ${getdata.title}\n• Video       :: ${getdata.videos.map(x => x).length} Videos\n• View        :: ${getdata.views} Views\n\`\`\`**`)
+        .setThumbnail(getdata.thumbnail)
+
     if (queue) {
-        queue.songs.push(...newsong)
+        queue.songs.push(...songgetdata)
         return client.channels.cache.get(queue.textChannel).send(e)
     }
 
     message.client.queue.set(message.guild.id, queueConstruct);
-    queueConstruct.songs.push(...newsong);
+    queueConstruct.songs.push(...songgetdata);
+
     message.channel.send(e)
 
     try {

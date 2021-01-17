@@ -19,8 +19,5 @@ module.exports = (client) => {
     client.on(event.name, event.run.bind(null, client));
 
     delete require.cache[require.resolve(`../events/${file}`)];
-
-    // debug
-    // console.log(`[INFO][EVENT]: Loaded ${event.name}`);
   });
 };

@@ -1,4 +1,6 @@
 const { play } = require('../../utils/Function')
+const songdata = require('../../extended/BaseQueue')
+
 module.exports = {
     name: "listenmoe",
     aliases: ["listen", "moe"],
@@ -43,8 +45,10 @@ module.exports = {
             };
         }
 
+        const track = new songdata(song, message.author)
+
         if (queue) {
-            queue.songs.push(song)
+            queue.songs.push(track)
             return message.channel.send(`✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`);
         }
 
@@ -61,7 +65,7 @@ module.exports = {
         };
 
         message.client.queue.set(message.guild.id, queueConstruct);
-        queueConstruct.songs.push(song);
+        queueConstruct.songs.push(track);
         try {
             const connection = await channel.join();
             queueConstruct.connection = connection;
