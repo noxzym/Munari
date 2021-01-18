@@ -51,7 +51,7 @@ module.exports = {
       .map(({ name }) => `**\`${name}\`**`)
       .join(", ");
 
-    if (message.content.includes("1")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[1]|animal)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Animal", client.user.avatarURL())
         .addField("Commands", animal)
@@ -59,7 +59,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("2")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[2]|action)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Action", client.user.avatarURL())
         .addField("Commands", actions)
@@ -67,7 +67,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("3")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[3]|image)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Image", client.user.avatarURL())
         .addField("Commands", image)
@@ -75,7 +75,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("4")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[4]|general)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • General", client.user.avatarURL())
         .addField("Commands", general)
@@ -83,7 +83,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("5")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[5]|fun)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Fun", client.user.avatarURL())
         .addField("Commands", fun)
@@ -91,7 +91,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("6")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[6]|utility)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Utility", client.user.avatarURL())
         .addField("Commands", utility)
@@ -99,7 +99,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("7")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[7]|music)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Music", client.user.avatarURL())
         .addField("Commands", music)
@@ -107,7 +107,7 @@ module.exports = {
         .setFooter(`"${prefix}help [command]" to get more Information`, message.author.avatarURL({ dynamic: true }))
       return message.channel.send(e)
     }
-    if (message.content.includes("8")) {
+    if (args.slice(0).join('').toLowerCase().match(/^(?:[8]|moderation)$/g)) {
       let e = createEmbed("info")
         .setAuthor("Category • Moderation", client.user.avatarURL())
         .addField("Commands", Admin)
@@ -127,7 +127,7 @@ module.exports = {
 
     const totalcmd = animalsize + actsize + imgsize + gensize + funsize + utisize + musicsize + adminsize
 
-    if (message.content.includes('--all')) {
+    if (args.slice(0).join('').match(/^(?:--all)$/g)) {
       let hembed = new Discord.MessageEmbed()
         .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
         .setColor(message.member.displayHexColor)
@@ -150,8 +150,8 @@ module.exports = {
     const cmdArgs = args.join(" ")
     if (cmdArgs) {
       const cmd = client.commandmanager.command.get(cmdArgs) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmdArgs));
-      if ((cmd.category === 'Developer' || cmd.category === '')) return
       if (!cmd) return
+      if ((cmd.category === 'Developer' || cmd.category === '')) return
 
       const aliases = cmd.aliases ? cmd.aliases.map((x) => x) : "-";
       const options = cmd.options ? cmd.options.map((x) => x) : "-";
@@ -170,7 +170,7 @@ module.exports = {
     let hembed = new Discord.MessageEmbed()
       .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
       .setColor(message.member.displayHexColor)
-      .setDescription(`Type **\`${prefix}help [Category]\`** to view command list\nTo view all commands use **\`${prefix}help --all\`**\n\n**Category**\n**\`【🐶】\` Animal \`help 1\`\n\`【😉】\` Action \`help 2\`\n\`【🖼】\` Image \`help 3\`\n\`【🎭】\` General \`help 4\`\n\`【🎲】\` Fun \`help 5\`\n\`【🛠️】\` Utility\`help 6\`\n\`【🎧】\` Music \`help 7\`\n\`【⚙️】\` Moderation \`help 8\`\n\n【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**`)
+      .setDescription(`Type **\`${prefix}help [Category]\`** to view command list\nTo view all commands use **\`${prefix}help --all\`**\n\n**Category**\n**\`【🐶】\` Animal \`help 1\`\n\`【😉】\` Action \`help 2\`\n\`【🖼】\` Image \`help 3\`\n\`【🎭】\` General \`help 4\`\n\`【🎲】\` Fun \`help 5\`\n\`【🛠️】\` Utility \`help 6\`\n\`【🎧】\` Music \`help 7\`\n\`【⚙️】\` Moderation \`help 8\`\n\n【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**`)
       .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()
     return message.channel.send(hembed)
