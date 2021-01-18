@@ -14,7 +14,8 @@ module.exports = {
 
         const generate = start => {
             const current = data.all.slice(start, start + 5);
-            const page = (current/5).toFixed(0) !== current/5 ? parseFloat((current/5).toFixed(0)) + 1 : current/5
+            const length = current.length
+            const page = (length/5).toFixed(0) !== length/5 ? parseFloat((length/5).toFixed(0)) + 1 : length/5
             let e = new MessageEmbed()
                 .setAuthor(`Update Changelog`, client.user.avatarURL({ size: 4096, format: 'png' }))
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
