@@ -1,5 +1,6 @@
 const { Util } = require("discord.js");
 const { play, playlist, createEmbed } = require('../../utils/Function')
+const { getPreview } = require('spotify-url-info')
 
 const ytdl = require("ytdl-core");
 const yts = require('yt-search')
@@ -43,14 +44,22 @@ module.exports = {
     }
 
     const search = args.join(" ");
+    const url = args[0];
+
     const videoPattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$gi/;
     const playlistPattern = /^.*(list=)([^#\&\?]*).*/;
-    const url = args[0];
+    const spotifytrack = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/;
+    const spotifyplaylist = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:playlist\/|\?uri=spotify:track:)/;
+
     const urlv = videoPattern.test(args[0]);
+    const spotiv = spotifytrack.test(args[0])
+    const spotivpl = spotifyplaylist.test(args[0])
 
     if (!search) {
       return message.channel.send(client.config.prefix + this.usage);
     }
+
+    if (spotivpl) return message.channel.send(createEmbed("info", "Sorry i can't play song from spotify playlist")).then(msg => { msg.delete({ timeout: 10000 }) });
 
     if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
       const dataid = search.match(playlistPattern)
@@ -61,7 +70,24 @@ module.exports = {
     let song;
 
     try {
-      if (urlv) {
+      if (spotiv) {
+        try {
+          const getdata = await getPreview(url)
+          const infoSong = await yts(`${getdata.title} - ${getdata.artist}`)
+          song = {
+            title: Util.escapeMarkdown(infoSong.all[0].title),
+            identifier: infoSong.all[0].videoId,
+            author: infoSong.all[0].author.name,
+            duration: infoSong.all[0].timestamp,
+            nowplaying: infoSong.all[0].seconds,
+            url: infoSong.all[0].url,
+            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
+          }
+        } catch (e) {
+          console.log(e)
+          return message.channel.send(createEmbed("error", "I could not find any videos that match that link")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        }
+      } else if (urlv) {
         try {
           songInfo = await ytdl.getInfo(url);
           const infoSong = await yts(songInfo.videoDetails.title)
@@ -148,13 +174,12 @@ module.exports = {
       const serverQueue = message.client.queue.get(message.guild.id);
 
       if (serverQueue) {
-        const filterbefore = serverQueue.songs;
-        const identifierfilter = filterbefore.map(x => x).filter(x => song.identifier.includes(x.identifier))
-        if (Boolean(identifierfilter.map(x => x.identifier === song.identifier).join())) {
+        if (Boolean(serverQueue.songs.slice(1).map(x => x).filter(x => song.identifier.includes(x.identifier)).map(x => x.identifier === song.identifier).join())) {
           return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
+        } else {
+          serverQueue.songs.push(track);
+          return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
         }
-        serverQueue.songs.push(track);
-        return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
       }
 
       const queueConstruct = {

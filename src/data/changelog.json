@@ -4,6 +4,7 @@
             {
                 "date": "18 January 2021",
                 "content": [
+                    "- Add feature play track from spotify",
                     "- Optimizing Music Service",
                     "- Fix some bug in help command"
                 ]

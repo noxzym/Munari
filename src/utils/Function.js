@@ -3,6 +3,7 @@ const { Util, MessageEmbed } = require('discord.js');
 const songdata = require('../extended/BaseQueue');
 
 const prettyMilliseconds = require("pretty-ms");
+const { getTracks } = require('spotify-url-info')
 const erityt = require('erit-ytdl');
 const yts = require('yt-search');
 const color = {
@@ -235,11 +236,88 @@ const playlist = async (url, channel, message, client) => {
                 msg.delete({ timeout: 5000 });
             });
     }
-}
+};
+
+// const spotifyPlaylist = async (url, channel, message, client) => {
+//     const dataget = await getTracks(url).then(x => x);
+
+//     await dataget.map(async (x) => {
+//         await yts(`${x.name} - ${x.artists.map(x => x.name)}`).then(async (datayt) => {
+//             const datazero = await datayt.all[0]
+//             const dataaaa = new songdata(song = {
+//                 title: Util.escapeMarkdown(datazero.title),
+//                 identifier: datazero.videoId,
+//                 author: datazero.author.name,
+//                 duration: datazero.duration.timestamp,
+//                 nowplaying: datazero.duration.seconds,
+//                 url: `https://www.youtube.com/watch?v=${datazero.videoId}`,
+//                 thumbnail: datazero.thumbnail + "?size=4096",
+//             }, message.author);
+//             const queueConstruct = {
+//                 textChannel: message.channel.id,
+//                 voiceChannel: channel.id,
+//                 guildId: message.guild.id,
+//                 songs: [],
+//                 connection: null,
+//                 loop: false,
+//                 volume: 100,
+//                 playing: true
+//             };
+
+//             const queue = client.queue.get(message.guild.id)
+//             if (queue) {
+//                 queue.songs.push(dataaaa)
+//             }
+
+//             message.client.queue.set(message.guild.id, queueConstruct);
+//             queueConstruct.songs.push(dataaaa);
+//         });
+
+//         // console.log(datayt)
+//     })
+//     // console.log(pushto)
+//     // dataget.map(x => youtube(`${x.name} - ${x.artists.map(x => x.name)}`))
+//     // async function youtube(x) {
+//     //     const datayt = await yts(x);
+//     //     const datazero = await datayt.all[0]
+
+//     //     const song = {
+//     //         title: Util.escapeMarkdown(datazero.title),
+//     //         identifier: datazero.videoId,
+//     //         author: datazero.author.name,
+//     //         duration: datazero.duration.timestamp,
+//     //         nowplaying: datazero.duration.seconds,
+//     //         url: `https://www.youtube.com/watch?v=${datazero.videoId}`,
+//     //         thumbnail: datazero.thumbnail + "?size=4096",
+//     //     };
+//     //     const track = await new songdata(song, message.author)
+//     //     const queueConstruct = {
+//     //         textChannel: message.channel.id,
+//     //         voiceChannel: channel.id,
+//     //         guildId: message.guild.id,
+//     //         songs: [],
+//     //         connection: null,
+//     //         loop: false,
+//     //         volume: 100,
+//     //         playing: true
+//     //     };
+
+//     //     const queue = client.queue.get(message.guild.id)
+//     //     if (queue) {
+//     //         queue.songs.push(track)
+//     //         return client.channels.cache.get(queue.textChannel).send(e)
+//     //     }
+
+//     //     message.client.queue.set(message.guild.id, queueConstruct);
+//     //     queueConstruct.songs.push(track);
+        
+//     // }
+// }
 
 module.exports = {
     play,
     playlist,
+    // spotifyPlaylist,
     formatMs,
     createEmbed,
     pagination
