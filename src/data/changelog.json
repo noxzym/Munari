@@ -2,7 +2,14 @@
     "data": {
         "all": [
             {
-                "date": "13 Januari 2021",
+                "date": "18 January 2021",
+                "content": [
+                    "- Optimizing Music Service",
+                    "- Fix some bug in help command"
+                ]
+            },
+            {
+                "date": "13 January 2021",
                 "content": [
                     "- Refactor Command",
                     "- Optimizing Command",

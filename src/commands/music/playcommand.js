@@ -154,7 +154,7 @@ module.exports = {
           return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
         }
         serverQueue.songs.push(track);
-        return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${song.requester.username}\`** Has been added to queue!`))
+        return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
       }
 
       const queueConstruct = {
