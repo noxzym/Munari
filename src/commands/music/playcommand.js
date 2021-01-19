@@ -1,5 +1,5 @@
 const { Util } = require("discord.js");
-const { play, playlist, createEmbed } = require('../../utils/Function')
+const { play, playlist, createEmbed, spotifyPlaylist } = require('../../utils/Function')
 const { getPreview } = require('spotify-url-info')
 
 const ytdl = require("ytdl-core");
@@ -59,6 +59,10 @@ module.exports = {
       return message.channel.send(client.config.prefix + this.usage);
     }
 
+    // if (!urlv && !spotiv && !playlistPattern.test(args[0]) && spotivpl){
+    //   const input = search.match(spotifyplaylist);
+    //   return spotifyPlaylist(input.input, channel, message, client)
+    // }
     if (spotivpl) return message.channel.send(createEmbed("info", "Sorry i can't play song from spotify playlist")).then(msg => { msg.delete({ timeout: 10000 }) });
 
     if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
@@ -72,8 +76,8 @@ module.exports = {
     try {
       if (spotiv) {
         try {
-          const getdata = await getPreview(url)
-          const infoSong = await yts(`${getdata.title} - ${getdata.artist}`)
+          const getdata = await getPreview(url);
+          const infoSong = await yts(`${getdata.title} - ${getdata.artist}`);
           song = {
             title: Util.escapeMarkdown(infoSong.all[0].title),
             identifier: infoSong.all[0].videoId,
@@ -90,7 +94,7 @@ module.exports = {
       } else if (urlv) {
         try {
           songInfo = await ytdl.getInfo(url);
-          const infoSong = await yts(songInfo.videoDetails.title)
+          const infoSong = await yts(songInfo.videoDetails.title);
           song = {
             title: Util.escapeMarkdown(infoSong.all[0].title),
             identifier: infoSong.all[0].videoId,
@@ -173,15 +177,12 @@ module.exports = {
       const track = new songdata(song, message.author)
       const serverQueue = message.client.queue.get(message.guild.id);
 
-      if (serverQueue) {
-        if (Boolean(serverQueue.songs.slice(1).map(x => x).filter(x => song.identifier.includes(x.identifier)).map(x => x.identifier === song.identifier).join())) {
-          return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
-        } else {
-          serverQueue.songs.push(track);
-          return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
-        }
+      if (serverQueue ? serverQueue.songs.length !== 0 && serverQueue.songs.map(x => x.identifier).filter(x => song.identifier.includes(x)).map(x => x === song.identifier).join() === 'true' : undefined) {
+        return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
+      } else if (serverQueue) {
+        serverQueue.songs.push(track);
+        return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
       }
-
       const queueConstruct = {
         textChannel: message.channel.id,
         voiceChannel: channel.id,
