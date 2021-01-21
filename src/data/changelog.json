@@ -2,6 +2,13 @@
     "data": {
         "all": [
             {
+                "date": "21 January 2021",
+                "content": [
+                    "- Support Spotify Playlist",
+                    "- Fix bug double executing command"
+                ]
+            },
+            {
                 "date": "18 January 2021",
                 "content": [
                     "- Add feature play track from spotify",
@@ -37,7 +44,6 @@
                 "date": "8 Januari 2021",
                 "content": [
                     "- Fix emoji command",
-                    "- To invite this bot, the server must have minimal have 30 user (not bot)",
                     "- Fix error in shufflecommand"
                 ]
             },

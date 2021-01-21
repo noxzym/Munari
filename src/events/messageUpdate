@@ -1,0 +1,21 @@
+const { run } = require('./message')
+module.exports = {
+    name: 'messageUpdate',
+    run: async function (client, oldMessage, newMessage) {
+        if (newMessage === undefined) return
+
+        let = getcmdfirst = newMessage.content.split(' ')[0].replace(client.config.prefix, '')
+
+        const commandname = client.commandmanager.command.map(x => `${x.name}`)
+        const commandalias = client.commandmanager.command.map(x => `${x.aliases}`).filter(x => x).toString().split(',')
+
+        let data = newMessage.content;
+        let filter = data.split(' ')[0];
+        let join = data.split().join(' ');
+
+        let message = newMessage
+        let args = join.replace(filter, '');
+
+        ((commandname.includes(getcmdfirst)) || (commandalias.includes(getcmdfirst))) ? await run(client, message, args) : undefined
+    }
+}
