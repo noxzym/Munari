@@ -104,10 +104,8 @@ module.exports = {
             const albumnocard = presence.assets.largeText
             const authnocard = presence.state
             let e = createEmbed()
-                .setColor('18d869 ')
-                .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png')
-                .setTitle(`${title}`)
-                .setURL(url)
+                .setColor('18d869')
+                .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png', url)
                 .setDescription(`\`\`\`asciidoc\n• SongName   :: ${songnameuncard}\n• SongAlbum  :: ${albumnocard}\n• SongAuthor :: ${authnocard}\n\`\`\``)
                 .setThumbnail(`${img}`)
                 .setTimestamp()

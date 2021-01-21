@@ -1,6 +1,7 @@
-require('dotenv').config()
-require('./InlineReply')
-require('./Message')
+require('dotenv').config();
+require('./InlineReply');
+require('./Message');
+process.setMaxListeners(0);
 const { Client } = require("discord.js");
 const { queue } = require('./BaseClasses')
 const { Commando } = require('./MunariCommando');

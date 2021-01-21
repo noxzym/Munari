@@ -20,12 +20,8 @@ module.exports = {
 
         if (!message.content.startsWith(prefix)) return
 
-        let args = message.content
-            .slice(prefix.length)
-            .trim()
-            .split(/ +/g);
+        let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let cmd = args.shift().toLowerCase();
-        if (!cmd) return
 
         //Command Files in HERE
         let command = client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
@@ -49,22 +45,20 @@ module.exports = {
             const expiration = timestamps.get(message.author.id) + cooldownamount;
             if (now < expiration) {
                 const timeleft = formatMs((expiration - now));
-                return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => {x.delete({timeout: 5000})});
+                return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => { x.delete({ timeout: 5000 }) });
             }
         };
 
         timestamps.set(message.author.id, now);
-        message.author.id === "243728573624614912" ? timestamps.delete(message.author.id) : setTimeout(() => {timestamps.delete(message.author.id)}, cooldownamount);
+        message.author.id === "243728573624614912" ? timestamps.delete(message.author.id) : setTimeout(() => { timestamps.delete(message.author.id) }, cooldownamount);
 
         //Execute command in here
-        if (command)
-            try {
-                command.run(client, message, args);
-            } catch (err) {
-            } finally {
-                console.log(
-                    `${message.author.tag} •> ${command.name} <•> ${message.guild.name} <•> #${message.channel.name}`
-                );
-            }
+        try {
+            await command.run(client, message, args);
+        } catch (err) {
+            console.error(err)
+        } finally {
+            console.log(`${message.author.tag} •> ${command.name} <•> ${message.guild.name} <•> #${message.channel.name}`)
+        }
     }
 }

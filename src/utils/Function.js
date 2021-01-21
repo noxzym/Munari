@@ -3,7 +3,7 @@ const { Util, MessageEmbed } = require('discord.js');
 const songdata = require('../extended/BaseQueue');
 
 const prettyMilliseconds = require("pretty-ms");
-const { getTracks } = require('spotify-url-info')
+const { getTracks, getPreview } = require('spotify-url-info')
 const erityt = require('erit-ytdl');
 const yts = require('yt-search');
 const color = {
@@ -20,7 +20,7 @@ const pagination = async (send, page, datae, message, option) => {
     await send.react('❌');
     if (option.songs.length > 6) await send.react('➡️');
 
-    var collector = send.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id, { time: 60000, errors: ['time'] });
+    var collector = send.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id);
     collector.on('collect', async reaction => {
         send.reactions.removeAll().catch(console.error)
         switch (reaction.emoji.name) {
@@ -42,7 +42,7 @@ const pagination = async (send, page, datae, message, option) => {
                 send.edit(datae[page]);
                 await send.react('❌');
                 if (page !== 0) await send.react('⬅️');
-                if (page + 1 < datae.length) await v.react('➡️')
+                if (page + 1 < datae.length) await send.react('➡️')
                 break;
 
             default:
@@ -179,7 +179,7 @@ const play = async (song, message, client) => {
 //playlist
 const playlist = async (url, channel, message, client) => {
     const getdata = await yts({ listId: url })
-    const songgetdata = await getdata.videos.map((vid) => {
+    const songgetdata = await getdata.videos.slice(0, 50).map((vid) => {
         return new songdata(song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,
@@ -206,14 +206,14 @@ const playlist = async (url, channel, message, client) => {
 
     let e = createEmbed("yt")
         .setAuthor(`Youtube Client Playlist`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
-        .setTitle(`Playlist Informations • ${getdata.title}`)
+        .setTitle(`Youtube Playlist`)
         .setURL(getdata.url)
         .setDescription(`**\`\`\`asciidoc\n• Title       :: ${getdata.title}\n• Video       :: ${getdata.videos.map(x => x).length} Videos\n• View        :: ${getdata.views} Views\n\`\`\`**`)
         .setThumbnail(getdata.thumbnail)
 
     if (queue) {
         queue.songs.push(...songgetdata)
-        return client.channels.cache.get(queue.textChannel).send(e)
+        return message.channel.send(e)
     }
 
     message.client.queue.set(message.guild.id, queueConstruct);
@@ -238,48 +238,128 @@ const playlist = async (url, channel, message, client) => {
     }
 };
 
+const spotifyTrack = async (url, channel, message, client) => {
+    try {
+        const getdata = await getPreview(url);
+        const infoSong = await yts(`${getdata.title} - ${getdata.artist}`);
+        song = {
+            title: Util.escapeMarkdown(infoSong.videos[0].title),
+            identifier: infoSong.videos[0].videoId,
+            author: infoSong.videos[0].author.name,
+            duration: infoSong.videos[0].timestamp,
+            nowplaying: infoSong.videos[0].seconds,
+            url: infoSong.videos[0].url,
+            thumbnail: infoSong.videos[0].thumbnail + "?size=4096",
+        }
+
+        const track = new songdata(song, message.author)
+        const serverQueue = message.client.queue.get(message.guild.id);
+
+        if (serverQueue ? serverQueue.songs.length !== 0 && serverQueue.songs.map(x => x.identifier).filter(x => song.identifier.includes(x)).map(x => x === song.identifier).join() === 'true' : undefined) {
+            return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
+        } else if (serverQueue) {
+            serverQueue.songs.push(track);
+            return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
+        }
+        
+        const queueConstruct = {
+            textChannel: message.channel.id,
+            voiceChannel: channel.id,
+            guildId: message.guild.id,
+            songs: [],
+            connection: null,
+            loop: false,
+            volume: 100,
+            playing: true,
+            timeout: null
+        };
+
+        message.client.queue.set(message.guild.id, queueConstruct);
+        queueConstruct.songs.push(track)
+
+        try {
+            const connection = await channel.join();
+            queueConstruct.connection = connection;
+            await queueConstruct.connection.voice.setSelfDeaf(true);
+            play(queueConstruct.songs[0], message, client);
+        } catch (error) {
+            message.client.queue.delete(message.guild.id);
+            await channel.leave();
+            return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 8000 }); });
+        }
+    } catch (e) {
+        console.log(e)
+        return message.channel.send(createEmbed("error", "I could not find any videos that match that link")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+    }
+};
+
 const spotifyPlaylist = async (url, channel, message, client) => {
-    // const dataget = await getTracks(url);
-    // await dataget.forEach(async (x) => {
-    //     const data = await yts.search(`${x.name} - ${x.artists.map(x => x.name)}`)
-    //     const dataout = await data.all[0]; 
-    //     const tosongs = {
-    //         title: Util.escapeMarkdown(dataout.title),
-    //         identifier: dataout.videoId,
-    //         author: dataout.author.name,
-    //         duration: dataout.duration.timestamp,
-    //         nowplaying: dataout.duration.seconds,
-    //         url: `https://www.youtube.com/watch?v=${dataout.videoId}`,
-    //         thumbnail: dataout.thumbnail + "?size=4096",
-    //     };
+    const data = await getTracks(url);
+    const getdata = await Promise.all(data.slice(0, 50).map(({ album }) => album).map(x => datayt(`${x.name} - ${x.artists.map(x => x.name)}`)));
 
-    //     const track = new songdata(tosongs, message.author)
+    async function datayt(x) {
+        const ytget = await yts.search(x);
+        const data = ytget.videos[0];
+        return data
+    };
 
-        // const queueConstruct = {
-        //     textChannel: message.channel.id,
-        //     voiceChannel: channel.id,
-        //     guildId: message.guild.id,
-        //     songs: [],
-        //     connection: null,
-        //     loop: false,
-        //     volume: 100,
-        //     playing: true
-        // };
+    const dad = getdata.map(x => {
+        return new songdata(song = {
+            title: Util.escapeMarkdown(x.title),
+            identifier: x.videoId,
+            author: x.author.name,
+            duration: x.timestamp,
+            nowplaying: x.seconds,
+            url: `https://www.youtube.com/watch?v=${x.videoId}`,
+            thumbnail: x.thumbnail + "?size=4096",
+        }, message.author)
+    });
 
-        // const queue = client.queue.get(message.guild.id)
-        // if (queue) {
-        //     queue.songs.push(...iterat)
-        // }
+    const queueConstruct = {
+        textChannel: message.channel.id,
+        voiceChannel: channel.id,
+        guildId: message.guild.id,
+        songs: [],
+        connection: null,
+        loop: false,
+        volume: 100,
+        playing: true,
+        timeout: null
+    };
 
-        // message.client.queue.set(message.guild.id, queueConstruct);
-        // queueConstruct.songs.push(...iterat);
+    // const e = await getData(url).then(x => {
+    // let e = createEmbed("spotify")
+    //     .setAuthor(`Spotify Playlist`, "https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png", `${x.external_urls.spotify}`)
+    //     .setDescription(`**\`\`\`asciidoc\n• Owner  :: ${x.owner.display_name}\n• Title  :: ${x.name}\n• Type   :: ${x.type}\n• Uri    :: ${x.uri}\n• Public :: ${x.public}\n\`\`\`**`)
+    //     .setThumbnail(x.images.filter(x => x.height >= 500)[0].url)
+    //     return e
     // })
+    
+    const queue = client.queue.get(message.guild.id)
+    if (queue) {
+        queue.songs.push(...dad)
+    }
+
+    message.client.queue.set(message.guild.id, queueConstruct);
+    queueConstruct.songs.push(...dad);
+
+    try {
+        const connection = await channel.join();
+        queueConstruct.connection = connection;
+        await queueConstruct.connection.voice.setSelfDeaf(true);
+        play(queueConstruct.songs[0], message, client);
+    } catch (error) {
+        message.client.queue.delete(message.guild.id);
+        await channel.leave();
+        return message.channel.send(createEmbed("error", `I could not join the voice channel:\n${error}`)).then(msg => { msg.delete({ timeout: 8000 }); });
+    }
 }
 
 module.exports = {
     play,
     playlist,
     spotifyPlaylist,
+    spotifyTrack,
     formatMs,
     createEmbed,
     pagination

@@ -1,5 +1,5 @@
 const { Util } = require("discord.js");
-const { play, playlist, createEmbed, spotifyPlaylist } = require('../../utils/Function')
+const { play, playlist, createEmbed, spotifyTrack, spotifyPlaylist } = require('../../utils/Function')
 const { getPreview } = require('spotify-url-info')
 
 const ytdl = require("ytdl-core");
@@ -59,11 +59,18 @@ module.exports = {
       return message.channel.send(client.config.prefix + this.usage);
     }
 
-    // if (!urlv && !spotiv && !playlistPattern.test(args[0]) && spotivpl){
-    //   const input = search.match(spotifyplaylist);
-    //   return spotifyPlaylist(input.input, channel, message, client)
-    // }
-    if (spotivpl) return message.channel.send(createEmbed("info", "Sorry i can't play song from spotify playlist")).then(msg => { msg.delete({ timeout: 10000 }) });
+    if (!urlv && !spotiv && !playlistPattern.test(args[0]) && spotivpl){
+      const input = search.match(spotifyplaylist);
+      message.channel.send(createEmbed("warn", "the songs you entered maybe not same as the spotify list")).then(x => { x.delete({ timeout: 10000 }) })
+      return spotifyPlaylist(input.input, channel, message, client)
+    }
+    
+    // if (spotivpl) return message.channel.send(createEmbed("info", "Sorry i can't play song from spotify playlist")).then(msg => { msg.delete({ timeout: 10000 }) });
+
+    if (spotiv) {
+      message.channel.send(createEmbed("warn", "the songs you entered maybe not same as the spotify list")).then(x => { x.delete({ timeout: 10000 }) })
+      return spotifyTrack(url, channel, message, client)
+    }
 
     if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
       const dataid = search.match(playlistPattern)
@@ -74,35 +81,18 @@ module.exports = {
     let song;
 
     try {
-      if (spotiv) {
-        try {
-          const getdata = await getPreview(url);
-          const infoSong = await yts(`${getdata.title} - ${getdata.artist}`);
-          song = {
-            title: Util.escapeMarkdown(infoSong.all[0].title),
-            identifier: infoSong.all[0].videoId,
-            author: infoSong.all[0].author.name,
-            duration: infoSong.all[0].timestamp,
-            nowplaying: infoSong.all[0].seconds,
-            url: infoSong.all[0].url,
-            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
-          }
-        } catch (e) {
-          console.log(e)
-          return message.channel.send(createEmbed("error", "I could not find any videos that match that link")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-        }
-      } else if (urlv) {
+      if (urlv) {
         try {
           songInfo = await ytdl.getInfo(url);
           const infoSong = await yts(songInfo.videoDetails.title);
           song = {
-            title: Util.escapeMarkdown(infoSong.all[0].title),
-            identifier: infoSong.all[0].videoId,
-            author: infoSong.all[0].author.name,
-            duration: infoSong.all[0].timestamp,
-            nowplaying: infoSong.all[0].seconds,
-            url: infoSong.all[0].url,
-            thumbnail: infoSong.all[0].thumbnail + "?size=4096",
+            title: Util.escapeMarkdown(infoSong.videos[0].title),
+            identifier: infoSong.videos[0].videoId,
+            author: infoSong.videos[0].author.name,
+            duration: infoSong.videos[0].timestamp,
+            nowplaying: infoSong.videos[0].seconds,
+            url: infoSong.videos[0].url,
+            thumbnail: infoSong.videos[0].thumbnail + "?size=4096",
           };
         } catch (e) {
           console.log(e);
@@ -111,7 +101,7 @@ module.exports = {
       } else if ((message.content.includes('--find') || message.content.includes("--search"))) {
         try {
           var searcher = await yts.search(search)
-          if (searcher.all[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          if (searcher.videos[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
           let index = 0;
           let em = createEmbed('yt')
             .setAuthor(`Youtube Client get Video`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
@@ -141,7 +131,7 @@ module.exports = {
           }
 
           const infoSong = await yts(video.title);
-          const vid = infoSong.all[0];
+          const vid = infoSong.videos[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,
@@ -158,7 +148,7 @@ module.exports = {
       } else {
         try {
           const infoSong = await yts(search);
-          const vid = infoSong.all[0];
+          const vid = infoSong.videos[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,
