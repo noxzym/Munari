@@ -35,7 +35,6 @@ module.exports = {
             }, 5000);
             
         } catch (e) {
-            return message.channel.send(e)
         }
     }
 }

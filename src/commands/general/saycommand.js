@@ -1,4 +1,4 @@
-const { Util } = require('discord.js');
+const { Util, MessageAttachment } = require('discord.js');
 const { createEmbed } = require('../../utils/Function');
 module.exports = {
   name: "say",
@@ -19,10 +19,11 @@ module.exports = {
       let e = createEmbed()
         .setDescription(sayMessage.replace('--embed', ''))
         .setColor(message.member.displayHexColor)
+
       return message.channel.send(e)
     }
 
-    if (!sayMessage) return client.commandmanager.command.get('help').run(client, message, ['say']).then(x => { x.delete({ timeout: 5000 }) })
+    if (!sayMessage && message.attachments.first() === undefined) return client.commandmanager.command.get('help').run(client, message, ['say']).then(x => { x.delete({ timeout: 5000 }) })
 
     const permiss = [
       "ADMINISTRATOR",
@@ -33,6 +34,15 @@ module.exports = {
     ]
     const memberperms = message.channel.permissionsFor(message.author).toArray()
     
-    memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage) : message.channel.send(Util.cleanContent(sayMessage));
+    if (message.attachments.first() !== undefined) {
+      const ath = new MessageAttachment(message.attachments.first().url)
+      if (!sayMessage) {
+        return message.channel.send(ath)
+      } else {
+        return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage, ath) : message.channel.send(Util.cleanContent(sayMessage), ath);
+      }
+    } else {
+      return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage) : message.channel.send(Util.cleanContent(sayMessage));
+    }
   }
 }
