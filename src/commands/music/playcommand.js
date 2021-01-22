@@ -85,14 +85,19 @@ module.exports = {
         try {
           songInfo = await ytdl.getInfo(url);
           const infoSong = await yts(songInfo.videoDetails.title);
+          let filter = [
+            "video",
+            "live"
+          ];
+          const datasong = infoSong.all.filter(x => filter.includes(x.type))[0]
           song = {
-            title: Util.escapeMarkdown(infoSong.videos[0].title),
-            identifier: infoSong.videos[0].videoId,
-            author: infoSong.videos[0].author.name,
-            duration: infoSong.videos[0].timestamp,
-            nowplaying: infoSong.videos[0].seconds,
-            url: infoSong.videos[0].url,
-            thumbnail: infoSong.videos[0].thumbnail + "?size=4096",
+            title: Util.escapeMarkdown(infoSong.all[0].title),
+            identifier: datasong.videoId,
+            author: datasong.author.name,
+            duration:datasong.timestamp,
+            nowplaying: datasong.seconds,
+            url: datasong.url,
+            thumbnail: datasong.thumbnail + "?size=4096",
           };
         } catch (e) {
           console.log(e);
@@ -101,12 +106,16 @@ module.exports = {
       } else if ((message.content.includes('--find') || message.content.includes("--search"))) {
         try {
           var searcher = await yts.search(search)
-          if (searcher.videos[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+          let filter = [
+            "video",
+            "live"
+          ];
+          if (searcher.all[0] === undefined) return message.channel.send(createEmbed("error", `I can't to find related video`)).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
           let index = 0;
           let em = createEmbed('yt')
             .setAuthor(`Youtube Client get Video`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
             .setTitle(`This is result for ${search}`)
-            .setDescription(`${searcher.all.slice(0, 5).map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.timestamp}]\`**`).join('\n')}`)
+            .setDescription(`${searcher.all.filter(x => filter.includes(x.type)).slice(0, 5).map(x => `**${++index} • [${x.title}](${x.url}) \`[${x.timestamp}]\`**`).join('\n')}`)
             .setFooter(`Type 'cancel' to cancel the song request`)
           var embedsearch = await message.channel.send(em)
           try {
@@ -131,7 +140,12 @@ module.exports = {
           }
 
           const infoSong = await yts(video.title);
-          const vid = infoSong.videos[0];
+          let filter = [
+            "video",
+            "live"
+          ];
+          const vid = infoSong.all.filter(x => filter.includes(x.type))[0];
+
           song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,
@@ -148,7 +162,11 @@ module.exports = {
       } else {
         try {
           const infoSong = await yts(search);
-          const vid = infoSong.videos[0];
+          let filter = [
+            "video",
+            "live"
+          ];
+          const vid = infoSong.all.filter(x => filter.includes(x.type))[0];
           song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,

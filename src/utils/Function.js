@@ -15,6 +15,25 @@ const color = {
     error: "#FF0000"
 }
 
+//CreateEmbed
+const createEmbed = (type, message) => {
+    const embed = new MessageEmbed()
+        .setColor(color[type])
+    if (message) embed.setDescription(message)
+
+    return embed
+}
+
+//FormatMs
+const formatMs = (ms) => {
+    if (isNaN(ms)) return;
+    return prettyMilliseconds(ms, {
+        verbose: true,
+        compact: false,
+        secondsDecimalDigits: 0
+    })
+};
+
 //Pagination
 const pagination = async (send, page, datae, message, option) => {
     await send.react('❌');
@@ -52,25 +71,6 @@ const pagination = async (send, page, datae, message, option) => {
     })
     return collector
 }
-
-//CreateEmbed
-const createEmbed = (type, message) => {
-    const embed = new MessageEmbed()
-        .setColor(color[type])
-    if (message) embed.setDescription(message)
-
-    return embed
-}
-
-//FormatMs
-const formatMs = (ms) => {
-    if (isNaN(ms)) return;
-    return prettyMilliseconds(ms, {
-        verbose: true,
-        compact: false,
-        secondsDecimalDigits: 0
-    })
-};
 
 //play
 const play = async (song, message, client) => {
@@ -179,7 +179,11 @@ const play = async (song, message, client) => {
 //playlist
 const playlist = async (url, channel, message, client) => {
     const getdata = await yts({ listId: url })
-    const songgetdata = await getdata.videos.slice(0, 50).map((vid) => {
+    let filter = [
+        "video",
+        "live"
+    ]
+    const songgetdata = await getdata.all.filter(x => filter.includes(x.type)).slice(0, 50).map((vid) => {
         return new songdata(song = {
             title: Util.escapeMarkdown(vid.title),
             identifier: vid.videoId,
@@ -242,14 +246,19 @@ const spotifyTrack = async (url, channel, message, client) => {
     try {
         const getdata = await getPreview(url);
         const infoSong = await yts(`${getdata.title} - ${getdata.artist}`);
+        let filter = [
+            "video",
+            "live"
+        ];
+        const getzero = infoSong.all.filter(x => filter.includes(x.type))[0];
         song = {
-            title: Util.escapeMarkdown(infoSong.videos[0].title),
-            identifier: infoSong.videos[0].videoId,
-            author: infoSong.videos[0].author.name,
-            duration: infoSong.videos[0].timestamp,
-            nowplaying: infoSong.videos[0].seconds,
-            url: infoSong.videos[0].url,
-            thumbnail: infoSong.videos[0].thumbnail + "?size=4096",
+            title: Util.escapeMarkdown(getzero.title),
+            identifier: getzero.videoId,
+            author: getzero.author.name,
+            duration: getzero.timestamp,
+            nowplaying: getzero.seconds,
+            url: getzero.url,
+            thumbnail: getzero.thumbnail + "?size=4096",
         }
 
         const track = new songdata(song, message.author)
@@ -261,7 +270,7 @@ const spotifyTrack = async (url, channel, message, client) => {
             serverQueue.songs.push(track);
             return message.channel.send(createEmbed("info", `✅ **\`${song.title}\`** by **\`${message.author.username}\`** Has been added to queue!`))
         }
-        
+
         const queueConstruct = {
             textChannel: message.channel.id,
             voiceChannel: channel.id,
@@ -299,7 +308,11 @@ const spotifyPlaylist = async (url, channel, message, client) => {
 
     async function datayt(x) {
         const ytget = await yts.search(x);
-        const data = ytget.videos[0];
+        let filter = [
+            "video",
+            "live"
+        ];
+        const data = ytget.all.filter(x => filter.includes(x.type))[0];
         return data
     };
 
@@ -334,7 +347,7 @@ const spotifyPlaylist = async (url, channel, message, client) => {
     //     .setThumbnail(x.images.filter(x => x.height >= 500)[0].url)
     //     return e
     // })
-    
+
     const queue = client.queue.get(message.guild.id)
     if (queue) {
         queue.songs.push(...dad)
@@ -362,5 +375,5 @@ module.exports = {
     spotifyTrack,
     formatMs,
     createEmbed,
-    pagination
+    pagination,
 }
