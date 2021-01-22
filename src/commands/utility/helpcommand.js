@@ -127,25 +127,25 @@ module.exports = {
 
     const totalcmd = animalsize + actsize + imgsize + gensize + funsize + utisize + musicsize + adminsize
 
-    if (args.slice(0).join('').match(/^(?:--all)$/g)) {
-      let hembed = new Discord.MessageEmbed()
-        .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
-        .setColor(message.member.displayHexColor)
-        .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
-        .setThumbnail(client.user.displayAvatarURL())
-        .addField(`**\`【🐶】\` • Animal \`[${animalsize}]\`**`, animal)
-        .addField(`**\`【😉】\` • Action \`[${actsize}]\`**`, actions)
-        .addField(`**\`【🖼️】\` • Image \`[${imgsize}]\`**`, image)
-        .addField(`**\`【🎭】\` • General \`[${gensize}]\`**`, general)
-        .addField(`**\`【🎲】\` • Fun Game \`[${funsize}]\`**`, fun)
-        .addField(`**\`【🛠️】\` • Utility \`[${utisize}]\`**`, utility)
-        .addField(`**\`【🎧】\` • Music \`[${musicsize}]\`**`, music)
-        .addField(`**\`【⚙️】\` • Moderation \`[${adminsize}]\`**`, Admin)
-        .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】 • 【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**")
-        .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
-        .setTimestamp()
-      return message.channel.send(hembed)
-    }
+    // if (args.slice(0).join('').match(/^(?:--all)$/g)) {
+    //   let hembed = new Discord.MessageEmbed()
+    //     .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
+    //     .setColor(message.member.displayHexColor)
+    //     .setDescription(`Type **\`${prefix}help [command]\`** to get how to use commands`)
+    //     .setThumbnail(client.user.displayAvatarURL())
+    //     .addField(`**\`【🐶】\` • Animal \`[${animalsize}]\`**`, animal)
+    //     .addField(`**\`【😉】\` • Action \`[${actsize}]\`**`, actions)
+    //     .addField(`**\`【🖼️】\` • Image \`[${imgsize}]\`**`, image)
+    //     .addField(`**\`【🎭】\` • General \`[${gensize}]\`**`, general)
+    //     .addField(`**\`【🎲】\` • Fun Game \`[${funsize}]\`**`, fun)
+    //     .addField(`**\`【🛠️】\` • Utility \`[${utisize}]\`**`, utility)
+    //     .addField(`**\`【🎧】\` • Music \`[${musicsize}]\`**`, music)
+    //     .addField(`**\`【⚙️】\` • Moderation \`[${adminsize}]\`**`, Admin)
+    //     .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】 • 【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**")
+    //     .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
+    //     .setTimestamp()
+    //   return message.channel.send(hembed)
+    // }
 
     const cmdArgs = args.join(" ")
     if (cmdArgs) {
@@ -170,7 +170,7 @@ module.exports = {
     let hembed = new Discord.MessageEmbed()
       .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
       .setColor(message.member.displayHexColor)
-      .setDescription(`Type **\`${prefix}help [Category]\`** to view command list\nTo view all commands use **\`${prefix}help --all\`**\n\n**Category**\n**\`【🐶】\` Animal \`help 1\`\n\`【😉】\` Action \`help 2\`\n\`【🖼】\` Image \`help 3\`\n\`【🎭】\` General \`help 4\`\n\`【🎲】\` Fun \`help 5\`\n\`【🛠️】\` Utility \`help 6\`\n\`【🎧】\` Music \`help 7\`\n\`【⚙️】\` Moderation \`help 8\`\n\n【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**`)
+      .setDescription(`Type **\`${prefix}help [Category]\`** to view command list\n\n**Category**\n**\`【🐶】\` Animal \`help 1\`\n\`【😉】\` Action \`help 2\`\n\`【🖼】\` Image \`help 3\`\n\`【🎭】\` General \`help 4\`\n\`【🎲】\` Fun \`help 5\`\n\`【🛠️】\` Utility \`help 6\`\n\`【🎧】\` Music \`help 7\`\n\`【⚙️】\` Moderation \`help 8\`\n\n【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**`)
       .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()
     return message.channel.send(hembed)
