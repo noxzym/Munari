@@ -350,7 +350,7 @@ const spotifyPlaylist = async (url, channel, message, client) => {
 
     const queue = client.queue.get(message.guild.id)
     if (queue) {
-        queue.songs.push(...dad)
+        return queue.songs.push(...dad)
     }
 
     message.client.queue.set(message.guild.id, queueConstruct);
@@ -375,5 +375,5 @@ module.exports = {
     spotifyTrack,
     formatMs,
     createEmbed,
-    pagination,
+    pagination
 }
