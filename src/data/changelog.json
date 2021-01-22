@@ -2,6 +2,14 @@
     "data": {
         "all": [
             {
+                "date": "22 January 2021",
+                "content": [
+                    "- Filter video data",
+                    "- Fix bug in shoob timer",
+                    "- Delete old style of help command"
+                ]
+            },
+            {
                 "date": "21 January 2021",
                 "content": [
                     "- Support Spotify Playlist",
