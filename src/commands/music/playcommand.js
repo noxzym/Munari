@@ -140,10 +140,6 @@ module.exports = {
           }
 
           const infoSong = await yts(video.title);
-          let filter = [
-            "video",
-            "live"
-          ];
           const vid = infoSong.all.filter(x => filter.includes(x.type))[0];
 
           song = {
