@@ -22,7 +22,7 @@ module.exports = {
         let number = args[1] === 'off' ? 0 : (ms(args[1]))/1000
         let nums = formatMs(number * 1000)
         
-        if (!number) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`).then(x => { x.delete({ timeout: 10000 }) })
+        if (number === undefined) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`).then(x => { x.delete({ timeout: 10000 }) })
         if (isNaN(number)) return message.channel.send(`Please input the correct number in second`).then(x => { x.delete({ timeout: 10000 }) })
         if (number > 21600) return message.channel.send(`Maximal number is 518400 second or 6 hours`).then(x => { x.delete({ timeout: 10000 }) })
         if (number < 0) return message.channel.send(`Minimal number is 0 second`).then(x => { x.delete({ timeout: 10000 }) })
