@@ -6,7 +6,7 @@ module.exports = {
     aliases: ["slowmo", "ratelimit"],
     category: "Moderation",
     descriptions: "Set ratelimit user",
-    usage: "slowmode <channel[mention/id]>",
+    usage: "slowmode <channel[mention/id]> <time[s/m/h]/off>",
     options: [""],
     cooldown: "10",
     ownerOnly: false,
@@ -19,12 +19,12 @@ module.exports = {
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         if (message.channel.activateCollector === true) return message.channel.send("please wait until the timeout over or response has given").then(msg => { msg.delete({ timeout: 5000 }) });
 
-        let number = ms(args[1])
-        let nums = formatMs(number)
+        let number = args[1] === 'off' ? 0 : (ms(args[1]))/1000
+        let nums = formatMs(number * 1000)
         
         if (!number) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`).then(x => { x.delete({ timeout: 10000 }) })
         if (isNaN(number)) return message.channel.send(`Please input the correct number in second`).then(x => { x.delete({ timeout: 10000 }) })
-        if (number > 518400000) return message.channel.send(`Maximal number is 518400 second or 6 hours`).then(x => { x.delete({ timeout: 10000 }) })
+        if (number > 21600) return message.channel.send(`Maximal number is 518400 second or 6 hours`).then(x => { x.delete({ timeout: 10000 }) })
         if (number < 0) return message.channel.send(`Minimal number is 0 second`).then(x => { x.delete({ timeout: 10000 }) })
 
         try {

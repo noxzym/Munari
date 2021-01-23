@@ -20,7 +20,7 @@ module.exports = {
   aliases: ["p"],
   category: "Music",
   descriptions: "Playing song from youtube client",
-  usage: "play <song[title/url/id]>",
+  usage: "play <[spotify/youtube][title/url/playlist]>",
   options: ["--find"],
   cooldown: "5",
   ownerOnly: false,

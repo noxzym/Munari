@@ -12,7 +12,7 @@ module.exports = {
     guildOnly: true,
     async run(client, message, args) {
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first()
-        if (!channel) return client.commandmanager.command.get("help").run(client, message, [this.name]).then(x => { x.delete({ timeout: 10000 }) })
+        if (!channel) return message.channel.send(`You need to mention channel first`).then(x => { x.delete({ timeout: 10000 }) })
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
