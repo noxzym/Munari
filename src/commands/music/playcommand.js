@@ -45,7 +45,7 @@ module.exports = {
     const search = args.join(" ");
     const url = args[0];
 
-    const videoPattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$gi/;
+    const videoPattern = /^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$/;
     const playlistPattern = /^.*(list=)([^#\&\?]*).*/;
     const spotifytrack = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/;
     const spotifyplaylist = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:playlist\/|\?uri=spotify:track:)/;

@@ -1,7 +1,7 @@
 const { MessageAttachment } = require('discord.js');
 const { registerFont, createCanvas, loadImage } = require('canvas');
-const ColorThief = require('color-thief');
-const colorThief = new ColorThief();
+// const ColorThief = require('color-thief');
+const colorThief = require("colorthief")//new ColorThief();
 const onecolor = require('onecolor');
 const fetch = require('node-fetch')
 const convert = require('parse-ms');
@@ -118,11 +118,13 @@ module.exports = {
                 if (!result.ok) throw new Error("Failed to get the avatar.");
                 const a = await result.buffer();
 
-                var rgb = colorThief.getColor(a)
-                var rgbCode = 'rgb( ' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'
-                var hex = onecolor(rgbCode).hex() || member.displayHexColor
+                const data = colorThief.getColor(img).then(x => {
+                    const rgb = x.toString().split(',');
+                    const data = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+                    return onecolor(data).hex()
+                });
 
-                return hex
+                return data
             } catch (e) {
                 console.error(e)
                 return 'Server Error'

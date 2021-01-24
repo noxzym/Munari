@@ -7,6 +7,7 @@ module.exports = (client) => {
         const commands = readdirSync(`./src/commands/${dir}/`).filter(file => file.endsWith(".js"));
         for (let file of commands) {
             let pull = require(`../commands/${dir}/${file}`);
+            pull.path = `./commands/${dir}/${file}`
     
             if (pull.name) {
                 client.commandmanager.command.set(pull.name, pull);

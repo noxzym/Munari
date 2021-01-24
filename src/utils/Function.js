@@ -369,11 +369,11 @@ const spotifyPlaylist = async (url, channel, message, client) => {
 }
 
 module.exports = {
-    play,
-    playlist,
-    spotifyPlaylist,
-    spotifyTrack,
     formatMs,
     createEmbed,
-    pagination
+    pagination,
+    play,
+    spotifyTrack,
+    playlist,
+    spotifyPlaylist
 }
