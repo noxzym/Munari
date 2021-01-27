@@ -13,7 +13,7 @@ module.exports = {
     let inviteEmbed = createEmbed()
       .setColor(message.member.displayHexColor)
       .setAuthor("Invite Me!")
-      .setDescription(`Do you want to invite me? click in [[**\`HERE\`**](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)]\nAlso you can vote me in [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]`)
+      .setDescription(`Do you want to invite me? click [[**\`HERE\`**](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)]\nAlso you can vote me in [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]`)
       .setThumbnail(client.user.avatarURL({ size: 4096 }))
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }));

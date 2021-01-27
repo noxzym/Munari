@@ -15,7 +15,7 @@ module.exports = {
         let e = new MessageEmbed()
             .setColor(message.member.displayHexColor)
             .setAuthor(`Vote me!`, client.user.avatarURL({ size: 4096 }))
-            .setDescription(`Do you want to vote me? click in [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]\nI have **\`${topgg}\`** Votes for this month`)
+            .setDescription(`Do you want to vote me? click [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]\nI have **\`${topgg}\`** Votes for this month`)
             .setImage('attachment://topgg.png')
             .setTimestamp()
             .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
