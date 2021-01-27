@@ -7,8 +7,8 @@ module.exports = {
     category: "Moderation",
     descriptions: "Set ratelimit user",
     usage: "slowmode <channel[mention/id]> <time[s/m/h]/off>",
-    options: [""],
-    cooldown: "10",
+    options: null,
+    cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {

@@ -6,7 +6,7 @@ module.exports = {
   descriptions: "Delete message up to 99",
   usage: "prune <message count>",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(bot, message) {

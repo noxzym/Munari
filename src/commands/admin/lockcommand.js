@@ -6,8 +6,8 @@ module.exports = {
     category: "Moderation",
     descriptions: "Lock the channel from everyone",
     usage: "lock <channel[mention/id]>",
-    options: [""],
-    cooldown: "10",
+    options: null,
+    cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {

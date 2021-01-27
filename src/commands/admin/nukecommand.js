@@ -6,8 +6,8 @@ module.exports = {
     category: "Moderation",
     descriptions: "Clear all ecosystem on the channel",
     usage: "nuke <channel[mention/id]>",
-    options: [""],
-    cooldown: "10",
+    options: null,
+    cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {

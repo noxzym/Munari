@@ -6,7 +6,7 @@ module.exports = {
   descriptions: "Send Announcement message to specific channel",
   usage: "announcement <#channel> <json embed>",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {

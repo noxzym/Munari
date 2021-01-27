@@ -6,7 +6,7 @@ module.exports = {
   descriptions: "Give someone role",
   usage: "addrole [user] [role]",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {

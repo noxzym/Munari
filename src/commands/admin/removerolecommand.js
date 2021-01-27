@@ -6,7 +6,7 @@ module.exports = {
   descriptions: "Remove someone role by mention or id",
   usage: "removerole <user> <role>",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   async run(bot, message, args) {

@@ -2,12 +2,12 @@ const { createEmbed } = require("../../utils/Function");
 
 module.exports = {
     name: "unlock",
-    aliases: [""],
+    aliases: null,
     category: "Moderation",
-    descriptions: "",
+    descriptions: "Re-acticate channel for everyone",
     usage: "Unlock the channel from everyone",
-    options: [""],
-    cooldown: "10",
+    options: null,
+    cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
