@@ -2,7 +2,7 @@ const { createEmbed } = require("../../utils/Function");
 module.exports = {
   name: "invite",
   aliases: ["inv"],
-  category: "General",
+  category: "Utility",
   descriptions: "Give link invite bot",
   usage: "invite",
   options: null,
@@ -12,10 +12,9 @@ module.exports = {
   async run(client, message, args) {
     let inviteEmbed = createEmbed()
       .setColor(message.member.displayHexColor)
-      .setAuthor("Click This Website to Invite Me")
-      // .setURL("https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639")
-      .setDescription(`**[[\`top.gg\`](https://top.gg/bot/740112353483554858)] • [[\`discord.boats\`](https://discord.boats/bot/740112353483554858)] • [[\`discordbotlist.com\`](https://discordbotlist.com/bots/munari-rose)]**`)
-      .setThumbnail(client.user.avatarURL({ size: 1024 }))
+      .setAuthor("Invite Me!")
+      .setDescription(`Do you want to invite me? click in [[**\`HERE\`**](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)]\nAlso you can vote me in [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]`)
+      .setThumbnail(client.user.avatarURL({ size: 4096 }))
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }));
     message.channel.send(inviteEmbed);

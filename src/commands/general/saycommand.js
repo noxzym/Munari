@@ -39,10 +39,10 @@ module.exports = {
       if (!sayMessage) {
         return message.channel.send(ath)
       } else {
-        return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage, ath) : message.channel.send(Util.cleanContent(sayMessage), ath);
+        return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage, ath) : message.channel.send(sayMessage, ath);
       }
     } else {
-      return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage) : message.channel.send(Util.cleanContent(sayMessage));
+      return memberperms.filter(x => permiss.includes(x)) ? message.channel.send(sayMessage) : message.channel.send(sayMessage);
     }
   }
 }
