@@ -2,6 +2,16 @@
     "data": {
         "all": [
             {
+                "date": "27 January 2021",
+                "content": [
+                    "- Update bot version to V6.2.0",
+                    "- Update Package",
+                    "- Upgrade Moderation Command",
+                    "- Add Respectcommand",
+                    "- Add blocked mention"
+                ]
+            },
+            {
                 "date": "22 January 2021",
                 "content": [
                     "- Filter video data",

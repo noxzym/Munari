@@ -1,7 +1,6 @@
 require('dotenv').config();
 require('./InlineReply');
 require('./Message');
-process.setMaxListeners(0);
 const { Client } = require("discord.js");
 const { queue } = require('./BaseClasses')
 const { Commando } = require('./MunariCommando');
@@ -11,6 +10,9 @@ module.exports = class MunariClient extends Client {
     constructor(config) {
         super({
             disableMentions: "everyone",
+            allowedMentions: {
+                parse: []
+            },
             messageCacheMaxSize: Infinity,
             messageCacheLifetime: 540,
             messageSweepInterval: 180,
