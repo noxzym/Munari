@@ -65,6 +65,7 @@
   "optionalDependencies": {
     "@discordjs/opus": "^0.3.3",
     "@jimp/custom": "^0.16.1",
+    "@jimp/plugin-circle": "^0.16.1",
     "bufferutil": "^4.0.3",
     "erlpack": "github:discord/erlpack",
     "libsodium-wrappers": "^0.7.8",
