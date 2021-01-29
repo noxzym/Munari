@@ -2,6 +2,14 @@
     "data": {
         "all": [
             {
+                "date": "29 January 2021",
+                "content": [
+                    "- New fakesay command",
+                    "- Add some feature <3",
+                    "- Update Module"
+                ]
+            },
+            {
                 "date": "27 January 2021",
                 "content": [
                     "- Update bot version to V6.2.0",

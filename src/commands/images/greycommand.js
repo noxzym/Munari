@@ -1,26 +1,24 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js')
-const alex = require('alexflipnote.js')
+const { greyscale } = require("../../utils/Imagegen")
+const { MessageEmbed } = require("discord.js")
 module.exports = {
-    name: "communist",
+    name: "grey",
     aliases: null,
     category: "Image",
-    descriptions: "Are you communist?",
-    usage: "communist [user]",
+    descriptions: "Add grey filter to image",
+    usage: "grey [user/^]",
     options: null,
-    cooldown: "8",
+    cooldown: "10",
     ownerOnly: false,
     guildOnly: true,
     async run(client, message, args) {
-        const { image } = new alex(client.config.alexapi)
-
         const parse = message.content.trim().split(" ");
         const parsedata = parse[1] !== undefined && parse[1].includes("^") ? parse[1].length : 0;
         const fetchmsg = await message.channel.messages.fetch(true).then(x => {
             return x.map(x => x)[parsedata]
         })
-        
-        var fetched = await message.channel.send(`Processing Image <a:LoadingFetch:785715659727175731>`)
 
+        var fetched = await message.channel.send(`Processing Image <a:LoadingFetch:785715659727175731>`)
+        
         const fetchattachment = fetchmsg.attachments.size !== 0 ? fetchmsg.attachments.first().url : undefined;
         const fetchembeds = fetchattachment === undefined && fetchmsg.embeds.map(x => { return x.image }).join(" ") !== '' ? fetchmsg.embeds.map(x => { return x.image.url }).join(" ") : undefined;
         const fetchmsgauthor = fetchattachment === undefined && fetchembeds === undefined && fetchmsg.content.includes("https://cdn.discordapp.com") ? fetchmsg.content.trim().split(" ")[1] : undefined;
@@ -29,15 +27,14 @@ module.exports = {
         const fetchavatarauthor = fetchattachment === undefined && fetchembeds === undefined && fetchmsgauthor === undefined && mentionuser === undefined && mentionuserid === undefined ? fetchmsg.author.avatarURL({ size: 4096, format: "png" }) : undefined;
 
         const data = fetchattachment || fetchembeds || fetchmsgauthor || mentionuser || mentionuserid || fetchavatarauthor;
-        const img = await image.communist({ image: data })
-        let ath = new MessageAttachment(img, "communist.png")
+        var img = await greyscale(data)
 
         let e = new MessageEmbed()
             .setColor(message.member.displayHexColor)
-            .setImage('attachment://communist.png')
+            .setImage('attachment://greyscale.png')
             .setTimestamp()
             .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true, size: 4096 }))
-        message.channel.send({ files: [ath], embed: e })
+        message.channel.send({ files: [img], embed: e })
         fetched.delete()
     }
 }
