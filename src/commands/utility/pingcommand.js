@@ -18,6 +18,6 @@ module.exports = {
       .setDescription(`:ping_pong: **Pong! \n\`📶\`Latency = **\`${latency}\`** ms\n\`🖥️\`Websocket = **\`${websocket}\`** ms**`)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()
-    message.channel.send(ping).then(msg => { msg.delete({ timeout: 20000 }) })
+    message.channel.send(ping)
   }
 }
