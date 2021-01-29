@@ -12,7 +12,7 @@ module.exports = {
   ownerOnly: true,
   guildOnly: true,
   async run(client, message, args) {
-    message.delete();
+    message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? message.delete() : undefined
     let codein = args.slice(0).join(" ");
     if (!codein) return
 
