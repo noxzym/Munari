@@ -10,6 +10,10 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const { others } = new alex(client.config.alexapi)
 

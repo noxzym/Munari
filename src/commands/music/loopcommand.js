@@ -5,9 +5,13 @@ module.exports = {
   descriptions: "Looping currently queue list",
   usage: "loop",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
     try {
 

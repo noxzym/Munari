@@ -9,9 +9,11 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["MANAGE_MESSAGES"],
+    userperms: ["MANAGE_MESSAGES"]
+  },
   async run(client, message, args) {
-    if (!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_MESSAGES")) return message.channel.send(`You don't have permissions \`ADMINISTRATOR\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
     let data;
     try {
       data = JSON.parse(args.slice(1).join(' ').toString())

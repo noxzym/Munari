@@ -1,9 +1,7 @@
 const { MessageAttachment } = require('discord.js');
 const { registerFont, createCanvas, loadImage } = require('canvas');
-// const ColorThief = require('color-thief');
-const colorThief = require("colorthief")//new ColorThief();
+const colorThief = require("colorthief")
 const onecolor = require('onecolor');
-const fetch = require('node-fetch')
 const convert = require('parse-ms');
 const path = require('path');
 const { createEmbed } = require('../../utils/Function');
@@ -14,14 +12,17 @@ module.exports = {
     category: "General",
     descriptions: "Display spotify user",
     usage: "spotify [member<mention/id>]",
-    options: ["--card"],
+    options: ["--nocanvas"],
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         const member =
             message.guild.members.cache.get(args[0]) ||
-            message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
             message.mentions.members.first() ||
             message.member
 
@@ -49,57 +50,7 @@ module.exports = {
         let durationdetik = dur.seconds < 10 ? `0${dur.seconds}` : dur.seconds;
         const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
 
-        if (message.content.includes('--card')) {
-            const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
-
-            const canvas = createCanvas(800, 240);
-            const ctx = canvas.getContext("2d");
-            let hex = await GetColor(img)
-
-            //background
-            ctx.beginPath();
-            ctx.rect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = hex;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.save()
-            ctx.globalAlpha = 0.7
-            roundRect(ctx, 100, 100, 3600, 520, 40, true, false, '#fff1e5')
-            ctx.restore()
-
-            const img2 = await loadImage(img);
-            ctx.drawImage(img2, 40, 20, 200, 200);
-
-            ctx.drawImage(spotifylogo, 683, 120, 40, 40);
-
-            ctx.font = "bold 40px Sans";
-            ctx.fillStyle = "#000000";
-            ctx.fillText(songname, 260, 80);
-
-            ctx.font = "bold 22px Sans";
-            ctx.fillStyle = "#000000";
-            ctx.fillText("By " + auth, 260, 138);
-
-            ctx.font = "bold 16px Sans";
-            ctx.fillStyle = "#000000";
-            ctx.fillText("On " + album, 260, 160);
-
-            ctx.rect(260, 180, 360, 8);
-            ctx.fillStyle = "#000000";
-            ctx.fillRect(260, 180, 360, 8);
-
-            ctx.fillStyle = "#1DB954";
-            ctx.fillRect(260, 180, timestampformatted, 8);
-
-            ctx.font = "bold 16px Sans";
-            ctx.fillStyle = "#000000";
-            ctx.fillText(timeleft, 640, 190);
-
-            const image = canvas.toBuffer();
-            const ath = new MessageAttachment(image, "spotify.png");
-
-            message.channel.send(ath)
-        } else {
+        if (message.content.includes("--nocanvas")) {
             const songnameuncard = presence.details
             const albumnocard = presence.assets.largeText
             const authnocard = presence.state
@@ -110,14 +61,61 @@ module.exports = {
                 .setThumbnail(`${img}`)
                 .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
-            message.channel.send(e)
+            return message.channel.send(e)
         }
+
+        const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
+
+        const canvas = createCanvas(800, 240);
+        const ctx = canvas.getContext("2d");
+        let hex = await GetColor(img)
+
+        //background
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = hex;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save()
+        ctx.globalAlpha = 0.7
+        roundRect(ctx, 100, 100, 3600, 520, 40, true, false, '#fff1e5')
+        ctx.restore()
+
+        const img2 = await loadImage(img);
+        ctx.drawImage(img2, 40, 20, 200, 200);
+
+        ctx.drawImage(spotifylogo, 683, 120, 40, 40);
+
+        ctx.font = "bold 40px Sans";
+        ctx.fillStyle = "#000000";
+        ctx.fillText(songname, 260, 80);
+
+        ctx.font = "bold 22px Sans";
+        ctx.fillStyle = "#000000";
+        ctx.fillText("By " + auth, 260, 138);
+
+        ctx.font = "bold 16px Sans";
+        ctx.fillStyle = "#000000";
+        ctx.fillText("On " + album, 260, 160);
+
+        ctx.rect(260, 180, 360, 8);
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(260, 180, 360, 8);
+
+        ctx.fillStyle = "#1DB954";
+        ctx.fillRect(260, 180, timestampformatted, 8);
+
+        ctx.font = "bold 16px Sans";
+        ctx.fillStyle = "#000000";
+        ctx.fillText(timeleft, 640, 190);
+
+        const image = canvas.toBuffer();
+        const ath = new MessageAttachment(image, "spotify.png");
+
+        message.channel.send(ath)
+
         async function GetColor(img) {
             try {
-                const result = await fetch(img);
-                if (!result.ok) throw new Error("Failed to get the avatar.");
-                const a = await result.buffer();
-
                 const data = colorThief.getColor(img).then(x => {
                     const rgb = x.toString().split(',');
                     const data = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;

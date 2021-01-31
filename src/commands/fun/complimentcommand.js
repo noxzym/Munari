@@ -10,6 +10,10 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const { compliment } = await fetch(
       "https://complimentr.com/api"

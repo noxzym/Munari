@@ -9,6 +9,10 @@ module.exports = {
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel;
         const snipes = client.snipes.get(channel.id)

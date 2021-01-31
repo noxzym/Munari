@@ -10,14 +10,15 @@ module.exports = {
     cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["MANAGE_CHANNELS"],
+        userperms: ["MANAGE_CHANNELS"]
+    },
     async run(client, message, args) {
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first();
         if (!channel) return message.channel.send(`You need to mention channel first`).then(x => { x.delete({ timeout: 10000 }) })
 
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-        if (!message.member.hasPermission('MANAGE_CHANNELS' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`MANAGE_CHANNELS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
         if (message.channel.activateCollector === true) return message.channel.send("please wait until the timeout over or response has given").then(msg => { msg.delete({ timeout: 5000 }) });
-
         try {
             var react = await message.channel.send(createEmbed("info", `Are you sure to Nuke Channel **\`${channel.name}\`**?`));
             message.channel.activateCollector = true

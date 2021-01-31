@@ -6,9 +6,13 @@ module.exports = {
     descriptions: "Vote me",
     usage: "vote",
     options: null,
-    cooldown: "",
+    cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         let ath = new MessageAttachment('https://top.gg/api/widget/740112353483554858.png', 'topgg.png')
         let topgg = await client.botlist.dbl.getBot("740112353483554858").then(x => x.monthlyPoints)

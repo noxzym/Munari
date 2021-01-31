@@ -14,6 +14,10 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     try {
       const username = args[0];
@@ -21,8 +25,9 @@ module.exports = {
 
       message.channel.startTyping()
 
-      const { results } = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
-      const data = results;
+      let results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
+      if (results.status !== 200) results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=1495780340:60piqEgZHgozfm:6` } }).then(x => x.json())
+      const data =  await results;
 
       const get = data.graphql.user;
       const fullname = get.full_name;

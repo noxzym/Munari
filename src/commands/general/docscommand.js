@@ -9,6 +9,10 @@ module.exports = {
     cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         
         const input = args.join(' ')

@@ -6,10 +6,14 @@ module.exports = {
     category: "Developer",
     descriptions: "Update change command",
     usage: "reload <command>",
-    options: [""],
-    cooldown: "",
-    ownerOnly: false,
+    options: null,
+    cooldown: null,
+    ownerOnly: true,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         let input = args[0]
         if (!input) return message.channel.send(createEmbed("error", "Operation Canceled. You need provided the command name")).then(x => { x.delete({ timeout: 10000 }) });

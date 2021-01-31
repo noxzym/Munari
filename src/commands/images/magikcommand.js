@@ -1,11 +1,11 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
 module.exports = {
-    name: "invert",
+    name: "magik",
     aliases: null,
     category: "Image",
-    descriptions: "Add invert filter to image",
-    usage: "invert [user/^]",
+    descriptions: "Add magik filter to image",
+    usage: "magik [user/^]",
     options: null,
     cooldown: "10",
     ownerOnly: false,
@@ -33,12 +33,13 @@ module.exports = {
         const fetchavatarauthor = fetchattachment === undefined && fetchembeds === undefined && fetchmsgauthor === undefined && mentionuser === undefined && mentionuserid === undefined ? fetchmsg.author.avatarURL({ size: 4096, format: "png" }) : undefined;
 
         const data = fetchattachment || fetchembeds || fetchmsgauthor || mentionuser || mentionuserid || fetchavatarauthor;
-        const img = await image.invert({ image: data })
-        let ath = new MessageAttachment(img, "invert.png")
+        const img = await image.magik({ image: data })
+
+        let ath = new MessageAttachment(img, "magik.png")
 
         let e = new MessageEmbed()
             .setColor(message.member.displayHexColor)
-            .setImage('attachment://invert.png')
+            .setImage('attachment://magik.png')
             .setTimestamp()
             .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true, size: 4096 }))
         message.channel.send({ files: [ath], embed: e })

@@ -11,6 +11,10 @@ module.exports = {
     cooldown: "10",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["CONNECT", "SPEAK"],
+        userperms: null
+    },
     async run(client, message, args) {
         const queue = client.queue.get(message.guild.id)
 

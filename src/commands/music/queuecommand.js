@@ -6,9 +6,13 @@ module.exports = {
   descriptions: "Display queuelist of song",
   usage: "queue",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
     const queue = client.queue.get(message.guild.id)
     if (!queue) return message.inlineReply(`Nothing are playing now`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

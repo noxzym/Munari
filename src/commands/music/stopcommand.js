@@ -5,9 +5,13 @@ module.exports = {
   descriptions: "Stop the music and clear queue",
   usage: "stop",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
     const { channel } = message.member.voice;
     const queue = client.queue.get(message.guild.id);

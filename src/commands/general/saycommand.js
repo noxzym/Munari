@@ -2,14 +2,18 @@ const { Util, MessageAttachment } = require('discord.js');
 const { createEmbed } = require('../../utils/Function');
 module.exports = {
   name: "say",
-  aliases: [""],
+  aliases: null,
   category: "General",
-  descriptions: "",
+  descriptions: "I can say everything what you want",
   usage: "say [message] [options]",
   options: ["--embed"],
   cooldown: "10",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     (message.guild.me.hasPermission("MANAGE_MESSAGES") || message.channel.permissionsFor(client.user).has('MANAGE_MESSAGES')) ? message.delete() : null
 

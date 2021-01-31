@@ -10,6 +10,10 @@ module.exports = {
     cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         const { image } = new alex(client.config.alexapi)
         const img = await image.sadcat()

@@ -10,6 +10,10 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const data = await fetch("https://icanhazdadjoke.com/slack").then(res => res.json());
     let e = new MessageEmbed()

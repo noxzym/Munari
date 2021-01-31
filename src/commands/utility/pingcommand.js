@@ -9,6 +9,10 @@ module.exports = {
   cooldown: "1",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(bot, message, args) {
     let latency = Math.round(new Date() - message.createdTimestamp)
     let websocket = bot.ws.ping

@@ -5,12 +5,16 @@ module.exports = {
   name: "eval",
   aliases: ["ev"],
   category: "Developer",
-  descriptions: "",
-  usage: "ev <code>",
-  options: [""],
-  cooldown: "",
+  descriptions: "Run code snippet",
+  usage: "eval <code>",
+  options: null,
+  cooldown: null,
   ownerOnly: true,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? message.delete() : undefined
     let codein = args.slice(0).join(" ");
@@ -20,10 +24,12 @@ module.exports = {
 
     try {
 
-      if ((codein.includes('--silent') && codein.includes('--async'))) {
+      if ((codein.includes('--async') && codein.includes('--silent'))) {
 
         codein = codein.replace('--async', '').replace('--silent', '');
-        await eval(`(aysnc () {${codein}})()`)
+        await eval(`(async function() {
+          ${codein}
+        })()`)
         return;
 
       } else if (codein.includes('--async')) {
@@ -60,7 +66,7 @@ module.exports = {
 
         let withouthaste = new MessageEmbed()
           .addField("Input", `\`\`\`js\n${codein}\`\`\``)
-          .addField(`Output`, `\`\`\`js\n${clean(outputcode).replace(client.token, "-")}\n\`\`\``)
+          .addField(`Output`, `\`\`\`js\n${await clean(outputcode).replace(client.token, "-")}\n\`\`\``)
           .addField(`Typecode`, typeof code)
         output = await message.channel.send(withouthaste)
 
@@ -82,7 +88,7 @@ module.exports = {
         .catch(e => { return });
 
     } catch (error) {
-      
+
       var output;
 
       if (error.length > 1024) {

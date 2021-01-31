@@ -1,25 +1,36 @@
-const { MessageEmbed, Collection } = require('discord.js')
+const { MessageEmbed, Collection, Permissions } = require('discord.js');
+const { Blacklist, Prefix } = require('../struct/MongoModels');
 const { formatMs, createEmbed } = require('../utils/Function')
 module.exports = {
     name: 'message',
     async run(client, message) {
-
         //Prefix In Here\\
-        const prefix = client.config.prefix;
-        const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
+        const Prefixes = await Prefix.findOne({ GuildId: message.guild.id }, async (err, data) => {
+            if (err) throw err;
+            return data
+        });
+        const prefix = Prefixes !== null ? Prefixes.Prefix : client.config.prefix
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setAuthor(`Munari Help`)
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setDescription(`My prefix is **\`m!\`**\n\nUse **\`m!help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
-        if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return
-        if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return
-        if (message.author.bot) return
+            .setDescription(`My prefix is **\`${prefix}\`**\n\nUse **\`${prefix}help\`** to get command list\n**[[INVITE ME](https://top.gg/bot/740112353483554858/invite)] [[VOTE ME](https://top.gg/bot/740112353483554858/vote)]**`)
+
+        if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return;
+        if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return;
+
+        if (message.author.bot) return;
+        const blacklisted = await Blacklist.findOne({ UserId: message.author.id }, async (err, data) => {
+            if (err) throw err;
+            return data
+        });
+        if (blacklisted) return;
+        
+        const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
         if (message.content.match(getpref)) return message.channel.send(embed);
 
         if (!message.content.startsWith(prefix)) return
-
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let cmd = args.shift().toLowerCase();
 
@@ -52,6 +63,30 @@ module.exports = {
         timestamps.set(message.author.id, now);
         message.author.id === "243728573624614912" ? timestamps.delete(message.author.id) : setTimeout(() => { timestamps.delete(message.author.id) }, cooldownamount);
 
+        //Permissions
+        if (command.missing && command.missing.botperms && command.missing.botperms.length > 0) {
+            let guildPerms = message.channel.permissionsFor(message.guild.me);
+            guildPerms = new Permissions(guildPerms.bitfield);
+            if (!guildPerms.has(command.missing.botperms)) {
+                let missingPerms = command.missing.botperms.filter(x => {
+                    return !guildPerms.has(x)
+                })
+                console.log(missingPerms)
+                return message.channel.send(createEmbed("error", `**<a:decline:776412779899781141> | Access Denied. Missing Permission for \`${client.user.username}\`:\n\`${missingPerms}\`**`))
+            }
+        };
+
+        if (command.missing && command.missing.userperms && command.missing.userperms.length > 0) {
+            let memberPerms = message.channel.permissionsFor(message.member);
+            memberPerms = new Permissions(memberPerms.bitfield);
+            if (!memberPerms.has(command.missing.userperms)) {
+                let missingPerms = command.missing.userperms.filter(x => {
+                    return !memberPerms.has(x)
+                }).join(", ");
+                return message.channel.send(createEmbed("error", `**<a:decline:776412779899781141> | Access Denied. Missing Permission for \`${message.member.user.username}\`:\n\`${missingPerms}\`**`))
+            }
+        }
+        
         //Execute command in here
         try {
             await command.run(client, message, args);

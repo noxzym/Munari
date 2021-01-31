@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 module.exports = {
   name: "prune",
-  aliases: null,
+  aliases: ["clear"],
   category: "Moderation",
   descriptions: "Delete message up to 99",
   usage: "prune <message count>",
@@ -9,9 +9,11 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["MANAGE_MESSAGES"],
+    userperms: ["MANAGE_MESSAGES"]
+  },
   async run(bot, message) {
-    if (!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_MESSAGES")) return message.channel.send(`You don't have permissions \`MANAGE_MESSAGES\` or \`ADMINISTRATOR\``).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
   const args = message.content.split(' ').slice(1);
   const amount = args.join(' ');
   message.delete();

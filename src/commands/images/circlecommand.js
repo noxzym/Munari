@@ -11,6 +11,10 @@ module.exports = {
     cooldown: "10",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         const parse = message.content.trim().split(" ");
         const parsedata = parse[1] !== undefined && parse[1].includes("^") ? parse[1].length : 0;

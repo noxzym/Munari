@@ -10,13 +10,15 @@ module.exports = {
     cooldown: "5",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["MANAGE_ROLES"],
+        userperms: ["MANAGE_ROLES"]
+    },
     async run(client, message, args) {
         const member =
             message.guild.members.cache.get(args[0]) ||
             message.mentions.members.first()
         if (!member) return message.channel.send(`Wrong input, you need to mention member first`).then(msg => { msg.delete({ timeout: 10000 }) })
-        if (!message.guild.me.hasPermission('MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`I need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 10000 }) })
-        if (!message.member.hasPermission('MANAGE_ROLES' || 'ADMINISTRATOR')) return message.channel.send(`You need permissions for **\`KICK_MEMBERS\`** or **\`BAN_MEMBERS\`** or **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 10000 }) })
         if (message.channel.activateCollector === true) return message.channel.send("please wait until the timeout over or response has given").then(msg => { msg.delete({ timeout: 10000 }) });
 
         let reason = args.slice(1).join(' ');

@@ -7,9 +7,13 @@ module.exports = {
   descriptions: "UNDER CONSTRUCTION",
   usage: "nowplaying",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
     const queue = client.queue.get(message.guild.id);
     if (!queue) return message.reply("There is nothing playing.").catch(console.error);

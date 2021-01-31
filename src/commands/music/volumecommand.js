@@ -5,9 +5,13 @@ module.exports = {
   descriptions: "Change volume of music songs",
   usage: "volume <set volume [1 - 100]>",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
     const queue = client.queue.get(message.guild.id);
     if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

@@ -5,10 +5,14 @@ module.exports = {
   category: "General",
   descriptions: "Display avatar of use",
   usage: "avatar [user]",
-  options: null,
+  options: ["--server"],
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     if (args.slice(0).join("").match(/^(?:--server)$/g)) {
       let e = createEmbed("info")

@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 module.exports = {
   name: "rate",
-  aliases: [""],
+  aliases: null,
   category: "Actions",
   descriptions: "rate someone",
   usage: "rate [user]",
-  options: [""],
+  options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,

@@ -8,6 +8,10 @@ module.exports = {
   cooldown: "",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const { channel } = message.member.voice;
     const serverQueue = client.queue.get(message.guild.id);

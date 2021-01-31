@@ -4,11 +4,15 @@ module.exports = {
   name: "execute",
   aliases: ["ex"],
   category: "Developer",
-  descriptions: "",
+  descriptions: null,
   usage: "execute <code>",
   options: null,
-  cooldown: "",
+  cooldown: null,
   ownerOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const input = await message.channel.send(`❯_ ${args.join(' ')}`)
     exec(args.join(" "), async (e, stdout, stderr) => {

@@ -11,6 +11,10 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(bot, message, args) {
     const member =
       message.guild.members.cache.get(args[0]) ||

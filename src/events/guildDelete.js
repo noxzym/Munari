@@ -1,10 +1,15 @@
 const { MessageEmbed } = require("discord.js");
+const { Prefix } = require("../struct/MongoModels")
+
 module.exports = {
   name: "guildDelete",
   async run(client, guild) {
+    // Prefix.findOneAndDelete({ GuildId: guild.id, Prefix: client.config.prefix }, async (err, data) => {
+    //   if (err) throw err;
+    //   return data
+    // });
 
     // if (guild.members.cache.filter(x => !x.user.bot).size < 30) return
-
     const sname = guild.name
       .toLowerCase()
       .split(" ")
@@ -29,7 +34,15 @@ module.exports = {
     let e = new MessageEmbed()
       .setAuthor(`I Removed one Server`)
       .setDescription(
-        `**Server Information\n\`\`\`asciidoc\nServer Name   :: ${sname} | ${guild.id}\nServer Owner  :: ${owner.tag} | ${owner.id}\nServer region :: ${sreg}\nMember Count  :: ${membert} Member\n              :: ${memberuser} User\n              :: ${memberbot} Bot\n\`\`\`**`
+`**Server Information\n`+
+`\`\`\`asciidoc\n`+
+`Server Name   :: ${sname} | ${guild.id}\n`+
+`Server Owner  :: ${owner.tag} | ${owner.id}\n`+
+`Server region :: ${sreg}\n`+
+`Member Count  :: ${membert} Member\n`+
+`              :: ${memberuser} User\n`+
+`              :: ${memberbot} Bot\n`+
+`\`\`\`**`
       );
     let channel = client.guilds.cache
       .get("770540956163899423")

@@ -1,5 +1,6 @@
 const { MessageAttachment } = require('discord.js')
 const alex = require('alexflipnote.js')
+
 module.exports = {
     name: "supreme",
     aliases: null,
@@ -10,6 +11,10 @@ module.exports = {
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: null,
+        userperms: null
+    },
     async run(client, message, args) {
         const { image } = new alex(client.config.alexapi)
         const input = args.slice(0).join(' ')

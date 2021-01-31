@@ -9,19 +9,11 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["MANAGE_ROLES"],
+    userperms: ["MANAGE_ROLES"]
+  },
   async run(bot, message, args) {
-    if (!message.guild.me.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
-      return message.channel.send(
-        `I don't Have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``
-      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-    if (!message.guild.me.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
-      return message.channel.send(
-        `I don't Have permissions \`MANAGE_ROLES\` or \`ADMINISTRATOR\``
-      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
-    if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR"))
-      return message.channel.send("You don't have permissions for that!").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
     const needsRole =
       message.guild.member(message.mentions.users.first()) ||
       message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||

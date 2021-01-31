@@ -24,20 +24,13 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["CONNECT", "SPEAK"],
+    userperms: null
+  },
   run: async function (client, message, args) {
     const { channel } = message.member.voice;
     if (!channel) return message.inlineReply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
-
-    const permissions = channel.permissionsFor(message.client.user);
-    if (!permissions.has("CONNECT"))
-      return message.channel.send(
-        "I cannot connect to your voice channel"
-      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-    if (!permissions.has("SPEAK"))
-      return message.channel.send(
-        "I cannot speak in this voice channel"
-      ).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
     if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
       return message.inlineReply(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
     }

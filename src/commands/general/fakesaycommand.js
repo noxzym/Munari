@@ -10,12 +10,15 @@ module.exports = {
     cooldown: "10",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["MANAGE_WEBHOOKS"],
+        userperms: null
+    },
     async run(client, message, args) {
         const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first()
         if (!member) return message.channel.send(createEmbed("error", "Operation Canceled, You need to mention someone")).then(x => { x.delete({ timeout: 10000 }) })
         const data = args.slice(1)
         if (!data) return message.channel.send(createEmbed("error", "Operation Canceled, You need input some message")).then(x => { x.delete({ timeout: 10000 }) })
-        if (!message.channel.permissionsFor(client.user.id).has("MANAGE_WEBHOOKS")) return message.channel.send(createEmbed("error", "Operation Canceled, Because i need permission of **\`MANAGE_WEBHOOKS\`**")).then(x => { x.delete({ timeout: 10000 }) })
         
         var fetched = await message.channel.send(`Please wait <a:LoadingFetch:785715659727175731>`)
         try {

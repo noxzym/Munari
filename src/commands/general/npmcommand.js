@@ -11,6 +11,10 @@ module.exports = {
   cooldown: "3",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
 
     const query = args.join(" ");

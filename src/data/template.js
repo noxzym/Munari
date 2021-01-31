@@ -1,20 +1,18 @@
-const { readdirSync } = require("fs");
-
 module.exports = {
-  name: "restart",
+  name: null,
   aliases: null,
-  category: "Developer",
+  category: null,
   descriptions: null,
-  usage: "restart",
+  usage: null,
   options: null,
   cooldown: null,
-  ownerOnly: true,
+  ownerOnly: false,
   guildOnly: true,
   missing: {
     botperms: null,
     userperms: null
   },
   async run(client, message, args) {
-    process.exit(1)
+
   }
-} 
+}

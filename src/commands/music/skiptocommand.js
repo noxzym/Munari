@@ -5,9 +5,13 @@ module.exports = {
   descriptions: "Skip to the selected queue number",
   usage: "skiptp <number queue>",
   options: null,
-  cooldown: "",
+  cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     try {
       const { channel } = message.member.voice;

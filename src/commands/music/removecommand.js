@@ -8,6 +8,10 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   run: async function (client, message, args) {
       const { channel } = message.member.voice;
       const botChannel = message.member.guild.me.voice.channel;

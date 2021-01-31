@@ -8,9 +8,13 @@ module.exports = {
     descriptions: "Pay the respect",
     usage: "respect [user]",
     options: null,
-    cooldown: "15",
+    cooldown: "60",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["ADD_REACTIONS"],
+        userperms: null
+    },
     async run(client, message, args) {
         let reason = args.join(" ")
 
@@ -26,7 +30,7 @@ module.exports = {
 
         var respect = await message.channel.send(e)
         await respect.react("🇫")
-        const collector = respect.createReactionCollector((reaction, user) => reaction.emoji.name === "🇫" && user.id !== client.user.id, { time: 15000, errors: ["time"] });
+        const collector = respect.createReactionCollector((reaction, user) => reaction.emoji.name === "🇫" && user.id !== client.user.id, { time: 60000, errors: ["time"] });
         const array = [];
         collector.on("collect", async (reaction, user) => {
             switch (reaction.emoji.name) {

@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const superagent = require("superagent");
+const fetch = require("node-fetch");
+
 module.exports = {
   name: "fact",
   aliases: null,
@@ -10,8 +10,12 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
-    const { body } = await superagent.get("https://nekos.life/api/v2/fact");
-    message.channel.send(`**${body.fact}**`)
+    const { fact } = await fetch("https://nekos.life/api/v2/fact").then(x => x.json())
+    message.channel.send(`**${fact}**`)
   }
 };

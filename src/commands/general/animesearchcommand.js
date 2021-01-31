@@ -11,6 +11,10 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: null,
+    userperms: null
+  },
   async run(client, message, args) {
     const title = args.join(" ");
     if (!title) return message.channel.send("Please input anime title").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

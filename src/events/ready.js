@@ -1,8 +1,15 @@
 const axios = require('axios')
+const Mongoose = require("mongoose")
+
 module.exports = {
     name: 'ready',
-    async run(client) {
+    async run(client) {        
+        Mongoose.connect("mongodb+srv://tetew123:tetew123@cluster0.f78hd.mongodb.net/Database", {
+            useUnifiedTopology: true,
+            useNewUrlParser: true
+        }).then(console.log(`Mongoose has connected!`))
         console.log("Amjay Mabar, SKUUYYY");
+
         setInterval(() => {
             const status = [
                 `• Mention me for know my prefix •`,
