@@ -21,11 +21,11 @@ module.exports = {
         if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return;
 
         if (message.author.bot) return;
-        const blacklisted = await Blacklist.findOne({ UserId: message.author.id }, async (err, data) => {
-            if (err) throw err;
-            return data
-        });
-        if (blacklisted) return;
+        // const blacklisted = await Blacklist.findOne({ UserId: message.author.id }, async (err, data) => {
+        //     if (err) throw err;
+        //     return data
+        // });
+        // if (blacklisted) return;
         
         const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
         if (message.content.match(getpref)) return message.channel.send(embed);
