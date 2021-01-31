@@ -1,4 +1,5 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
+const { createEmbed } = require("../../utils/Function")
 const fetch = require('node-fetch')
 const { registerFont, createCanvas, loadImage } = require('canvas');
 const path = require('path')
@@ -25,8 +26,13 @@ module.exports = {
 
       message.channel.startTyping()
 
-      let results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
+      try {
+      var results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
       if (results.status !== 200) results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=1495780340:60piqEgZHgozfm:6` } }).then(x => x.json())
+      } catch (e) {
+        message.channel.stopTyping()
+        return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => {x.delete({timeout:10000})})
+      }
       const data =  await results;
 
       const get = data.graphql.user;
@@ -142,7 +148,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error)
-      message.channel.send("Cannot find that username or the service maintenance").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+      message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })
       message.channel.stopTyping()
     }
   }
