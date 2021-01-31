@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { Prefix } = require("../struct/MongoModels")
+// const { Prefix } = require("../struct/MongoModels")
 
 module.exports = {
   name: "guildDelete",
