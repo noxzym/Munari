@@ -5,11 +5,11 @@ module.exports = {
     name: 'message',
     async run(client, message) {
         //Prefix In Here\\
-        const Prefixes = await Prefix.findOne({ GuildId: message.guild.id }, async (err, data) => {
+        /*const Prefixes = await Prefix.findOne({ GuildId: message.guild.id }, async (err, data) => {
             if (err) throw err;
             return data
-        });
-        const prefix = Prefixes !== null ? Prefixes.Prefix : client.config.prefix
+        });*/
+        const prefix = /*Prefixes !== null ? Prefixes.Prefix :*/ client.config.prefix
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
