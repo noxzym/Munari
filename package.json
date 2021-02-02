@@ -23,7 +23,7 @@
     "Munari"
   ],
   "dependencies": {
-    "@top-gg/sdk": "^3.0.6",
+    "@top-gg/sdk": "^3.0.7",
     "alexflipnote.js": "^2.3.4",
     "axios": "^0.21.1",
     "boats.js": "^2.5.0",
