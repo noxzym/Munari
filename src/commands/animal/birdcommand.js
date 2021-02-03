@@ -20,10 +20,8 @@ module.exports = {
 
     const e = new Discord.MessageEmbed()
       .setColor(message.member.roles.cache.sort((a, b) => b.position - a.position).first().color)
-      .setTitle(
-        `${message.author.username}, this is your bird picture`
-      )
-      await e.setImage(body.join(' '))
+      .setTitle(`${message.author.username}, this is your bird picture`)
+    await e.setImage(body.join(' '))
       .setTimestamp()
     message.channel.send({ embed: e });
   }

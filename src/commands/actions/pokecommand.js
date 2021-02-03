@@ -1,35 +1,30 @@
 const { MessageAttachment, MessageEmbed } = require("discord.js");
-const superagent = require("superagent");
+const fethc = require("node-fetch");
 
 module.exports = {
   name: "poke",
   aliases: null,
   category: "Actions",
-  descriptions: "poke someone",
+  descriptions: "poke your crush",
   usage: "poke <user>",
   options: null,
-  cooldown: "8",
+  cooldown: "10",
   ownerOnly: false,
   guildOnly: true,
   async run(client, message, args) {
-    const member =
-      message.guild.members.cache.get(args[0]) ||
-      message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) ||
-      message.mentions.members.first()
-    if (!member)
-      return message.reply("You need to mention someone to poke them").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-    if (member.id === client.user.id) return message.channel.send(`I don't want it`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-    const { body } = await superagent.get("https://nekos.life/api/v2/img/poke");
-    const get = body.url
-    const ath = new MessageAttachment(get, 'poke.gif')
+    const member = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) || message.mentions.members.first()
+    if (!member) return message.reply("You need to mention someone for you poke").then(msg => { msg.delete({ timeout: 10000 }) });
+    if (member.id === client.user.id) return message.channel.send(`I don't want it`).then(msg => { msg.delete({ timeout: 10000 }) });
+
+    const { url } = await superagent.get("https://nekos.life/api/v2/img/poke").then(x => x.json());
+    const ath = new MessageAttachment(url, 'poke.gif')
+
     const e = new MessageEmbed()
       .setColor(message.member.displayHexColor)
-      .setTitle(
-        `${message.author.username} Poke ${member.user.username
-        }`
-      )
+      .setTitle(`${member.user.username} was Poked by ${message.author.username}`)
       .setImage('attachment://poke.gif')
       .setTimestamp()
+      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true, size: 4096 }))
     message.channel.send({ files: [ath], embed: e });
   }
 };
