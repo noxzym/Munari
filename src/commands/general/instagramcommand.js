@@ -1,9 +1,10 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { createEmbed } = require("../../utils/Function")
-const fetch = require('node-fetch')
+const { createEmbed } = require("../../utils/Function");
 const { registerFont, createCanvas, loadImage } = require('canvas');
-const path = require('path')
-registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
+const { Circle } = require("../../utils/Imagegen");
+const fetch = require('node-fetch');
+const path = require('path');
+registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' });
 
 module.exports = {
   name: "instagram",
@@ -12,7 +13,7 @@ module.exports = {
   descriptions: "Display instagram information",
   usage: "instagram <username>",
   options: ["--nocanvas"],
-  cooldown: "8",
+  cooldown: "15",
   ownerOnly: false,
   guildOnly: true,
   missing: {
@@ -22,18 +23,22 @@ module.exports = {
   async run(client, message, args) {
     try {
       const username = args[0];
-      if (!username) return client.commandmanager.command.get('help').run(client, message, [this.name]).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+      if (!username) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You need to input username")).then(x => { x.delete({ timeout: 10000 }) })
+
+      try {
+        var results
+        try {
+          results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
+        } catch {
+          results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=14643228375:npTziRVmYocZT9:22` } }).then(x => x.json())
+        }
+      } catch (e) {
+        return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })
+      }
 
       message.channel.startTyping()
 
-      try {
-      var results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
-      if (results.status !== 200) results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=1495780340:60piqEgZHgozfm:6` } }).then(x => x.json())
-      } catch (e) {
-        message.channel.stopTyping()
-        return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => {x.delete({timeout:10000})})
-      }
-      const data =  await results;
+      const data = await results;
 
       const get = data.graphql.user;
       const fullname = get.full_name;
@@ -54,17 +59,14 @@ module.exports = {
         ctx.fillStyle = "#1e1e1e";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        let img2 = "https://cdn.discordapp.com/attachments/795512730940735508/796296618894426122/1609922288508.png"
-        let loadimg = await loadImage(img2)
+        let loadimg = await loadImage(path.join(__dirname, "..", "..", "data", "images", "instagram-circle.png"))
         ctx.drawImage(loadimg, 100, 195, 250, 250)
 
-        let img3 = "https://cdn.discordapp.com/attachments/795512730940735508/796417192945909840/instagram.png"
-        let loadimg2 = await loadImage(img3)
+        let loadimg2 = await loadImage(path.join(__dirname, "..", "..", "data", "images", "instagram-icon.png"))
         ctx.drawImage(loadimg2, 30, 30, 80, 80)
 
         if (get.is_verified) {
-          let img4 = "https://cdn.discordapp.com/attachments/795512730940735508/796424132186341376/736956407374544967.png"
-          let loadimg3 = await loadImage(img4)
+          let loadimg3 = await loadImage(path.join(__dirname, "..", "..", "data", "images", "verified.png"))
           ctx.drawImage(loadimg3, 1090, 30, 80, 80)
         }
 
@@ -88,7 +90,7 @@ module.exports = {
 
         ctx.font = "40px Sans";
         ctx.fillStyle = "#FFFFFF";
-        await wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 80)
+        await wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 100)
 
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -121,6 +123,14 @@ module.exports = {
         ctx.fillStyle = "#7a7a7a";
         ctx.fillText("Following", 1000, 400);
 
+        if (get.is_private) {
+          /*let loadimg4 = await loadImage(path.join(__dirname, "..", "..", "data", "images", "instagramlock.png"));
+          ctx.drawImage(loadimg4, canvas.width/2 - 200, canvas.height/2 + 400, 80, 80)*/
+          ctx.font = "35px Sans";
+          ctx.fillStyle = "#7a7a7a";
+          ctx.fillText("This Account is Private", 600, 1120);
+        }
+        /*
         ctx.beginPath()
         ctx.arc(225, 320, 118, 0, Math.PI * 2, true);
         ctx.closePath()
@@ -128,11 +138,15 @@ module.exports = {
 
         const av = await loadImage(thm)
         ctx.lineTo(av, 50, 50)
-        ctx.drawImage(av, 105, 200, 240, 240)
+        ctx.drawImage(av, 105, 200, 240, 240)*/
+
+        const imager = await Circle(thm);
+        const imgprof = await loadImage(imager);
+        ctx.drawImage(imgprof, 105, 200, 240, 240)
 
         let img = canvas.toBuffer()
         const ath = new MessageAttachment(img, "instagram.png")
-        message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath]})
+        message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath] })
         message.channel.stopTyping()
       } else {
 
@@ -147,7 +161,6 @@ module.exports = {
 
       }
     } catch (error) {
-      console.log(error)
       message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })
       message.channel.stopTyping()
     }
