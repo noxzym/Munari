@@ -1,4 +1,5 @@
 const fetch = require("node-fetch")
+const { createEmbed } = require("../../utils/Function")
 
 module.exports = {
   name: "8ball",

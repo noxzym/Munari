@@ -130,19 +130,17 @@ module.exports = {
           } catch (e) {
             return message.channel.send(createEmbed("error", "The request has been canceled because no respond!")).then(x => x.delete({ timeout: 3000 }) && embedsearch.delete())
           }
-
-          const infoSong = await yts(video.title);
-          const vid = infoSong.all.filter(x => filter.includes(x.type))[0];
-
+          
           song = {
-            title: Util.escapeMarkdown(vid.title),
-            identifier: vid.videoId,
-            author: vid.author.name,
-            duration: vid.timestamp,
-            nowplaying: vid.seconds,
-            url: vid.url,
-            thumbnail: vid.thumbnail + "?size=4096",
+            title: Util.escapeMarkdown(video.title),
+            identifier: video.videoId,
+            author: video.author.name,
+            duration: video.timestamp,
+            nowplaying: video.seconds,
+            url: video.url,
+            thumbnail: video.thumbnail + "?size=4096",
           };
+          
         } catch (e) {
           console.log(e);
           return message.channel.send(createEmbed("error", "I could not find any videos that match that title")).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());

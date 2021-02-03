@@ -2,6 +2,14 @@
     "data": {
         "all": [
             {
+                "date": "03 February 2021",
+                "content": [
+                    "- Fix: Play command",
+                    "- Update: Action Command",
+                    "- Feat: Instagram Private API"
+                ]
+            },
+            {
                 "date": "29 January 2021",
                 "content": [
                     "- New fakesay command",
