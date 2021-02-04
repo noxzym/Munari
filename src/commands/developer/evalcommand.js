@@ -66,7 +66,7 @@ module.exports = {
 
         let withouthaste = new MessageEmbed()
           .addField("Input", `\`\`\`js\n${codein}\`\`\``)
-          .addField(`Output`, `\`\`\`js\n${await clean(outputcode).replace(client.token, "-")}\n\`\`\``)
+          .addField(`Output`, `\`\`\`js\n${await clean(outputcode).replace(client.token, " [SECRET] ")}\n\`\`\``)
           .addField(`Typecode`, typeof code)
         output = await message.channel.send(withouthaste)
 

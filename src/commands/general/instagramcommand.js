@@ -30,7 +30,7 @@ module.exports = {
         try {
           results = await fetch(`https://api.hansputera.me/instagram/${username}`).then(x => x.json())
         } catch {
-          results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=14643228375:npTziRVmYocZT9:22` } }).then(x => x.json())
+          results = await fetch(`https://instagram.com/${username}/?__a=1`, { headers: { cookie: `sessionid=${client.config.sessionid}` } }).then(x => x.json())
         }
       } catch (e) {
         return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })

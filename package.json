@@ -1,6 +1,6 @@
 {
   "name": "munari-bot",
-  "version": "6.2.0",
+  "version": "6.2.3",
   "description": " - ",
   "private": true,
   "main": "index.js",
@@ -23,7 +23,7 @@
     "Munari"
   ],
   "dependencies": {
-    "@top-gg/sdk": "^3.0.6",
+    "@top-gg/sdk": "^3.0.7",
     "alexflipnote.js": "^2.3.4",
     "axios": "^0.21.1",
     "boats.js": "^2.5.0",
@@ -55,7 +55,7 @@
     "spotify-url-info": "^2.2.0",
     "string-progressbar": "^1.0.3",
     "superagent": "^6.1.0",
-    "yt-search": "^2.5.2",
+    "yt-search": "^2.6.1",
     "ytdl-core": "^4.4.5"
   },
   "optionalDependencies": {

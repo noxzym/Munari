@@ -33,7 +33,7 @@ module.exports = {
     const homepage = data.links.homepage ? `[[\`HOMEPAGE\`](${data.links.homepage})]` : "-";
     const repository = data.links.repository ? `[[\`REPOSITORY\`](${data.links.repository})]` : "-";
     const bugs = data.links.bugs ? `[[\`BUGS\`](${data.links.bugs})]` : "-";
-    const author = data.author.name ? `**\`${data.author.name}\`**` : "Unknown";
+    const author = data.author ? `**\`${data.author.name}\`**` : "Unknown";
     const maintainers = data.maintainers ? data.maintainers.map(x => `**\`${x.username}\`**`).join(" ") : "Unknown";
 
     const pkg = await fetch(`http://registry.npmjs.com/${data.name}`).then(x => x.json());
