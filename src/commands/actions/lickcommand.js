@@ -11,6 +11,10 @@ module.exports = {
     cooldown: "10",
     ownerOnly: false,
     guildOnly: true,
+    missing: {
+        botperms: ["EMBED_LINKS"],
+        userperms: null
+    },
     async run(client, message, args) {
         const member = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(x => x.user.username.toLowerCase() === `${args[0]}` || x.user.username === `${args[0]}`) || message.mentions.members.first()
         if (!member)return message.reply("You need to mention someone for you lick").then(msg => { msg.delete({ timeout: 10000 }) });

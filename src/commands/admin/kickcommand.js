@@ -11,7 +11,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: ["KICK_MEMBERS"],
+        botperms: ["KICK_MEMBERS", "EMBED_LINKS"],
         userperms: ["KICK_MEMBERS"]
     },
     async run(client, message, args) {

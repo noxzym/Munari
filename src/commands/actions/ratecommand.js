@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 module.exports = {
   name: "rate",
   aliases: null,
@@ -9,6 +8,10 @@ module.exports = {
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["EMBED_LINKS"],
+    userperms: null
+  },
   async run(client, message, args) {
     const ratus =
       message.guild.members.cache.get(args[0]) ||

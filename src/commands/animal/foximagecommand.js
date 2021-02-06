@@ -12,7 +12,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: null,
+        botperms: ["EMBED_LINKS"],
         userperms: null
     },
     async run(bot, message, args) {

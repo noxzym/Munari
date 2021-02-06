@@ -1,4 +1,3 @@
-const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: "iq",
   aliases: null,
@@ -9,6 +8,10 @@ module.exports = {
   cooldown: "8",
   ownerOnly: false,
   guildOnly: true,
+  missing: {
+    botperms: ["EMBED_LINKS"],
+    userperms: null
+  },
   async run(client, message, args) {
     const iq = Math.floor(Math.random() * 200) + 1;
     const member =

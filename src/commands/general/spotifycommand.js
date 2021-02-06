@@ -5,7 +5,7 @@ const onecolor = require('onecolor');
 const convert = require('parse-ms');
 const path = require('path');
 const { createEmbed } = require('../../utils/Function');
-registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' })
+
 module.exports = {
     name: "spotify",
     aliases: ["sp"],
@@ -17,161 +17,251 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: null,
+        botperms: ["EMBED_LINKS"],
         userperms: null
     },
     async run(client, message, args) {
-        const member =
-            message.guild.members.cache.get(args[0]) ||
-            message.mentions.members.first() ||
-            message.member
+        const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
-        if (!presence) return message.channel.send(`I can't find spotify presence, try again`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+        if (!presence) return message.inlineReply(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find spotify presence")).then(x => { x.delete({ timeout: 10000 }) })
 
-        const songname = presence.details.length <= 15 ? presence.details : presence.details.substr(0, 15).trim() + ' ...';
-        const album = presence.assets.largeText.length <= 20 ? presence.assets.largeText : presence.assets.largeText.substr(0, 20).trim() + " ...";
-        const auth = presence.state.length <= 10 ? presence.state : presence.state.substr(0, 10).trim() + " ...";
-        const title = `${presence.state} • ${presence.details}`
-        const url = `https://open.spotify.com/track/${presence.syncID}`
-        const img = `https://i.scdn.co/image/${presence.assets.largeImage.slice(8)}`
+        var songname;
+        var album;
+        var auth;
+        var title;
+        var url;
+        var img;
+        var start;
+        var end;
 
-        const start = presence.timestamps.start
-        const end = presence.timestamps.end
-        const time = end - start
-        const duri = Date.now() - start
-        const timestampformatted = (duri / time) * 360
-        const convirt = convert(time)
+        try {
+            songname = presence.details;
+            album = presence.assets.largeText;
+            auth = presence.state;
+            title = `${presence.state} • ${presence.details}`;
+            url = `https://open.spotify.com/track/${presence.syncID}`;
+            img = `https://i.scdn.co/image/${presence.assets.largeImage.slice(8)}`;
+            start = presence.timestamps.start;
+            end = presence.timestamps.end
+        } catch {
+            return message.inlineReply(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find spotify presence")).then(x => { x.delete({ timeout: 10000 }) })
+        };
 
-        let menit = convirt.minutes < 10 ? `0${convirt.minutes}` : convirt.minutes;
-        let detik = convirt.seconds < 10 ? `0${convirt.seconds}` : convirt.seconds;
-        let dur = convert(duri);
-        let durationmenit = dur.minutes < 10 ? `0${dur.minutes}` : dur.minutes;
-        let durationdetik = dur.seconds < 10 ? `0${dur.seconds}` : dur.seconds;
-        const timeleft = `[${durationmenit}:${durationdetik}] - [${menit}:${detik}]`
+        const duration = end - start;
+        const progress = Date.now() - start;
+
+        const convertms = convert(duration)
+        const minutes = convertms.minutes < 10 ? `0${convertms.minutes}` : convertms.minutes;
+        const seconds = convertms.seconds < 10 ? `0${convertms.seconds}` : convertms.seconds;
+
+        const progressconvert = convert(progress);
+        const progressminutes = progressconvert.minutes < 10 ? `0${progressconvert.minutes}` : progressconvert.minutes;
+        const progressseconds = progressconvert.seconds < 10 ? `0${progressconvert.seconds}` : progressconvert.seconds;
+
+        const progressrun = `${progressminutes}:${progressseconds}`;
+        const endprogress = `${minutes}:${seconds}`;
 
         if (message.content.includes("--nocanvas")) {
-            const songnameuncard = presence.details
-            const albumnocard = presence.assets.largeText
-            const authnocard = presence.state
-            let e = createEmbed()
-                .setColor('18d869')
+            let e = createEmbed("spotify")
                 .setAuthor(`Spotify Song Information`, 'https://media.discordapp.net/attachments/570740974725103636/582005158632882176/Spotify.png', url)
-                .setDescription(`\`\`\`asciidoc\n• SongName   :: ${songnameuncard}\n• SongAlbum  :: ${albumnocard}\n• SongAuthor :: ${authnocard}\n\`\`\``)
-                .setThumbnail(`${img}`)
+                .setDescription(
+                    `\`\`\`asciidoc\n`+
+                    `• SongName     :: ${songname}\n`+
+                    `• SongAlbum    :: ${album}\n`+
+                    `• SongAuthor   :: ${auth}\n`+
+                    `• SongDuration :: [${progressrun}] - [${endprogress}]\n`+
+                    `\`\`\``
+                )
+                .setThumbnail(img)
                 .setTimestamp()
                 .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
             return message.channel.send(e)
         }
 
-        const spotifylogo = await loadImage('https://cdn.discordapp.com/attachments/743752317333143583/787165793585856532/spotify-logo.png');
-
-        const canvas = createCanvas(800, 240);
+        const canvas = createCanvas(1280, 423);
         const ctx = canvas.getContext("2d");
-        let hex = await GetColor(img)
+        let hex = await GetColor(img);
 
-        //background
-        ctx.beginPath();
+        ctx.beginPath()
         ctx.rect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = hex;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.save()
-        ctx.globalAlpha = 0.7
-        roundRect(ctx, 100, 100, 3600, 520, 40, true, false, '#fff1e5')
+        ctx.drawImage(await loadImage(img), 1280 - 423, 0, 423, 423)
+
+        var lingrad = ctx.createLinearGradient(1500, 0, 900, 0)
+        lingrad.addColorStop(0, "rgba(0,0,0,0.0)")
+        lingrad.addColorStop(1, `${hex}`)
         ctx.restore()
+        ctx.fillStyle = lingrad
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const img2 = await loadImage(img);
-        ctx.drawImage(img2, 40, 20, 200, 200);
+        const logo = await SpotifyImg(img, path);
+        ctx.drawImage(await loadImage(logo), 50, 40, 80, 80)
 
-        ctx.drawImage(spotifylogo, 683, 120, 40, 40);
+        const colortext = await TextColor(img);
+        ctx.font = "40px Sans";
+        ctx.fillStyle = colortext;
+        ctx.fillText(progressrun, 70, canvas.height - 40);
 
-        ctx.font = "bold 40px Sans";
-        ctx.fillStyle = "#000000";
-        ctx.fillText(songname, 260, 80);
+        ctx.font = "40px Sans";
+        ctx.fillStyle = colortext;
+        ctx.fillText(endprogress, canvas.width - 180, canvas.height - 40);
 
-        ctx.font = "bold 22px Sans";
-        ctx.fillStyle = "#000000";
-        ctx.fillText("By " + auth, 260, 138);
+        ctx.font = "40px Sans";
+        ctx.fillStyle = colortext;
+        ctx.fillText(fittingString(ctx, `Spotify • ${album}`, canvas.width - (canvas.height + 50)), 130, 90)
 
-        ctx.font = "bold 16px Sans";
-        ctx.fillStyle = "#000000";
-        ctx.fillText("On " + album, 260, 160);
+        ctx.font = "80px Sans";
+        ctx.fillStyle = colortext;
+        ctx.fillText(fittingString(ctx, songname, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) - 20)
 
-        ctx.rect(260, 180, 360, 8);
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(260, 180, 360, 8);
+        ctx.font = "50px Sans";
+        ctx.fillStyle = colortext;
+        ctx.fillText(fittingString(ctx, auth, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) + 50)
 
-        ctx.fillStyle = "#1DB954";
-        ctx.fillRect(260, 180, timestampformatted, 8);
+        const barcolor = await barprogress(img);
+        ctx.rect(70, canvas.height - 100, canvas.width - 148, 8);
+        ctx.fillStyle = barcolor;
+        ctx.fillRect(70, canvas.height - 100, canvas.width - 148, 8);
 
-        ctx.font = "bold 16px Sans";
-        ctx.fillStyle = "#000000";
-        ctx.fillText(timeleft, 640, 190);
+        const toFormat = (progress / duration) * (canvas.width - 148);
+        ctx.fillStyle = colortext;
+        ctx.fillRect(70, canvas.height - 100, toFormat, 8);
 
-        const image = canvas.toBuffer();
-        const ath = new MessageAttachment(image, "spotify.png");
+        await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
+    }
+};
 
-        message.channel.send(ath)
+async function SpotifyImg(img, path) {
+    try {
+        const data = await colorThief.getColor(img).then(x => {
+            return x
+        });
+        const torgb = await data.toString().split(",");
+        const getcolor = (0.299 * torgb[0] + 0.587 * torgb[1] + 0.114 * torgb[2]) / 255;
+        let d
+        if (getcolor > 0.5) {
+            d = await path.join(__dirname, "..", "..", "data", "images", "SpotifyBlack.png");
+        } else {
+            d = await path.join(__dirname, "..", "..", "data", "images", "SpotifyWhite.png")
+        };
+        return d
+    } catch (e) {
+        console.log(e)
+    }
+};
 
-        async function GetColor(img) {
-            try {
-                const data = colorThief.getColor(img).then(x => {
-                    const rgb = x.toString().split(',');
-                    const data = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-                    return onecolor(data).hex()
-                });
+async function barprogress(img) {
+    try {
+        const data = await colorThief.getColor(img).then(x => {
+            return x
+        });
+        const torgb = await data.toString().split(",");
+        const getcolor = (0.299 * torgb[0] + 0.587 * torgb[1] + 0.114 * torgb[2]) / 255;
+        let d = 0
+        if (getcolor > 0.5) {
+            d = 255;
+        } else {
+            d = 0;
+        };
+        return onecolor(`rgb(${d}, ${d}, ${d})`).hex()
+    } catch (e) {
+        console.log(e)
+    }
+};
 
-                return data
-            } catch (e) {
-                console.error(e)
-                return 'Server Error'
-            }
+async function TextColor(img) {
+    try {
+        const data = await colorThief.getColor(img).then(x => {
+            return x
+        });
+        const torgb = await data.toString().split(",");
+        const getcolor = (0.299 * torgb[0] + 0.587 * torgb[1] + 0.114 * torgb[2]) / 255;
+        let d = 0
+        if (getcolor > 0.5) {
+            d = 0;
+        } else {
+            d = 255;
+        };
+        return onecolor(`rgb(${d}, ${d}, ${d})`).hex()
+    } catch (e) {
+        console.log(e)
+    }
+};
+
+async function GetColor(img) {
+    try {
+        const data = colorThief.getColor(img).then(x => {
+            const rgb = x.toString().split(',');
+            const data = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+            return onecolor(data).hex()
+        });
+
+        return data
+    } catch (e) {
+        if (e) throw Error("Server error")
+    }
+};
+
+function fittingString(c, str, maxWidth) {
+    let width = c.measureText(str).width;
+    let ellipsis = '…';
+    let ellipsisWidth = c.measureText(ellipsis).width;
+    if (width <= maxWidth || width <= ellipsisWidth) {
+        return str;
+    } else {
+        var len = str.length;
+        while (width >= maxWidth - ellipsisWidth && len-- > 0) {
+            str = str.substring(0, len);
+            width = c.measureText(str).width;
         }
-        async function roundRect(ctx, x, y, width, height, radius, fill, stroke, color) {
-            if (typeof stroke == 'undefined') {
-                stroke = true;
-            }
-            if (typeof radius === 'undefined') {
-                radius = 5;
-            }
-            if (typeof radius === 'number') {
-                radius = {
-                    tl: radius,
-                    tr: radius,
-                    br: radius,
-                    bl: radius
-                };
-            } else {
-                var defaultRadius = {
-                    tl: 0,
-                    tr: 0,
-                    br: 0,
-                    bl: 0
-                };
-                for (var side in defaultRadius) {
-                    radius[side] = radius[side] || defaultRadius[side];
-                }
-            }
-            ctx.beginPath();
-            ctx.fillStyle = color
-            ctx.moveTo(x + radius.tl, y);
-            ctx.lineTo(x + width - radius.tr, y);
-            ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
-            ctx.lineTo(x + width, y + height - radius.br);
-            ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
-            ctx.lineTo(x + radius.bl, y + height);
-            ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
-            ctx.lineTo(x, y + radius.tl);
-            ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-            ctx.closePath();
-            if (fill) {
-                ctx.fill();
-            }
-            if (stroke) {
-                ctx.stroke();
-            }
+        return str + ellipsis;
+    }
+}
 
+async function roundRect(ctx, x, y, width, height, radius, fill, stroke, color) {
+    if (typeof stroke == 'undefined') {
+        stroke = true;
+    }
+    if (typeof radius === 'undefined') {
+        radius = 5;
+    }
+    if (typeof radius === 'number') {
+        radius = {
+            tl: radius,
+            tr: radius,
+            br: radius,
+            bl: radius
+        };
+    } else {
+        var defaultRadius = {
+            tl: 0,
+            tr: 0,
+            br: 0,
+            bl: 0
+        };
+        for (var side in defaultRadius) {
+            radius[side] = radius[side] || defaultRadius[side];
         }
+    }
+    ctx.beginPath();
+    ctx.fillStyle = color
+    ctx.moveTo(x + radius.tl, y);
+    ctx.lineTo(x + width - radius.tr, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+    ctx.lineTo(x + width, y + height - radius.br);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+    ctx.lineTo(x + radius.bl, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+    ctx.lineTo(x, y + radius.tl);
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+    ctx.closePath();
+    if (fill) {
+        ctx.fill();
+    }
+    if (stroke) {
+        ctx.stroke();
     }
 }

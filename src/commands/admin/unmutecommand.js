@@ -11,7 +11,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: ["MANAGE_ROLES"],
+        botperms: ["MANAGE_ROLES", "EMBED_LINKS"],
         userperms: ["MANAGE_ROLES"]
     },
     async run(client, message, args) {

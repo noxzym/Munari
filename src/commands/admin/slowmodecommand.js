@@ -12,7 +12,7 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: ["MANAGE_CHANNELS"],
+        botperms: ["MANAGE_CHANNELS", "EMBED_LINKS"],
         userperms: ["MANAGE_CHANNELS"]
     },
     async run(client, message, args) {
