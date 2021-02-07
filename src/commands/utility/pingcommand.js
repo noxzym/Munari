@@ -10,7 +10,7 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
   async run(bot, message, args) {
@@ -20,8 +20,8 @@ module.exports = {
       .setColor(message.member.displayHexColor)
       .setTimestamp(message.createdTimestamp)
       .setDescription(`:ping_pong: **Pong! \n\`📶\`Latency = **\`${latency}\`** ms\n\`🖥️\`Websocket = **\`${websocket}\`** ms**`)
-      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()
+      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true, size: 4096, format: "png" }))
     message.channel.send(ping)
   }
 }
