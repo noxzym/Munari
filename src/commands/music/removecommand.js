@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function")
+
 module.exports = {
   name: "remove",
   aliases: null,
@@ -12,28 +14,19 @@ module.exports = {
     botperms: null,
     userperms: null
   },
-  run: async function (client, message, args) {
-      const { channel } = message.member.voice;
-      const botChannel = message.member.guild.me.voice.channel;
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
+    const { channel } = message.member.voice;
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to remove the music")).then(x => x.delete({ timeout: 10000 }))
 
-      if (channel !== botChannel) {
-        return message.inlineReply("You need to join the voice channel first!").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-      }
-      const queue = client.queue.get(message.guild.id);
-      if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+    if (!args.length) return client.commandmanager.command.get('help').run(client, message, [this.name])
+    if (isNaN(args[0])) return;
+    if (args[0] < 1 || args[0] > queue.songs.length - 1) return;
 
-    const count = args.join(' ');
-    if (!count) return client.commandmanager.command.get('help').run(client, message, [this.name])
-    
-    if (isNaN(count)) return;
-    if (count < 1 || count > queue.songs.length - 1) return;
-    try {
+    const song = queue.songs.splice(args[0], 1);
+    message.channel.send(createEmbed("info", `**\`${song[0].title}\` has been removed from queue**`)).then(x => x.delete({ timeout: 10000 }))
 
-      const song = queue.songs.splice(count, 1);
-      client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | Remove ${song[0].title} from queue Successful!`).then(msg => { msg.delete({ timeout: 5000 }) });
-
-    } catch (e) {
-      console.log(e)
-    }
   }
 };

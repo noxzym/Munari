@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "leave",
   aliases: null,
@@ -13,33 +15,13 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
     const { channel } = message.member.voice;
-    const serverQueue = client.queue.get(message.guild.id);
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to leaving me")).then(x => x.delete({ timeout: 10000 }))
 
-    if (!channel) return message.inlineReply("You need to join a voice channel first!").then(msg => { msg.delete({ timeout: 5000 }) })
-      .catch(console.error);
-
-    if (!message.guild.me.voice.channel)
-      return message.inlineReply("I am not in a voice channel!").then(msg => { msg.delete({ timeout: 5000 }) })
-        .catch(console.error);
-
-    if (channel.id !== message.guild.me.voice.channel.id)
-      return message.inlineReply("I am not in your voice channel!").then(msg => { msg.delete({ timeout: 5000 }) })
-        .catch(console.error);
-
-    if (serverQueue) {
-      
-      serverQueue.connection.dispatcher.destroy();
-      channel.leave();
-      message.client.queue.delete(message.guild.id);
-      return message.channel.send('I have disconnected!').then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-    } else {
-
-      channel.leave();
-      message.client.queue.delete(message.guild.id);
-      return message.channel.send('I have disconnected!').then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-    }
+    await client.player.leave(message);
+    return message.channel.send(createEmbed("info", `I has been disconnected`)).then(x => x.delete({ timeout: 10000 }))
   }
 };

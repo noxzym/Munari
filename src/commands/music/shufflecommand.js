@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
     name: "shuffle",
     aliases: ["sh"],
@@ -9,29 +11,24 @@ module.exports = {
     ownerOnly: false,
     guildOnly: true,
     missing: {
-        botperms: null,
+        botperms: ["EMBED_LINKS"],
         userperms: null
     },
     async run(client, message, args) {
+        const queue = message.guild.queue
+        if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
         const { channel } = message.member.voice;
-        if (!channel) return message.inlineReply("Please join voice channel first!").catch(console.error).then(msg => { msg.delete({ timeout: 8000 }); });
+        if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+        if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to shuffle the music")).then(x => x.delete({ timeout: 10000 }))
 
-        const queue = client.queue.get(message.guild.id)
         const songs = queue.songs
-
-        if (message.guild.me.voice.channel !== null && channel.id !== queue.voiceChannel) return message.inlineReply(`I has join channel **\`🔊${message.guild.me.voice.channel.name}\`**`).then(msg => { msg.delete({ timeout: 8000 }); });
-
         for (let i = songs.length - 1; i > 1; i--) {
             let j = 1 + Math.floor(Math.random() * i);
             [songs[i], songs[j]] = [songs[j], songs[i]];
         }
-
         queue.songs = songs;
-        message.client.queue.set(message.guild.id, queue);
+        message.guild.queue = queue;
 
-        await client.channels.cache.get(queue.textChannel)
-            .send(`<a:yes:765207711423004676> | ${songs[0].requester.username} has shuffled the queue!`)
-            .then(msg => { msg.delete({ timeout: 5000 }); })
-            .catch(console.error);
+        message.channel.send(createEmbed("info", `**The queue has been shufled by \`${message.author.username}\`**`)).then(x => x.delete({ timeout: 10000 }))
     }
 }

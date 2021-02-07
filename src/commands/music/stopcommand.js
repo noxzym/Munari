@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "stop",
   aliases: null,
@@ -9,25 +11,18 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
-  run: async function (client, message, args) {
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
     const { channel } = message.member.voice;
-    const queue = client.queue.get(message.guild.id);
-    if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to stop the music")).then(x => x.delete({ timeout: 10000 }))
 
-    try {
-      if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.inlineReply(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to stop the song`).then(msg => { msg.delete({ timeout: 8000 }); });
-      }
+    await client.player.stop(message)
+    message.channel.send(createEmbed("info", `**Music has been stopped by \`${message.author.username}\`**`)).then(x => x.delete({ timeout: 10000 }))
 
-      queue.songs = [];
-      queue.connection.dispatcher.end();
-      client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has stopped the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-    } catch (e) {
-      console.log(e)
-    }
   }
 };

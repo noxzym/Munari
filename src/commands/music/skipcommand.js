@@ -1,33 +1,28 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "skip",
   aliases: ["s"],
   category: "Music",
-  descriptions: "Skip the currently playing song",
+  descriptions: "Skip the currently playing",
   usage: "skip",
   options: null,
   cooldown: "5",
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
   async run(client, message, args) {
-    try {
-      const { channel } = message.member.voice;
-      if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.inlineReply(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to skip the song`).then(msg => { msg.delete({ timeout: 8000 }); });
-      }
-      const queue = client.queue.get(message.guild.id);
-      if (!queue)
-        return message.inlineReply("There is nothing playing that I could skip for you.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
+    const { channel } = message.member.voice;
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to skip the music")).then(x => x.delete({ timeout: 10000 }))
 
-      queue.playing = true;
-      queue.connection.dispatcher.end();
-      client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has skipped the song`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-    } catch (e) {
-      console.log(e)
-    }
+    client.player.skip(message)
+    message.channel.send(createEmbed("info", `**the current queue has been skipped by \`${message.author.username}\`**`)).then(x => x.delete({ timeout: 10000 }))
 
   }
 };

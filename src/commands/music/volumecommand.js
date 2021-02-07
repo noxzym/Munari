@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "volume",
   aliases: ["v"],
@@ -9,35 +11,24 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
-  run: async function (client, message, args) {
-    const queue = client.queue.get(message.guild.id);
-    if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
+    const { channel } = message.member.voice;
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to set the volume")).then(x => x.delete({ timeout: 10000 }))
+    if (!args.length) return message.channel.send(createEmbed("info", `🔊The current volume is **\`${queue.volume}\`**`)).then(x => x.delete({ timeout: 10000 }))
 
-    try {
-      const { channel } = message.member.voice;
-      const botChannel = message.member.guild.me.voice.channel;
+      if (/^([1-9]?\d|100)$/.test(args[0])) {
 
-      if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.inlineReply(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to set the volume`).then(msg => { msg.delete({ timeout: 8000 }); });
+        client.player.setVolume(message, args[0])
+        message.channel.send(createEmbed("info", `**Volume has been change to \`${args[0]}\`**`)).then(x => x.delete({ timeout: 10000 }))
+
+      } else {
+        message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Please input a valid number between 1 - 100")).then(x => x.delete({ timeout: 10000 }))
       }
-
-      if (!args[0]) return message.inlineReply(`🔊 The current volume is: **${queue.volume}%**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
-      if (/^([1-9]?\d|100)$/.test(args[0]) === false) {
-        return message.inlineReply("Please use a number between 0 - 100.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-      }
-
-      queue.volume = args[0];
-      queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
-
-      client.channels.cache.get(queue.textChannel).send(`Volume set to: **${args[0]}%**`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-    } catch (e) {
-      console.log(e)
-      message.channel.send(e.message).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-    }
   }
 };

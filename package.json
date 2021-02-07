@@ -1,6 +1,6 @@
 {
   "name": "munari-bot",
-  "version": "6.2.3",
+  "version": "6.3.0",
   "description": " - ",
   "private": true,
   "main": "index.js",
@@ -55,7 +55,7 @@
     "spotify-url-info": "^2.2.0",
     "string-progressbar": "^1.0.3",
     "superagent": "^6.1.0",
-    "yt-search": "^2.6.1",
+    "yt-search": "^2.7.1",
     "ytdl-core": "^4.4.5"
   },
   "optionalDependencies": {

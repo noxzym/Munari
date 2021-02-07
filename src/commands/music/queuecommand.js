@@ -1,4 +1,5 @@
 const { createEmbed, formatMs, pagination } = require("../../utils/Function");
+
 module.exports = {
   name: "queue",
   aliases: ["q"],
@@ -10,18 +11,17 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
-  run: async function (client, message, args) {
-    const queue = client.queue.get(message.guild.id)
-    if (!queue) return message.inlineReply(`Nothing are playing now`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
 
     const embeds = geneembed(message, queue.songs);
-
     let page = 0;
     var embed = await message.channel.send(embeds[page])
-    pagination(embed, page, embeds, message, queue)
+    pagination(embed, page, embeds, message, queue.songs.length, 6)
     
     function geneembed(message, queue) {
       const embeds = [];

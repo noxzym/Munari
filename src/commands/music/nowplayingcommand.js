@@ -11,11 +11,11 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
-  run: async function (client, message, args) {
-    const queue = client.queue.get(message.guild.id);
+  async run(client, message, args) {
+    const queue = message.guild.queue
     if (!queue) return message.reply("There is nothing playing.").catch(console.error);
     
     const song = queue.songs[0];
@@ -38,7 +38,7 @@ module.exports = {
       .setColor('#ff0000')
       .setAuthor(`Youtube Client Now Playing`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
       .setTitle(`${song.title}`)
-    await nowPlaying.setURL(client.queue.get(message.guild.id).songs[0].url)
+    await nowPlaying.setURL(song.url)
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester.username}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
@@ -47,7 +47,7 @@ module.exports = {
       .setColor('1d1f2b')
       .setAuthor(`Listen.moe Now Playing`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
       .setTitle(`${song.title}`)
-    await listenmoenoeplaying.setURL(client.queue.get(message.guild.id).songs[0].url)
+    await listenmoenoeplaying.setURL(song.url)
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester.username}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))

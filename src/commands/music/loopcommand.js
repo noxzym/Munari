@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "loop",
   aliases: null,
@@ -9,28 +11,18 @@ module.exports = {
   ownerOnly: false,
   guildOnly: true,
   missing: {
-    botperms: null,
+    botperms: ["EMBED_LINKS"],
     userperms: null
   },
-  run: async function (client, message, args) {
-    try {
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
+    const { channel } = message.member.voice;
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to repeat the music")).then(x => x.delete({ timeout: 10000 }))
 
-      const { channel } = message.member.voice;
-      if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-        return message.channel.send(`You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to loop the song`).then(msg => { msg.delete({ timeout: 8000 }); });
-      }
+    queue.loop = !queue.loop;
+    return message.channel.send(createEmbed("info", `**Loop music has been set to\`${queue.loop ? "on" : "off"}\`**`)).then(x => x.delete({ timeout: 10000 }))
 
-      const queue = client.queue.get(message.guild.id);
-      if (!queue) return message.reply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-      queue.loop = !queue.loop;
-
-      return client.channels.cache.get(queue.textChannel)
-        .send(`<a:yes:765207711423004676> | Loop is now ${queue.loop ? `**\`On\`**` : `**\`Off\`**`}`).then(msg => { msg.delete({ timeout: 5000 }) })
-        .catch(console.error);
-        
-    } catch (e) {
-      console.log(e)
-    }
   }
 };

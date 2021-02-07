@@ -1,3 +1,5 @@
+const { createEmbed } = require("../../utils/Function");
+
 module.exports = {
   name: "resume",
   aliases: null,
@@ -12,34 +14,16 @@ module.exports = {
     botperms: null,
     userperms: null
   },
-  run: async function(client, message, args) {
-    const queue = client.queue.get(message.guild.id)
-    if (!queue) return message.inlineReply("There is nothing playing.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
+  async run(client, message, args) {
+    const queue = message.guild.queue
+    if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
+    const { channel } = message.member.voice;
+    if (!channel) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You not in the voiceChannel")).then(x => x.delete({ timeout: 10000 }))
+    if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to resume the music")).then(x => x.delete({ timeout: 10000 }))
 
-    if (!queue.playing) {
+    if (queue.playing) return message.channel.send(createEmbed("error", `<a:no:765207855506522173> | Operation Canceled. I can't resume the music if music is not paused`)).then(x => x.delete({ timeout: 10000 }))
 
-      try {
-        const { channel } = message.member.voice;
-        if (!channel) return message.inlineReply(`Please join voice channel first`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
-        if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) {
-          return message.inlineReply(`You must in my voice channel`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-        }
-
-        queue.playing = true
-        await queue.connection.dispatcher.resume(true);
-        return client.channels.cache.get(queue.textChannel).send(`<a:yes:765207711423004676> | ${message.author} has resumed the music!`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-
-      } catch (e) {
-
-        console.error();
-        message.channel.send(`Sorry i get ${e} when execute this command`).then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error());
-
-      }
-
-    } else {
-      return message.inlineReply("The queue is not paused.").then(msg => { msg.delete({ timeout: 5000 }) }).catch(console.error);
-    }
-    
+    client.player.resume(message)
+    message.channel.send(createEmbed("info", `**\`${message.author.username}\` has resumed the music!**`)).then(x => x.delete({ timeout: 10000 }))
   }
 };
