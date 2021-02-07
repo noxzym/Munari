@@ -3,6 +3,7 @@
         {
             "date": "07 February 2021",
             "content": [
+                "- Fix: Bug leaving voice channel",
                 "- Feat: Canvas Spotify",
                 "- Fix: Bug Platlist",
                 "- Feat: Pagination",

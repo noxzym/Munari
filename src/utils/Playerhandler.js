@@ -45,7 +45,7 @@ module.exports = class PlayHandler {
         data.playing = true
     };
 
-    async getSongs(data, message) {
+    async getSongs(data) {
         const videoPattern = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?[\w\?=]*)?/
         const playlistPattern = /^((?:https?:)?\/\/)?((?:www|m)\.)?.*(youtu.be\/|list=)([^#\&\?]*).*/;
         const spotifyregex = /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track)(?:[/:])([A-Za-z0-9]+).*$/;
@@ -149,8 +149,14 @@ module.exports = class PlayHandler {
         const queue = message.guild.queue
 
         if (!song) {
-            await this.client.channels.cache.get(queue.voiceChannel).leave();
-            return this.client.channels.cache.get(queue.textChannel).send(createEmbed("info", "Request more song to keep me in the voice channel")).then(msg => { msg.delete({ timeout: 10000 }); })
+            setTimeout(async() => {
+                if (!queue.connection.dispatcher && message.guild.me.voice.channel) {
+                    await this.leave(message);
+                    return await this.client.channels.cache.get(queue.textChannel).send(createEmbed("info", "Request more song to keep me in the voice channel")).then(msg => { msg.delete({ timeout: 10000 }); })
+                } else return;
+            }, 60000);
+            queue.songs = []
+            return this.client.channels.cache.get(queue.textChannel).send(createEmbed("info", "Music queue ended. I'll disconnected in **\`60\`** minutes")).then(msg => { msg.delete({ timeout: 10000 }); })
         }
         queue.connection.on("disconnect", () => message.guild.queue = null)
 
