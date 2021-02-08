@@ -61,32 +61,32 @@ const pagination = async (send, page, datae, message, client) => {
                 break;
 
             case "⏹️":
-                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await send.reactions.removeAll() : undefined
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await send.reactions.removeAll() : undefined;
                 await collector.stop();
                 break;
 
             case "⏪":
-                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reaction.users.remove(user) : undefined;
                 if (page === 0) return;
                 page = datae.length - datae.length
                 send.edit(datae[page]);
                 break;
 
             case "⏩":
-                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reaction.users.remove(user) : undefined;
                 page = datae.length - 1;
                 send.edit(datae[page]);
                 break;
 
             case "⬅️":
-                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reaction.users.remove(user) : undefined;
                 if (page === 0) return
                 --page;
                 send.edit(datae[page]);
                 break;
 
             case "➡️":
-                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reaction.users.remove(user) : undefined;
                 if (page + 2 > datae.length) return
                 page++;
                 send.edit(datae[page]);
