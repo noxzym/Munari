@@ -18,13 +18,13 @@ module.exports = {
     },
     async run(client, message, args) {
         let page = 0;
-        const embed = geneembed(message, data);
+        const embed = await geneembed(message, data, client);
         let ems = await message.channel.send(embed[page])
         pagination(ems, page, embed, message, client)
     }
 };
 
-async function geneembed(message, data) {
+async function geneembed(message, data, client) {
     let array = [];
     let k = 5;
     for (let i = 0; i < data.length; i += 5) {

@@ -4,7 +4,7 @@ const colorThief = require("colorthief")
 const onecolor = require('onecolor');
 const convert = require('parse-ms');
 const path = require('path');
-const { createEmbed } = require('../../utils/Function');
+const { createEmbed, Deleted } = require('../../utils/Function');
 
 module.exports = {
     name: "spotify",

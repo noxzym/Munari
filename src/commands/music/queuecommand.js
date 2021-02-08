@@ -18,7 +18,7 @@ module.exports = {
     const queue = message.guild.queue
     if (!queue) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Nothing music are playng now")).then(x => x.delete({ timeout: 10000 }))
 
-    const embeds = geneembed(message, queue.songs);
+    const embeds = await geneembed(message, queue.songs);
     let page = 0;
     var embed = await message.channel.send(embeds[page])
     pagination(embed, page, embeds, message, client)
