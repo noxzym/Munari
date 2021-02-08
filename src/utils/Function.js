@@ -29,29 +29,64 @@ const formatMs = (ms) => {
     })
 };
 
-//Pagination
-const pagination = async (send, page, datae, message, option, pages) => {
-    await send.react('⬅️');
-    await send.react('❌');
-    await send.react('➡️');
+//DeleteMessage
+const Deleted = async(send, message) => {
+    const emo = ["🇽"];
+    for (const emoji of emo) await send.react(emoji);
 
-    var collector = send.createReactionCollector((reaction, user) => ['⬅️', '❌', '➡️'].includes(reaction.emoji.name) && user.id === message.author.id);
+    var collector = send.createReactionCollector((reaction, user) => emo.includes(reaction.emoji.name) && user.id === message.author.id);
+    collector.on("collect", async(reaction) => {
+        switch (reaction.emoji.name) {
+            case "🇽":
+                await send.delete()
+                break;
+        
+            default:
+                break;
+        }
+    })
+}
+
+//Pagination
+const pagination = async (send, page, datae, message, client) => {
+    const emo = ["🇽", "⏪", "⬅️", "➡️", "⏩", "⏹️"];
+    for (const emoji of emo) await send.react(emoji);
+
+    var collector = send.createReactionCollector((reaction, user) => emo.includes(reaction.emoji.name) && user.id === message.author.id);
     collector.on('collect', async (reaction, user) => {
         switch (reaction.emoji.name) {
 
-            case '❌':
-                await send.delete()
+            case "🇽":
+                await send.delete();
                 break;
 
-            case '⬅️':
-                reaction.users.remove(user)
+            case "⏹️":
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await send.reactions.removeAll() : undefined
+                await collector.stop();
+                break;
+
+            case "⏪":
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                if (page === 0) return;
+                page = datae.length - datae.length
+                send.edit(datae[page]);
+                break;
+
+            case "⏩":
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
+                page = datae.length - 1;
+                send.edit(datae[page]);
+                break;
+
+            case "⬅️":
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
                 if (page === 0) return
                 --page;
                 send.edit(datae[page]);
                 break;
 
-            case '➡️':
-                reaction.users.remove(user)
+            case "➡️":
+                message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? await reactions.users.remove(user) : undefined
                 if (page + 2 > datae.length) return
                 page++;
                 send.edit(datae[page]);
@@ -68,5 +103,6 @@ const pagination = async (send, page, datae, message, option, pages) => {
 module.exports = {
     formatMs,
     createEmbed,
+    Deleted,
     pagination
 }

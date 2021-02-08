@@ -5,7 +5,7 @@ const erityt = require('erit-ytdl');
 const yts = require('yt-search');
 const ytdl = require("ytdl-core");
 
-module.exports = class PlayHandler {
+module.exports = class PlayerHandler {
     constructor(client) {
         this.client = client
     };

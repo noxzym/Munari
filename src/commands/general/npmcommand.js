@@ -26,21 +26,21 @@ module.exports = {
     if (objects.length === 0) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Data not found")).then(x => { x.delete({ timeout: 10000 }) });
     const data = await objects.map(x => x.package)[0]
 
-    const name = data.name ? `**\`${data.name}\`**` : "No-Name";
-    const version = data.version ? `**\`V${data.version}\`**` : "No-Ver";
-    const description = data.description ? data.description : "No-Desc";
+    const name = data.name ? `**\`${data.name}\`**` : "**\`No-Name\`**";
+    const version = data.version ? `**\`V${data.version}\`**` : "**\`No-Ver\`**";
+    const description = data.description ? data.description : "**\`No-Desc\`**";
     const npm = data.links.npm ? data.links.npm : null;
-    const homepage = data.links.homepage ? `[[\`HOMEPAGE\`](${data.links.homepage})]` : "-";
-    const repository = data.links.repository ? `[[\`REPOSITORY\`](${data.links.repository})]` : "-";
-    const bugs = data.links.bugs ? `[[\`BUGS\`](${data.links.bugs})]` : "-";
-    const author = data.author ? `**\`${data.author.name}\`**` : "Unknown";
-    const maintainers = data.maintainers ? data.maintainers.map(x => `**\`${x.username}\`**`).join(" ") : "Unknown";
+    const homepage = data.links.homepage ? `[[\`HOMEPAGE\`](${data.links.homepage})]` : `**\`-\`**`;
+    const repository = data.links.repository ? `[[\`REPOSITORY\`](${data.links.repository})]` : `**\`-\`**`;
+    const bugs = data.links.bugs ? `[[\`BUGS\`](${data.links.bugs})]` : `**\`-\`**`;
+    const author = data.author ? `**\`${data.author.name}\`**` : "**\`Unknown\`**";
+    const maintainers = data.maintainers ? data.maintainers.map(x => `**\`${x.username}\`**`).join(" ") : "**\`Unknown\`**";
 
     const pkg = await fetch(`http://registry.npmjs.com/${data.name}`).then(x => x.json());
-    const created = pkg.time ? `**\`${moment(pkg.time.created).format("MMMM Do YYYY")}\`**` : "Unknown";
-    const modified = pkg.time ? `**\`${moment(pkg.time.modified).format("MMM Do YYYY")}\`**` : "Unknown";
-    const license = pkg.license ? `**\`${pkg.license}\`**` : "Unknown";
-    const dependencies = Array.from(Object.keys(pkg.versions[data.version].dependencies)).map(x => `**\`${x}\`**`).join(" ")
+    const created = pkg.time ? `**\`${moment(pkg.time.created).format("MMMM Do YYYY")}\`**` : "**\`Unknown\`**";
+    const modified = pkg.time ? `**\`${moment(pkg.time.modified).format("MMM Do YYYY")}\`**` : "**\`Unknown\`**";
+    const license = pkg.license ? `**\`${pkg.license}\`**` : "**\`Unknown\`**";
+    const dependencies = pkg.versions[data.version].dependencies ? Array.from(Object.keys(pkg.versions[data.version].dependencies)).map(x => `**\`${x}\`**`).join(" ") : `**\`-\`**`;
 
     let e = createEmbed()
       .setColor("cb3837")

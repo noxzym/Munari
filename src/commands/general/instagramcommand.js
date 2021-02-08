@@ -1,5 +1,5 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed, Deleted } = require("../../utils/Function");
 const { registerFont, createCanvas, loadImage } = require('canvas');
 const { Circle } = require("../../utils/Imagegen");
 const fetch = require('node-fetch');
@@ -39,7 +39,6 @@ module.exports = {
       message.channel.startTyping()
 
       const data = await results;
-
       const get = data.graphql.user;
       const fullname = get.full_name;
       const userig = get.username;
@@ -130,15 +129,6 @@ module.exports = {
           ctx.fillStyle = "#7a7a7a";
           ctx.fillText("This Account is Private", 600, 1120);
         }
-        /*
-        ctx.beginPath()
-        ctx.arc(225, 320, 118, 0, Math.PI * 2, true);
-        ctx.closePath()
-        ctx.clip()
-
-        const av = await loadImage(thm)
-        ctx.lineTo(av, 50, 50)
-        ctx.drawImage(av, 105, 200, 240, 240)*/
 
         const imager = await Circle(thm);
         const imgprof = await loadImage(imager);
@@ -146,7 +136,8 @@ module.exports = {
 
         let img = canvas.toBuffer()
         const ath = new MessageAttachment(img, "instagram.png")
-        message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath] })
+        var dataran = await message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath] });
+        await Deleted(dataran, message)
         message.channel.stopTyping()
       } else {
 

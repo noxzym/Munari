@@ -42,7 +42,7 @@ module.exports = class MunariClient extends Client {
         this.player = new PlayerHandler(this)
         this.botlist = new MunariBotList()
         this.config = config;
-        this.snipes = new Map();
+        this.snipes = [];
     }
     async totalGuilds() {
         return this.shard.broadcastEval("this.guilds.cache.size").then(x => x.reduce((a, b) => a + b), 0)

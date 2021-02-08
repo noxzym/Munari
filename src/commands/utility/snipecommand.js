@@ -1,11 +1,12 @@
-const { MessageEmbed, MessageAttachment, Message } = require('discord.js')
+const { createEmbed, pagination } = require('../../utils/Function');
+
 module.exports = {
     name: "snipe",
     aliases: null,
     category: "Utility",
     descriptions: "Get last message delete",
     usage: "snipe [channel[mention/id]]",
-    options: null,
+    options: ["--all"],
     cooldown: "8",
     ownerOnly: false,
     guildOnly: true,
@@ -15,20 +16,30 @@ module.exports = {
     },
     async run(client, message, args) {
         const channel = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel;
-        const snipes = client.snipes.get(channel.id)
+        const snipes = client.snipes.filter(x => x.channel === channel.id);
+        if (snipes.length === 0) return message.channel.send(createEmbed("error", `I can't get last message delete in channel **\`${channel.name}\`**`)).then(msg => { msg.delete({ timeout: 10000 }) });
 
-        let e = new MessageEmbed()
-        let snipemsg;
-        if (snipes === undefined) {
-            return message.channel.send(e.setDescription(`I can't get last message delete in channel **\`${channel.name}\`**`).setColor('RED')).then(msg => { msg.delete({ timeout: 5000 }) })
-        } else {
-            snipemsg = snipes[0]
-            e.setColor(snipemsg.color)
-            e.setAuthor(`Last MessageDelete by ${snipemsg.author.tag}`, snipemsg.author.avatarURL({ dynamic: true }))
-            e.setDescription(snipemsg.content.length <= 1091 ? snipemsg.content : snipemsg.content.substr(0, 1091).trim() + ' ...')
-            e.setImage(snipemsg.image)
-            e.setFooter(`Time: ${snipemsg.date} • #${channel.name}`)
-            message.channel.send({ embed: e })
-        }
+        let page = 0;
+        const embeds = await geneembed(snipes, channel)
+        let send = await message.channel.send(embeds[page])
+
+        if (args.join('').toLowerCase().match(/^(?:--all)$/g)) return pagination(send, page, embeds, message, client)
     }
+}
+
+async function geneembed(data, channel) {
+    const embeds = [];
+    let k = 1;
+    for (let i = 0; i < data.length; i++) {
+        const now = data.slice(i, k);
+        k += 5;
+        const maping = await now.map(x => x)[0]
+        let e = createEmbed("info")
+            .setAuthor(`Message Delete by ${maping.author.tag}`, maping.author.avatarURL({ dynamic: true }))
+            .setDescription(maping.content.length <= 1091 ? maping.content : maping.content.substr(0, 1091).trim() + ' ...')
+            .setImage(maping.image)
+            .setFooter(`${maping.date} • #${channel.name}`)
+        embeds.push(e);
+    };
+    return embeds
 }

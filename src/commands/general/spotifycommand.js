@@ -130,7 +130,8 @@ module.exports = {
         ctx.fillStyle = colortext;
         ctx.fillRect(70, canvas.height - 100, toFormat, 8);
 
-        await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
+        var deletit = await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
+        await Deleted(deletit, message)
     }
 };
 

@@ -16,7 +16,7 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
-    message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? message.delete() : undefined
+    // message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? message.delete() : undefined
     let codein = args.slice(0).join(" ");
     if (!codein) return
 
