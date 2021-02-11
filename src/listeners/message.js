@@ -41,8 +41,6 @@ module.exports = {
         let command = client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
         if (!command) return;
 
-        if (message.guild.id !== "703245245315416184" && message.author.id !== "243728573624614912") return
-
         //Owner Only
         if (command.ownerOnly && message.author.id !== "243728573624614912") return
 
@@ -61,7 +59,7 @@ module.exports = {
             const expiration = timestamps.get(message.author.id) + cooldownamount;
             if (now < expiration) {
                 const timeleft = formatMs((expiration - now));
-                return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => { x.delete({ timeout: 5000 }) });
+                return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => { x.delete({ timeout: 10000 }) });
             }
         };
 
@@ -76,7 +74,7 @@ module.exports = {
                 let missingPerms = command.missing.botperms.filter(x => {
                     return !guildPerms.has(x)
                 })
-                return message.channel.send(`**<a:decline:776412779899781141> | Access Denied.\nMissing Permission for \`${client.user.username} [${missingPerms.join(", ")}]\`**`)
+                return message.channel.send(`**<a:decline:776412779899781141> | Access Denied.\nMissing Permission for \`${client.user.username} [${missingPerms.join(", ")}]\`**`).then(x => { x.delete({ timeout: 10000 }) });
             }
         };
 
@@ -87,7 +85,7 @@ module.exports = {
                 let missingPerms = command.missing.userperms.filter(x => {
                     return !memberPerms.has(x)
                 }).join(", ");
-                return message.channel.send(createEmbed("error", `**<a:decline:776412779899781141> | Access Denied. Missing Permission for \`${message.member.user.username}\`:\n\`${missingPerms}\`**`))
+                return message.channel.send(createEmbed("error", `**<a:decline:776412779899781141> | Access Denied. Missing Permission for \`${message.member.user.username}\`:\n\`${missingPerms}\`**`)).then(x => { x.delete({ timeout: 10000 }) });
             }
         }
         
