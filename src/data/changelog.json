@@ -1,6 +1,13 @@
 {
     "data": [
         {
+            "date": "11 February 2021",
+            "content": [
+                "- Fix: Typo in music service, Snipe Command, and more",
+                "- Chore: Bump Module"
+            ]
+        },
+        {
             "date": "07 February 2021",
             "content": [
                 "- Fix: Bug leaving voice channel",
@@ -22,7 +29,7 @@
             "date": "29 January 2021",
             "content": [
                 "- New fakesay command",
-                "- Add some feature <3",
+                "- Add some feature",
                 "- Update Module"
             ]
         },

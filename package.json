@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@top-gg/sdk": "^3.0.7",
-    "alexflipnote.js": "^2.3.4",
+    "alexflipnote.js": "^2.3.5",
     "axios": "^0.21.1",
     "boats.js": "^2.5.0",
     "canvas": "^2.6.1",
@@ -40,7 +40,6 @@
     "gifencoder": "^2.0.1",
     "http": "^0.0.0",
     "jimp": "^0.16.1",
-    "mal-scraper": "^2.11.3",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
     "one-liner-joke": "^1.2.0",
