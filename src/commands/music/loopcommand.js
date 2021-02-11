@@ -22,7 +22,7 @@ module.exports = {
     if (message.guild.me.voice.channel !== null && channel.id !== message.guild.me.voice.channel.id) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You must join channel **\`🔊${message.guild.me.voice.channel.name}\`** to repeat the music")).then(x => x.delete({ timeout: 10000 }))
 
     queue.loop = !queue.loop;
-    return message.channel.send(createEmbed("info", `**Loop music has been set to\`${queue.loop ? "on" : "off"}\`**`)).then(x => x.delete({ timeout: 10000 }))
+    return message.channel.send(createEmbed("info", `**Loop mode has been set to \`${queue.loop ? "on" : "off"}\`**`)).then(x => x.delete({ timeout: 10000 }))
 
   }
 };

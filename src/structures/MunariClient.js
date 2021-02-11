@@ -20,6 +20,7 @@ module.exports = class MunariClient extends Client {
             messageCacheMaxSize: Infinity,
             messageCacheLifetime: 540,
             messageSweepInterval: 180,
+            restTimeOffset: 0,
             ws: {
                 intents: [
                     "GUILDS",
@@ -42,7 +43,7 @@ module.exports = class MunariClient extends Client {
         this.player = new PlayerHandler(this)
         this.botlist = new MunariBotList()
         this.config = config;
-        this.snipes = [];
+        this.snipes = new Map();
     }
     async totalGuilds() {
         return this.shard.broadcastEval("this.guilds.cache.size").then(x => x.reduce((a, b) => a + b), 0)
@@ -59,6 +60,10 @@ module.exports = class MunariClient extends Client {
     async totalMemory(type) {
         return this.shard.broadcastEval(`process.memoryUsage()["${type}"]`).then(x => x.reduce((a, b) => a + b))
     };
+    async start() {
+        return this.login("NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.BZkIVivPrGsCf7E5gk4X8wBIXgM")
+        // return this.login("NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM")
+    }
 };
 
 class MunariBotList {

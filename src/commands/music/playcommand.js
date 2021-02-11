@@ -54,7 +54,7 @@ module.exports = {
             };
 
             if (song[0].vid || song[0].sp) {
-                
+
                 if (queue !== null ? queue.songs.length !== 0 && queue.songs.map(x => x.identifier).filter(x => song[0].identifier.includes(x)).map(x => x === song[0].identifier).join() === 'true' : undefined) {
                     return message.channel.send(createEmbed("error", `🚫 | Sorry, this song is already in the queue.`)).then(msg => { msg.delete({ timeout: 8000 }); });
                 } else if (queue !== null) {
@@ -77,11 +77,11 @@ module.exports = {
                             url: song[i].url,
                             thumbnail: song[i].thumbnail,
                             requester: message.author
-                        })                        
+                        })
                     };
 
                 } else {
-                    
+
                     for (let i = 0; i < song.length; i++) {
                         queueConstruct.songs.push({
                             title: song[i].title,
@@ -92,7 +92,7 @@ module.exports = {
                             url: song[i].url,
                             thumbnail: song[i].thumbnail,
                             requester: message.author
-                        })                        
+                        })
                     }
 
                 };

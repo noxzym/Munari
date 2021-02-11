@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-
 const prettyMilliseconds = require("pretty-ms");
 const color = {
     spotify: "#18d869",

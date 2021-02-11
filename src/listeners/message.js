@@ -5,11 +5,20 @@ module.exports = {
     name: 'message',
     async run(client, message) {
         //Prefix In Here\\
-        /*const Prefixes = await Prefix.findOne({ GuildId: message.guild.id }, async (err, data) => {
+        /*
+        const Prefixes = await Prefix.findOne({ GuildId: message.guild.id }, async (err, data) => {
             if (err) throw err;
             return data
-        });*/
-        const prefix = /*Prefixes !== null ? Prefixes.Prefix :*/ client.config.prefix
+        });
+
+        const blacklisted = await Blacklist.findOne({ UserId: message.author.id }, async (err, data) => {
+            if (err) throw err;
+            return data
+        });
+
+        if (blacklisted) return;
+        */
+        const prefix = /*Prefixes !== null ? Prefixes.Prefix : */client.config.prefix
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
@@ -19,13 +28,7 @@ module.exports = {
 
         if ((message.guild !== null && !message.guild.me.hasPermission('SEND_MESSAGES'))) return;
         if (message.channel.type !== 'dm' && !message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) return;
-
         if (message.author.bot) return;
-        // const blacklisted = await Blacklist.findOne({ UserId: message.author.id }, async (err, data) => {
-        //     if (err) throw err;
-        //     return data
-        // });
-        // if (blacklisted) return;
         
         const getpref = new RegExp(`^<@!?${client.user.id}>( |)$`);
         if (message.content.match(getpref)) return message.channel.send(embed);
@@ -37,6 +40,8 @@ module.exports = {
         //Command Files in HERE
         let command = client.commandmanager.command.get(cmd) || client.commandmanager.command.get(client.commandmanager.aliases.get(cmd));
         if (!command) return;
+
+        if (message.guild.id !== "703245245315416184" && message.author.id !== "243728573624614912") return
 
         //Owner Only
         if (command.ownerOnly && message.author.id !== "243728573624614912") return
