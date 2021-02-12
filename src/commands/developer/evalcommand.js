@@ -1,6 +1,6 @@
 const { Message, Guild, TextChannel, VoiceChannel, MessageEmbed, MessageAttachment, DMChannel, NewsChannel, VoiceConnection, Collection, ClientEvents, VoiceState, Util } = require('discord.js');
 const { Deleted } = require("../../utils/Function")
-const req = require('snekfetch')
+const req = require('node-superfetch')
 const util = require('util')
 
 module.exports = {
