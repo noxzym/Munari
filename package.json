@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@top-gg/sdk": "^3.0.7",
-    "alexflipnote.js": "^2.3.5",
+    "alexflipnote.js": "^2.3.6",
     "axios": "^0.21.1",
     "boats.js": "^2.5.0",
     "canvas": "^2.6.1",
