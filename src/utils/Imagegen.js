@@ -5,7 +5,6 @@ const circle = require("@jimp/plugin-circle")
 const configure = require('@jimp/custom');
 const { MessageAttachment } = require("discord.js");
 const GIFEncoder = require(`gifencoder`);
-
 configure({ plugins: [circle] }, jimp);
 
 const brightness = async (img, amount) => {

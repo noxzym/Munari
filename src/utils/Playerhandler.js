@@ -83,8 +83,8 @@ module.exports = class PlayerHandler {
           title: Util.escapeMarkdown(datar[i].title),
           identifier: datar[i].videoId,
           author: datar[i].author.name,
-          duration: datar[i].timestamp,
-          nowplaying: datar[i].seconds,
+          duration: datar[i].duration.timestamp,
+          nowplaying: datar[i].duration.seconds,
           url: `https://www.youtube.com/watch?v=${datar[i].videoId}`,
           thumbnail: datar[i].thumbnail + "?size=4096",
         })
