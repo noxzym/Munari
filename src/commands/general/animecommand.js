@@ -93,7 +93,7 @@ module.exports = {
       .setDescription(
         `\`\`\`asciidoc\n` +
         `• Title    :: ${finalresult.attributes.titles.en_jp}\n` +
-        `• JPTitle    :: ${finalresult.attributes.titles.ja_jp}\n` +
+        `• JPTitle  :: ${finalresult.attributes.titles.ja_jp}\n` +
         `• Type     :: ${finalresult.attributes.subtype}\n` +
         `• Rating   :: ${finalresult.attributes.averageRating}\n` +
         `• Genres   :: ${genre}\n` +
