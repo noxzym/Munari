@@ -1,6 +1,7 @@
-const Discord = require('discord.js');
+const { createEmbed } = require("../../utils/createEmbed");
 const moment = require('moment');
 moment.locale();
+
 module.exports = {
   name: "userinfo",
   aliases: ["ui"],
@@ -32,8 +33,7 @@ module.exports = {
       bot = "What's up?"
     }
 
-    const e = new Discord.MessageEmbed()
-      .setColor(color)
+    const e = createEmbed("info")
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 1024 }))
       .setDescription(`**__User Informations__**\n**\`\`\`asciidoc\n• UserName     :: ${member.user.tag}\n• UserID       :: ${member.user.id}\n• Created At   :: ${date}\n• Joined At    :: ${Jdate}\n• Highest Role :: ${roles.first().name}\n• Lowest Role  :: ${roles.last(2)[0].name}\n• Type         :: ${bot}\n\`\`\`**`)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))

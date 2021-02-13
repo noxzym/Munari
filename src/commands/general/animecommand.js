@@ -1,5 +1,5 @@
 const { Util } = require("discord.js");
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed")
 const { get } = require("axios");
 const moment = require("moment");
 

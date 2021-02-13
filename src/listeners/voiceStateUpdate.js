@@ -1,4 +1,5 @@
-const { createEmbed, formatMs } = require("../utils/Function");
+const { createEmbed } = require("../utils/createEmbed");
+
 module.exports = {
     name: 'voiceStateUpdate',
     async run(client, oldState, newState) {
@@ -37,7 +38,7 @@ module.exports = {
             newState.guild.queue.playing = false;
             queue.connection ? queue.connection.dispatcher.pause(true) : null;
             const timeout = 120000;
-            const duration = formatMs(timeout);
+            const duration = client.util.parseMs(timeout);
             newState.guild.queue.timeout = setTimeout(() => {
                 client.channels.cache.get(queue.voiceChannel).leave();
                 client.channels.cache.get(queue.textChannel).send(

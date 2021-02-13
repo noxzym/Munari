@@ -1,4 +1,5 @@
-const Discord = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
+
 module.exports = {
   name: "ping",
   aliases: null,
@@ -16,8 +17,8 @@ module.exports = {
   async run(bot, message, args) {
     let latency = Math.round(new Date() - message.createdTimestamp)
     let websocket = bot.ws.ping
-    let ping = new Discord.MessageEmbed()
-      .setColor(message.member.displayHexColor)
+    
+    let ping = createEmbed("info")
       .setTimestamp(message.createdTimestamp)
       .setDescription(`:ping_pong: **Pong! \n\`📶\`Latency = **\`${latency}\`** ms\n\`🖥️\`Websocket = **\`${websocket}\`** ms**`)
       .setTimestamp()

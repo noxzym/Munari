@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed")
 
 module.exports = {
   name: "dog",

@@ -1,5 +1,6 @@
-const { MessageAttachment, MessageEmbed } = require("discord.js");
-const fethc = require("node-fetch");
+const { MessageAttachment } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
+const fetch = require("node-fetch");
 
 module.exports = {
   name: "poke",
@@ -20,11 +21,10 @@ module.exports = {
     if (!member) return message.reply("You need to mention someone for you poke").then(msg => { msg.delete({ timeout: 10000 }) });
     if (member.id === client.user.id) return message.channel.send(`I don't want it`).then(msg => { msg.delete({ timeout: 10000 }) });
 
-    const { url } = await superagent.get("https://nekos.life/api/v2/img/poke").then(x => x.json());
+    const { url } = await fetch("https://nekos.life/api/v2/img/poke").then(x => x.json());
     const ath = new MessageAttachment(url, 'poke.gif')
 
-    const e = new MessageEmbed()
-      .setColor(message.member.displayHexColor)
+    const e = createEmbed("info")
       .setTitle(`${member.user.username} was Poked by ${message.author.username}`)
       .setImage('attachment://poke.gif')
       .setTimestamp()

@@ -25,12 +25,6 @@ module.exports = {
 
     let result = Math.floor(Math.random() * rates.length);
 
-    message.channel
-      .send(`Hold a moment <a:loading1:753610786991112282>`)
-      .then(msg => {
-        setTimeout(function () {
-          msg.edit(`${ratus} have ${result}/10 score`);
-        }, 5000);
-      });
+    message.channel.send(`Hold a moment <a:loading1:753610786991112282>`).then(msg => { setTimeout(function () { msg.edit(`${ratus} have ${result}/10 score`); }, 5000); });
   }
 };

@@ -1,4 +1,6 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js')
+const { MessageAttachment } = require('discord.js')
+const { createEmbed } = require("../../utils/createEmbed");
+
 module.exports = {
     name: "vote",
     aliases: null,
@@ -16,8 +18,8 @@ module.exports = {
     async run(client, message, args) {
         let ath = new MessageAttachment('https://top.gg/api/widget/740112353483554858.png', 'topgg.png')
         let topgg = await client.botlist.dbl.getBot("740112353483554858").then(x => x.monthlyPoints)
-        let e = new MessageEmbed()
-            .setColor(message.member.displayHexColor)
+
+        let e = createEmbed("info")
             .setAuthor(`Vote me!`, client.user.avatarURL({ size: 4096 }))
             .setDescription(`Do you want to vote me? click [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]\nI have **\`${topgg}\`** Votes for this month`)
             .setImage('attachment://topgg.png')

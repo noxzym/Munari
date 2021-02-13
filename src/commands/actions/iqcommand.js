@@ -20,20 +20,9 @@ module.exports = {
       message.mentions.members.first() ||
       message.member
     if (!member) {
-      message.channel.send(`Hold a moment <a:loading1:753610786991112282>`)
-        .then(msg => {
-          setTimeout(function () {
-            msg.edit(`${message.author} have ${iq} IQ`)
-          }, 5000)
-        })
-    }
+      message.channel.send(`Hold a moment <a:loading1:753610786991112282>`).then(msg => { setTimeout(function () { msg.edit(`${message.author} have ${iq} IQ`) }, 5000) }) }
     if (member) {
-      message.channel.send(`Hold a moment <a:loading1:753610786991112282>`)
-        .then(msg => {
-          setTimeout(function () {
-            msg.edit(`${member} have ${iq} IQ`)
-          }, 5000)
-        })
+      message.channel.send(`Hold a moment <a:loading1:753610786991112282>`) .then(msg => { setTimeout(function () { msg.edit(`${member} have ${iq} IQ`) }, 5000) })
     }
   }
 }

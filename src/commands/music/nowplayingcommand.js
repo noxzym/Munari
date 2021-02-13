@@ -1,5 +1,6 @@
 const createBar = require("string-progressbar");
-const { MessageEmbed } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
+
 module.exports = {
   name: "nowplaying",
   aliases: ["np"],
@@ -34,23 +35,23 @@ module.exports = {
 
     const date = duration !== undefined ? `${dur}/${song.duration}` : " ◉ LIVE " 
 
-    let nowPlaying = new MessageEmbed()
+    let nowPlaying = createEmbed()
       .setColor('#ff0000')
       .setAuthor(`Youtube Client Now Playing`, 'https://media.discordapp.net/attachments/743752317333143583/786185147706900490/YouTubeLogo.png?width=270&height=270')
       .setTitle(`${song.title}`)
-    await nowPlaying.setURL(song.url)
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester.username}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+    nowPlaying.setURL(song.url)
 
-    let listenmoenoeplaying = new MessageEmbed()
+    let listenmoenoeplaying = createEmbed()
       .setColor('1d1f2b')
       .setAuthor(`Listen.moe Now Playing`, 'https://cdn.discordapp.com/attachments/743752317333143583/767745938252103690/Avatar.png')
       .setTitle(`${song.title}`)
-    await listenmoenoeplaying.setURL(song.url)
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester.username}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+    istenmoenoeplaying.setURL(song.url)
 
     song.url.includes("youtube.com") ? message.channel.send(nowPlaying) : message.channel.send(listenmoenoeplaying)
   }

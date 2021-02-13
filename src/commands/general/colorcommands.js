@@ -1,5 +1,7 @@
-const { MessageEmbed, MessageAttachment } = require("discord.js");
+const { MessageAttachment } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed")
 const alex = require('alexflipnote.js')
+
 module.exports = {
   name: "color",
   aliases: null,
@@ -30,7 +32,7 @@ module.exports = {
     const rgb = data.rgb
 
     const ath = new MessageAttachment(gradient, `color.png`)
-    const e = new MessageEmbed()
+    const e = createEmbed()
       .setColor(hex)
       .setTitle(`${name} • ${hex}`)
       .setDescription(`\`\`\`asciidoc\n• Color name    :: ${name}\n• Color hex     :: ${hex}\n• Color RGB     :: ${rgb}\n• Color Int     :: ${int}\n• Color Brightness :: ${bright}\n\`\`\``)

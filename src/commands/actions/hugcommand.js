@@ -1,5 +1,6 @@
-const { MessageAttachment, MessageEmbed } = require("discord.js");
+const { MessageAttachment } = require("discord.js");
 const fetch = require("node-fetch");
+const { createEmbed } = require("../../utils/createEmbed");
 
 module.exports = {
   name: "hug",
@@ -23,8 +24,7 @@ module.exports = {
     const { url } = await fetch("https://nekos.life/api/v2/img/hug").then(x => x.json());
     const ath = new MessageAttachment(url, 'hug.gif')
 
-    const e = new MessageEmbed()
-      .setColor(message.member.displayHexColor)
+    const e = createEmbed("info")
       .setTitle(`${member.user.username} has been Hugged by ${message.author.username}`)
       .setImage('attachment://hug.gif')
       .setTimestamp()

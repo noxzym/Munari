@@ -1,4 +1,5 @@
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed")
+
 module.exports = {
   name: "avatar",
   aliases: ["av"],

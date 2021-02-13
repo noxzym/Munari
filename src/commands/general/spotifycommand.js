@@ -1,10 +1,10 @@
 const { MessageAttachment } = require('discord.js');
-const { registerFont, createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('canvas');
 const colorThief = require("colorthief")
 const onecolor = require('onecolor');
 const convert = require('parse-ms');
 const path = require('path');
-const { createEmbed, Deleted } = require('../../utils/Function');
+const { createEmbed } = require("../../utils/createEmbed");
 
 module.exports = {
     name: "spotify",
@@ -21,6 +21,7 @@ module.exports = {
         userperms: null
     },
     async run(client, message, args) {
+        const { delmsg } = await client.util
         const member = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
         const presence = member.presence.activities.filter(x => x.name === 'Spotify')[0]
@@ -131,7 +132,7 @@ module.exports = {
         ctx.fillRect(70, canvas.height - 100, toFormat, 8);
 
         var deletit = await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
-        await Deleted(deletit, message)
+        await delmsg(deletit, message)
     }
 };
 

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
+const { createEmbed } = require("../../utils/createEmbed");
 
 module.exports = {
   name: "punch",
@@ -23,8 +24,7 @@ module.exports = {
     const { url } = await fetch("https://neko-love.xyz/api/v1/punch").then(x => x.json())
     const ath = new Discord.MessageAttachment(url, "punch.gif")
 
-    const e = new Discord.MessageEmbed()
-      .setColor(message.member.displayHexColor)
+    const e = createEmbed("info")
       .setTitle(`${member.user.username} was Punched by ${message.author.username}`)
       .setImage("attachment://punch.gif")
       .setTimestamp()

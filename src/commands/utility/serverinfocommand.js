@@ -1,5 +1,6 @@
-const Discord = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
 const moment = require('moment');
+
 moment.locale();
 module.exports = {
   name: "serverinfo",
@@ -16,8 +17,6 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
-    const color = message.member.displayHexColor
-
     const sname = message.guild.name.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ')
     const sreg = message.guild.region.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ')
     const sver = message.guild.verificationLevel.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ')
@@ -41,8 +40,7 @@ module.exports = {
     const ownercr = moment(message.guild.owner.user.createdAt).format('ll')
     const ownerjo = moment(message.guild.owner.joinedAt).format('ll')
 
-    const e = new Discord.MessageEmbed()
-      .setColor(color)
+    const e = createEmbed("info")
       .setTitle('Server Informations')
       .setDescription(`**__Overview__**\n**\`\`\`asciidoc\n• ServerName   :: ${sname}\n• ServerID     :: ${message.guild.id}\n• ServerRegion :: ${sreg}\n• Verif. Lvl.  :: ${sver}\n• Created At   :: ${scr}\n• Booster      :: ${sbos}\n\`\`\`**\n**__Details__**\n**\`\`\`asciidoc\n• Roles    :: ${message.guild.roles.cache.size}\n• Channels :: [${channel}]\n           :: ${channelc} Category\n           :: ${channelt} Text\n           :: ${channelv} Voice\n• Members  :: [${membert}]\n           :: ${online} Online\n           :: ${idle} Idle\n           :: ${dnd} Do Not Disturb\n           :: ${offline} Offline\n\`\`\`**\n**__Owner Informations__**\n**\`\`\`asciidoc\n• UserName  :: ${owner}\n• UserID    :: ${ownerid}\n• CreatedAt :: ${ownercr}\n• JoinedAt  :: ${ownerjo}\n\`\`\`**`)
       .setThumbnail(message.guild.iconURL({ dynamic: true }))

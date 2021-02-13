@@ -1,5 +1,6 @@
-const Discord = require('discord.js')
+const { createEmbed } = require("../../utils/createEmbed")
 const joke = require('one-liner-joke').getRandomJoke
+
 module.exports = {
   name: "joke",
   aliases: null,
@@ -16,12 +17,11 @@ module.exports = {
   },
   async run(client, message, args) {
 
-    message.channel.send(
-      new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setDescription(joke({ exclude_tags: ['dirty', 'racist', 'marriage', 'sex', 'death'] }).body)
-        .setTimestamp()
-        .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
-    )
+    let e = createEmbed("info")
+      .setDescription(joke({ exclude_tags: ['dirty', 'racist', 'marriage', 'sex', 'death'] }).body)
+      .setTimestamp()
+      .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+
+    message.channel.send(e)
   }
 }

@@ -1,7 +1,6 @@
-const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { createEmbed, Deleted } = require("../../utils/Function");
+const { MessageAttachment } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
 const { registerFont, createCanvas, loadImage } = require('canvas');
-const { Circle } = require("../../utils/Imagegen");
 const fetch = require('node-fetch');
 const path = require('path');
 registerFont(path.join(__dirname, '..', '..', '..', 'src', 'data', 'fonts', 'nishiki.ttf'), { family: 'Sans' });
@@ -21,6 +20,7 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
+    const { delmsg } = await client.util
     try {
       const username = args[0];
       if (!username) return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. You need to input username")).then(x => { x.delete({ timeout: 10000 }) })
@@ -89,7 +89,7 @@ module.exports = {
 
         ctx.font = "40px Sans";
         ctx.fillStyle = "#FFFFFF";
-        await wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 100)
+        wraptext(ctx, bio, canvas.width - 1100, 650, 1015, 100)
 
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -130,19 +130,18 @@ module.exports = {
           ctx.fillText("This Account is Private", 600, 1120);
         }
 
-        const imager = await Circle(thm);
+        const imager = await client.util.circle(thm);
         const imgprof = await loadImage(imager);
         ctx.drawImage(imgprof, 105, 200, 240, 240)
 
         let img = canvas.toBuffer()
         const ath = new MessageAttachment(img, "instagram.png")
         var dataran = await message.inlineReply({ content: `**Link? https://www.instagram.com/${userig}**`, files: [ath] });
-        await Deleted(dataran, message)
+        await delmsg(dataran, message)
         message.channel.stopTyping()
       } else {
 
-        let e = new MessageEmbed()
-          .setColor(message.member.displayHexColor)
+        let e = createEmbed("info")
           .setTitle(`Instagram Account • ${fullname}`)
           .setURL(`https://www.instagram.com/${username}`)
           .setThumbnail(`${thm}`)

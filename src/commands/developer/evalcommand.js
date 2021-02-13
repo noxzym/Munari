@@ -1,5 +1,4 @@
 const { Message, Guild, TextChannel, VoiceChannel, MessageEmbed, MessageAttachment, DMChannel, NewsChannel, VoiceConnection, Collection, ClientEvents, VoiceState, Util } = require('discord.js');
-const { Deleted } = require("../../utils/Function")
 const req = require('node-superfetch')
 const util = require('util')
 
@@ -19,6 +18,7 @@ module.exports = {
   },
   async run(client, message, args) {
     message.channel.permissionsFor(client.user.id).has("MANAGE_MESSAGES") ? message.delete() : undefined
+    const { delmsg } = await client.util
     let codein = args.slice(0).join(" ");
     if (!codein) return
 
@@ -59,7 +59,7 @@ module.exports = {
         output = await message.channel.send(withouthaste)
       }
 
-      Deleted(output, message)
+      await delmsg(output, message)
 
     } catch (error) {
       var output;
@@ -77,7 +77,7 @@ module.exports = {
         output = await message.channel.send(nohaste)
       }
 
-      Deleted(output, message)
+      await delmsg(output, message)
       
     }
   }

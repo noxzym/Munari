@@ -1,4 +1,6 @@
 const moment = require('moment')
+moment.locale()
+
 module.exports = {
   name: 'messageDelete',
   async run(client, message) {

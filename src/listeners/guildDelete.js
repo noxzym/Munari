@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { createEmbed } = require("../utils/createEmbed");
 // const { Prefix } = require("../struct/MongoModels")
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
 
     const owner = guild.owner.user;
 
-    let e = new MessageEmbed()
+    let e = createEmbed("info")
       .setAuthor(`I Removed one Server`)
       .setDescription(
 `**Server Information\n`+

@@ -1,5 +1,5 @@
 const { version } = require("discord.js");
-const { createEmbed, pagination } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed");
 const os = require('os');
 const cpuStat = require("cpu-stat");
 const formatMs = require("pretty-ms");

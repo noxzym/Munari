@@ -1,5 +1,5 @@
 const { Util } = require("discord.js");
-const { createEmbed } = require('../../utils/Function')
+const { createEmbed } = require("../../utils/createEmbed");
 const yts = require('yt-search')
 
 module.exports = {

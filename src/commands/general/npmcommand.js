@@ -1,5 +1,4 @@
-
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed");
 const fetch = require("node-fetch");
 const moment = require("moment")
 

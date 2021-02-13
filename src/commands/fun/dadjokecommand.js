@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
-const { MessageEmbed } = require('discord.js')
+const { createEmbed } = require("../../utils/createEmbed")
+
 module.exports = {
   name: "dadjoke",
   aliases: null,
@@ -16,8 +17,7 @@ module.exports = {
   },
   async run(client, message, args) {
     const data = await fetch("https://icanhazdadjoke.com/slack").then(res => res.json());
-    let e = new MessageEmbed()
-      .setColor('RANDOM')
+    let e = createEmbed("info")
       .setAuthor('Dad Jokes')
       .setTitle(data.attachments[0].fallback)
       .setTimestamp()

@@ -1,5 +1,7 @@
 const { MessageEmbed } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed")
 const fetch = require("node-fetch");
+
 module.exports = {
   name: "compliment",
   aliases: null,
@@ -15,14 +17,11 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
-    const { compliment } = await fetch(
-      "https://complimentr.com/api"
-    ).then((res) => res.json());
+    const { compliment } = await fetch("https://complimentr.com/api").then((res) => res.json());
 
-    const embed = new MessageEmbed()
+    const embed = createEmbed("info")
       .setTitle("New Compliment")
       .setDescription(compliment)
-      .setColor("RANDOM")
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({dynamic: true}))
     message.channel.send(embed);

@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const { createEmbed } = require('../../utils/Function')
+const { createEmbed } = require("../../utils/createEmbed");
+
 module.exports = {
   name: "help",
   aliases: ["h", "?"],
@@ -163,17 +163,15 @@ module.exports = {
       const usage = cmd.usage ? `${prefix}${cmd.usage}` : "Not specified"
       const description = cmd.descriptions ? cmd.descriptions : "Not specified"
 
-      const embed = createEmbed()
-        .setColor(message.member.displayHexColor)
+      const embed = createEmbed("info")
         .setDescription(`**__Help Commands__**\n**\`\`\`asciidoc\n• Name        :: ${cmd.name}\n• Aliases     :: ${aliases}\n• Category    :: ${cmd.category}\n• Options     :: ${options}\n• Description :: ${description}\n• Usage       :: ${usage}\n• Cooldowns   :: ${cooldown}\n\`\`\`**`)
         .setThumbnail(client.user.displayAvatarURL())
         .setFooter(`Don't include <> or []. It's mean, <> is required and [] is optional`)
       return message.channel.send(embed);
     }
 
-    let hembed = new Discord.MessageEmbed()
+    let hembed = createEmbed("info")
       .setAuthor('Munari Help Commands', client.user.displayAvatarURL())
-      .setColor(message.member.displayHexColor)
       .setDescription(`Type **\`${prefix}help [Category]\`** to view command list\n\n**Category**\n**\`【🐶】\` Animal \`help 1\`\n\`【😉】\` Action \`help 2\`\n\`【🖼】\` Image \`help 3\`\n\`【🎭】\` General \`help 4\`\n\`【🎲】\` Fun \`help 5\`\n\`【🛠️】\` Utility \`help 6\`\n\`【🎧】\` Music \`help 7\`\n\`【⚙️】\` Moderation \`help 8\`\n\n【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**`)
       .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
       .setTimestamp()

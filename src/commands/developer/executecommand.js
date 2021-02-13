@@ -1,5 +1,6 @@
 const { exec } = require("child_process");
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed")
+
 module.exports = {
   name: "execute",
   aliases: ["ex"],

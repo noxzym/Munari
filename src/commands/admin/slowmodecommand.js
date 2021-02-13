@@ -1,4 +1,4 @@
-const { createEmbed, formatMs } = require('../../utils/Function')
+const { createEmbed } = require("../../utils/createEmbed")
 const ms = require('ms')
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 
         if (message.channel.activateCollector === true) return message.channel.send("please wait until the timeout over or response has given").then(msg => { msg.delete({ timeout: 5000 }) });
         let number = args[1] === 'off' ? 0 : (ms(args[1]))/1000
-        let nums = formatMs(number * 1000)
+        let nums = await client.util.parseMs(number * 1000)
         
         if (number === undefined) return message.channel.send(`Please provide the time to slowmode channel **\`${channel.name}\`**`).then(x => { x.delete({ timeout: 10000 }) })
         if (isNaN(number)) return message.channel.send(`Please input the correct number in second`).then(x => { x.delete({ timeout: 10000 }) })

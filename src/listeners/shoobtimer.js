@@ -1,4 +1,5 @@
-const { MessageEmbed } = require('discord.js')
+const { createEmbed } = require("../utils/createEmbed");
+
 module.exports = {
     name: 'message',
     async run(client, message) {
@@ -15,7 +16,7 @@ module.exports = {
             if (!embed.image) return;
 
             var i = 15;
-            let e = new MessageEmbed()
+            let e = createEmbed()
             var time = await message.channel.send({ embed: e.setDescription(`:green_circle:**\`| ❝ ${embed.title} ❞ Despawn in ${i}\`**`).setColor('#78b159') })
             var interval = setInterval(function () {
                 i = i - 5;

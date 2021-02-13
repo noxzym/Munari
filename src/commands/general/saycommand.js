@@ -1,5 +1,5 @@
-const { Util, MessageAttachment } = require('discord.js');
-const { createEmbed } = require('../../utils/Function');
+const { MessageAttachment } = require('discord.js');
+
 module.exports = {
   name: "say",
   aliases: null,

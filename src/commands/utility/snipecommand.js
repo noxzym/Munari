@@ -1,4 +1,4 @@
-const { createEmbed, pagination } = require('../../utils/Function');
+const { createEmbed } = require("../../utils/createEmbed");
 
 module.exports = {
     name: "snipe",
@@ -23,7 +23,7 @@ module.exports = {
         const embeds = await geneembed(snipes, channel)
         let send = await message.channel.send(embeds[page])
 
-        if (args.join(" ").toLowerCase().includes("--all")) return pagination(send, page, embeds, message, client)
+        if (args.join(" ").toLowerCase().includes("--all")) return await client.util.pagination(send, page, embeds, message, client)
     }
 }
 

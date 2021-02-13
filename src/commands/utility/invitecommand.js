@@ -1,4 +1,5 @@
-const { createEmbed } = require("../../utils/Function");
+const { createEmbed } = require("../../utils/createEmbed");
+
 module.exports = {
   name: "invite",
   aliases: ["inv"],
@@ -14,8 +15,7 @@ module.exports = {
     userperms: null
   },
   async run(client, message, args) {
-    let inviteEmbed = createEmbed()
-      .setColor(message.member.displayHexColor)
+    let inviteEmbed = createEmbed("info")
       .setAuthor("Invite Me!")
       .setDescription(`Do you want to invite me? click [[**\`HERE\`**](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)]\nAlso you can vote me in [[**\`HERE\`**](https://top.gg/bot/740112353483554858/vote)]`)
       .setThumbnail(client.user.avatarURL({ size: 4096 }))

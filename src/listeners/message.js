@@ -1,7 +1,6 @@
 const { MessageEmbed, Collection, Permissions } = require('discord.js');
 // const { Blacklist, Prefix } = require('../struct/MongoModels');
-const { formatMs, createEmbed } = require('../utils/Function')
-const moment = require("moment");
+const { createEmbed } = require("../utils/createEmbed");
 
 module.exports = {
   name: 'message',
@@ -60,7 +59,7 @@ module.exports = {
     if (timestamps.has(message.author.id)) {
       const expiration = timestamps.get(message.author.id) + cooldownamount;
       if (now < expiration) {
-        const timeleft = formatMs((expiration - now));
+        const timeleft = await client.util.parseMs((expiration - now));
         return message.channel.send(createEmbed("error", `Oof! you hit the cooldown. Please wait **\`${timeleft}\`** to use this command again`)).then(x => { x.delete({ timeout: 10000 }) });
       }
     };

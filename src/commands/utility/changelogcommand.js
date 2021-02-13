@@ -1,6 +1,5 @@
-const { MessageEmbed } = require("discord.js");
+const { createEmbed } = require("../../utils/createEmbed");
 const { data } = require('../../data/changelog.json');
-const { pagination, createEmbed } = require("../../utils/Function");
 
 module.exports = {
     name: "changelog",
@@ -20,7 +19,7 @@ module.exports = {
         let page = 0;
         const embed = await geneembed(message, data, client);
         let ems = await message.channel.send(embed[page])
-        pagination(ems, page, embed, message, client)
+        await client.util.pagination(ems, page, embed, message, client)
     }
 };
 

@@ -1,6 +1,6 @@
 const glob = require("glob");
 const { readFileSync } = require("fs");
-const { createEmbed } = require("../../utils/Function")
+const { createEmbed } = require("../../utils/createEmbed");
 
 module.exports = {
     name: "totalcode",

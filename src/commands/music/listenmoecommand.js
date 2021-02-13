@@ -1,5 +1,3 @@
-const { play } = require('../../utils/Function')
-
 module.exports = {
     name: "listenmoe",
     aliases: ["listen", "moe"],
@@ -32,7 +30,6 @@ module.exports = {
             timeout: null
         };
 
-        let song;
         let songdata = []
         if (message.content.includes('--kpop')) {
 
