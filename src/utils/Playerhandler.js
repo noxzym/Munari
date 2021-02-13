@@ -1,5 +1,5 @@
 const { Util } = require("discord.js")
-const { createEmbed } = require("./Function")
+const { createEmbed } = require("./createEmbed")
 const { getTracks, getPreview } = require('spotify-url-info')
 const erityt = require('erit-ytdl');
 const yts = require('yt-search');

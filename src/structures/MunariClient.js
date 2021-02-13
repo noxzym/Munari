@@ -4,13 +4,10 @@ require('../extenders/GuildMember');
 require("../extenders/Guild");
 
 const { Client } = require("discord.js");
-const PlayerHandler = require('../utils/Playerhandler');
-const MunariCommando = require('../extenders/MunariCommando');
 const { Api } = require('@top-gg/sdk')
-const BOATS = require('boats.js');
-
-const dbl = new Api('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24');
-const boat = new BOATS('2bo3CkMT7P6CNxx7IBQrO5haxlOsSPazT8ExCCKAvUVxzuW8bKlsJqw3JH6yDd40B39zmNIGS4uV4SgVY3w54fIaiRiA0mJkMzlNlkCFCKvxoL4mtI1ABWvRfmpnUDrj8RutB2rjA7Uv9rVp9k9wt4G9VCr');
+const MunariCommando = require('../extenders/MunariCommando');
+const PlayerHandler = require('../utils/Playerhandler');
+const UtilHandler = require('../utils/UtilHandler');
 
 module.exports = class MunariClient extends Client {
     constructor(config) {
@@ -43,7 +40,8 @@ module.exports = class MunariClient extends Client {
         });
         this.commandmanager = new MunariCommando()
         this.player = new PlayerHandler(this)
-        this.botlist = new MunariBotList()
+        this.util = new UtilHandler(this)
+        this.dbl = new Api('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImJvdCI6dHJ1ZSwiaWF0IjoxNjA1NDk5OTc3fQ.0S6h9gpQg77c0mLRqLC4vc4zgduENIBrPlXzkRtDF24');
         this.config = config;
         this.snipes = new Map();
     }
@@ -66,11 +64,4 @@ module.exports = class MunariClient extends Client {
         return this.login("NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.BZkIVivPrGsCf7E5gk4X8wBIXgM")
         // return this.login("NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM")
     }
-};
-
-class MunariBotList {
-    constructor() {
-        this.dbl = dbl;
-        this.boat = boat;
-    };
 };

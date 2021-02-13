@@ -1,14 +1,25 @@
+const BOATS = require('boats.js');
+const boat = new BOATS('2bo3CkMT7P6CNxx7IBQrO5haxlOsSPazT8ExCCKAvUVxzuW8bKlsJqw3JH6yDd40B39zmNIGS4uV4SgVY3w54fIaiRiA0mJkMzlNlkCFCKvxoL4mtI1ABWvRfmpnUDrj8RutB2rjA7Uv9rVp9k9wt4G9VCr');
 
+client.boat.postStats(
+    client.guilds.cache.size, client.user.id
+)
 
-let commandFiles;
-    try {
-      commandFiles = require(`./commands/${cmd}.js`);
-      commandFiles.run(client, message, args)
-    } catch (err) {
-      return message.reply("Command tidak tersedia/dalam tahap pengembangan. Silahkan ketik tghelp")
-    } finally {
-      console.log(`${message.author.tag} menggunakan command ${prefix}${cmd}`)
+axios.post('https://discord.bots.gg/api/v1/bots/740112353483554858/stats', {
+    guildCount: client.guilds.cache.size, shardCount: client.ws.totalShards
+}, {
+    headers: {
+        Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjQzNzI4NTczNjI0NjE0OTEyIiwiaWF0IjoxNjA4MTI4OTYwfQ.AFqBCF0pWLsS7Nqf89hfBNpELzKyoLmlsN_d6Wp6Qa0'
     }
+})
+
+axios.post('https://discordbotlist.com/api/v1/bots/740112353483554858/stats', {
+    guilds: client.guilds.cache.size, users: client.users.cache.size
+}, {
+    headers: {
+        Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6Ijc0MDExMjM1MzQ4MzU1NDg1OCIsImlhdCI6MTYwODEyNzEyNn0.d5ikZ309UZspeFoDqkDuyoCK5_b4xir9fdD37zf2EoU'
+    }
+})
     
 const ffmpegFilters = {
   "3d": "apulsator=hz=0.125",

@@ -17,7 +17,7 @@ module.exports = {
     },
     async run(client, message, args) {
         let ath = new MessageAttachment('https://top.gg/api/widget/740112353483554858.png', 'topgg.png')
-        let topgg = await client.botlist.dbl.getBot("740112353483554858").then(x => x.monthlyPoints)
+        let topgg = await client.dbl.getBot("740112353483554858").then(x => x.monthlyPoints)
 
         let e = createEmbed("info")
             .setAuthor(`Vote me!`, client.user.avatarURL({ size: 4096 }))
