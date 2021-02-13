@@ -1,11 +1,6 @@
 const Canvas = require("canvas");
 const path = require("path");
-const jimp = require("jimp");
-const circle = require("@jimp/plugin-circle")
-const configure = require('@jimp/custom');
 const { MessageAttachment } = require("discord.js");
-const GIFEncoder = require(`gifencoder`);
-configure({ plugins: [circle] }, jimp);
 
 const brightness = async (img, amount) => {
     const image = await Canvas.loadImage(img);
@@ -132,10 +127,22 @@ const treshold = async (img, amount = 50) => {
 };
 
 const Circle = async(image) => {
-    image = await jimp.read(image);
-    image.circle();
-    let raw = await image.getBufferAsync("image/png");
-    return raw;
+    const canvas = Canvas.createCanvas(500, 500);
+    const ctx = canvas.getContext("2d");
+
+    ctx.save()
+    ctx.beginPath()
+    ctx.arc(250, 250, 250, 0, Math.PI * 2, true)
+    ctx.closePath()
+    ctx.clip()
+
+    ctx.drawImage(await Canvas.loadImage(image), 0, 0, canvas.width, canvas.height)
+
+    ctx.beginPath()
+    ctx.arc(0, 0, 200, 0, Math.PI * 2, true)
+    ctx.clip()
+    ctx.closePath()
+    return await canvas.toBuffer();
 }
 
 module.exports = {
