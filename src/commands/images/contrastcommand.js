@@ -1,15 +1,14 @@
-const { MessageAttachment, Util } = require("discord.js");
-const superagent = require("superagent");
 const { createEmbed } = require("../../utils/createEmbed");
+const { Util } = require('discord.js');
 
 module.exports = {
-  name: "blurple",
+  name: "contrast",
   aliases: null,
   category: "Image",
-  descriptions: "Add blurple filter to image",
-  usage: "blurple [user]",
+  descriptions: "Increase image contrast",
+  usage: "contrast [user/^]",
   options: null,
-  cooldown: "8",
+  cooldown: "10",
   ownerOnly: false,
   guildOnly: true,
   missing: {
@@ -23,16 +22,14 @@ module.exports = {
     } catch {
       fetched.delete();
       return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Invalid Data")).then(x => x.delete({ timeout: 10000 }));
-    };
-    
-    const { body } = await superagent.get(`https://neko-love.xyz/api/v2/blurple?url=${data}`);
-    let ath = new MessageAttachment(body.url, "blurple.png")
+    }
 
-    const e = createEmbed("info")
-      .setImage("attachment://blurple.png")
+    const ath = await client.util.canvas.contrast(data)
+    let e = createEmbed("info")
+      .setImage('attachment://contrast.png')
       .setTimestamp()
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true, size: 4096 }))
-    message.channel.send({ embed: e, files: [ath] });
+    message.channel.send({ files: [ath], embed: e })
     fetched.delete()
   }
-};
+}
