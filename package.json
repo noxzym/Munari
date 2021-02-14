@@ -26,7 +26,7 @@
     "@top-gg/sdk": "^3.0.7",
     "alexflipnote.js": "^2.3.5",
     "axios": "^0.21.1",
-    "boats.js": "^2.5.0",
+    "boats.js": "^2.5.1",
     "canvas": "^2.6.1",
     "colorthief": "^2.3.2",
     "cpu-stat": "^2.0.1",
