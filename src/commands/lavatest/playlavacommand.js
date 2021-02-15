@@ -1,5 +1,6 @@
 const { Util } = require("discord.js");
 const { createEmbed } = require("../../utils/createEmbed");
+const convert = require("pretty-ms");
 
 module.exports = {
   name: "playlava",
@@ -22,17 +23,8 @@ module.exports = {
     const search = args.join(" ");
     if (!search) return;
 
-    const spotifyregex = /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track)(?:[/:])([A-Za-z0-9]+).*$/;
-    var song;
-    try {
-      if (spotifyregex.test(args[0])) {
-        song = await client.lavaplayer.getSongs(search, "spotify")
-      } else {
-        song = await client.lavaplayer.getSongs(search, "youtube")
-      }
-    } catch (e) {
-      return message.channel.send(createEmbed("error", "Operation Canceled. Because: Empty Data"))
-    }
+    const track = await client.lavaplayer.getSongs(search);
+    const song = await track.tracks.shift()
 
     var queueConstruct = {
       textChannel: message.channel.id,
@@ -46,14 +38,26 @@ module.exports = {
       timeout: null
     };
 
+    const data = {
+      track: song.track,
+      title: Util.escapeMarkdown(song.info.title),
+      identifier: song.info.identifier,
+      author: song.info.author,
+      duration: convert(song.info.length, { colonNotation: true }),
+      nowplaying: song.info.length,
+      url: song.info.uri,
+      thumbnail: `https://i.ytimg.com/vi/${song.info.identifier}/hq720.jpg?size=4096`,
+      requester: message.author
+    };
+
     if (queue !== null) {
-      queue.songs.push(song)
+      queue.songs.push(data)
       return message.channel.send(createEmbed("info", `${song.info.title} Has been added to queue`))
     };
 
     if (queue === null) {
       try {
-        queueConstruct.songs.push(song);
+        queueConstruct.songs.push(data);
         message.guild.queue = queueConstruct;
         await client.lavaplayer.play(queueConstruct.songs[0].track, message)
       } catch (e) {
