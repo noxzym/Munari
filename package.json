@@ -5,11 +5,11 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "bash start.sh",
+    "main": "node index.js"
   },
   "engines": {
-    "node": "14.15.4",
-    "npm": "6.14.10"
+    "node": "14.40.0"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,8 @@
   ],
   "dependencies": {
     "@top-gg/sdk": "^3.0.7",
-    "alexflipnote.js": "^2.3.5",
+    "alexflipnote.js": "^2.3.6",
     "axios": "^0.21.1",
-    "boats.js": "^2.5.0",
     "canvas": "^2.6.1",
     "colorthief": "^2.3.2",
     "cpu-stat": "^2.0.1",
@@ -40,8 +39,10 @@
     "gifencoder": "^2.0.1",
     "glob": "^7.1.6",
     "http": "^0.0.0",
+    "lavasfy": "github:NezuChan/lava-spotify",
     "moment": "^2.29.1",
     "ms": "^2.1.3",
+    "node": "^14.15.2",
     "node-fetch": "^2.6.1",
     "node-superfetch": "^0.1.11",
     "one-liner-joke": "^1.2.0",
@@ -51,6 +52,7 @@
     "parse-ms": "^2.1.0",
     "path": "^0.12.7",
     "pretty-ms": "^7.0.1",
+    "shoukaku": "github:nezuchan/shoukaku",
     "sodium": "^3.0.2",
     "spotify-url-info": "^2.2.0",
     "string-progressbar": "^1.0.3",

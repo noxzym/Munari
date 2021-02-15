@@ -1,3 +1,12 @@
+/*Server_Build*/
+const express = require("express");
+const app = express();
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+app.listen(8000);
+
+/*ShardingManager*/
 const { ShardingManager } = require('discord.js');
 const moment = require("moment");
 const mainFile = "./src/index.js";
@@ -17,7 +26,7 @@ const shards = new ShardingManager(`${mainFile}`, {
   totalShards: 'auto',
   mode: 'process',
   respawn: true,
-  token: "NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.BZkIVivPrGsCf7E5gk4X8wBIXgM"
+  token: "NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.PNWsdNSf-fCylgj8hsSo22ZprRc"
   // token: 'NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM'
 });
 

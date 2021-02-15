@@ -35,7 +35,6 @@ module.exports = {
       } catch (e) {
         return message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })
       }
-
       message.channel.startTyping()
 
       const data = await results;
@@ -130,7 +129,7 @@ module.exports = {
           ctx.fillText("This Account is Private", 600, 1120);
         }
 
-        const imager = await client.util.circle(thm);
+        const imager = await client.util.canvas.circle(thm);
         const imgprof = await loadImage(imager);
         ctx.drawImage(imgprof, 105, 200, 240, 240)
 
@@ -151,6 +150,7 @@ module.exports = {
 
       }
     } catch (error) {
+      console.log(error)
       message.channel.send(createEmbed("error", "<a:no:765207855506522173> | Operation Canceled. Cannot find that username or the service unavailable")).then(x => { x.delete({ timeout: 10000 }) })
       message.channel.stopTyping()
     }
