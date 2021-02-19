@@ -39,7 +39,7 @@ module.exports = {
     const created = pkg.time ? `**\`${moment(pkg.time.created).format("MMMM Do YYYY")}\`**` : "**\`Unknown\`**";
     const modified = pkg.time ? `**\`${moment(pkg.time.modified).format("MMM Do YYYY")}\`**` : "**\`Unknown\`**";
     const license = pkg.license ? `**\`${pkg.license}\`**` : "**\`Unknown\`**";
-    const dependencies = pkg.versions[data.version].dependencies ? Array.from(Object.keys(pkg.versions[data.version].dependencies)).map(x => `**\`${x}\`**`).join(" ") : `**\`-\`**`;
+    const dependencies = pkg.versions[data.version].dependencies ? Array.from(Object.keys(pkg.versions[data.version].dependencies)).map(x => `**\`${x}\`**`).join(" ") !== "" ? Array.from(Object.keys(pkg.versions[data.version].dependencies)).map(x => `**\`${x}\`**`).join(" ") : `**\`-\`**` : `**\`-\`**`;
 
     let e = createEmbed()
       .setColor("cb3837")

@@ -86,7 +86,7 @@ module.exports = {
         let missingPerms = command.missing.userperms.filter(x => {
           return !memberPerms.has(x)
         }).join(", ");
-        return message.channel.send(createEmbed("error", `**<a:decline:776412779899781141> | Access Denied. Missing Permission for \`${message.member.user.username}\`:\n\`${missingPerms}\`**`)).then(x => { x.delete({ timeout: 10000 }) });
+        return message.channel.send(`**<a:decline:776412779899781141> | Access Denied. \nMissing Permission for \`${message.member.user.username} [${missingPerms.join(", ")}]\`**`).then(x => { x.delete({ timeout: 10000 }) });
       }
     }
 

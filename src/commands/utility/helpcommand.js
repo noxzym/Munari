@@ -146,8 +146,8 @@ module.exports = {
     //     .addField(`**\`【🎧】\` • Music \`[${musicsize}]\`**`, music)
     //     .addField(`**\`【⚙️】\` • Moderation \`[${adminsize}]\`**`, Admin)
     //     .addField('\u200B', "**【[VOTE ME](https://top.gg/bot/740112353483554858/vote)】 • 【[INVITE ME](https://discord.com/oauth2/authorize?client_id=740112353483554858&scope=bot&permissions=2146827639)】**")
-    //     .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
-    //     .setTimestamp()
+        // .setFooter(`Commanded by ${message.author.tag} | ${totalcmd} commands has been loaded`, message.author.avatarURL({ dynamic: true }))
+        // .setTimestamp()
     //   return message.channel.send(hembed)
     // }
 

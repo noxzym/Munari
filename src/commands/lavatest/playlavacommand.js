@@ -23,7 +23,7 @@ module.exports = {
     const search = args.join(" ");
     if (!search) return;
 
-    const track = await client.lavaplayer.getSongs(search);
+    const track = await client.shoukaku.getSongs(search);
     const song = await track.tracks.shift()
 
     var queueConstruct = {
@@ -46,20 +46,23 @@ module.exports = {
       duration: convert(song.info.length, { colonNotation: true }),
       nowplaying: song.info.length,
       url: song.info.uri,
-      thumbnail: `https://i.ytimg.com/vi/${song.info.identifier}/hq720.jpg?size=4096`,
+      thumbnail: `https://img.youtube.com/vi/${song.info.identifier}/sddefault.jpg?size=4096`,
       requester: message.author
     };
 
-    if (queue !== null) {
+    if (queue) {
       queue.songs.push(data)
       return message.channel.send(createEmbed("info", `${song.info.title} Has been added to queue`))
     };
 
-    if (queue === null) {
+    if (!queue) {
       try {
         queueConstruct.songs.push(data);
         message.guild.queue = queueConstruct;
-        await client.lavaplayer.play(queueConstruct.songs[0].track, message)
+        const node = await client.shoukaku.manager.getNode();
+        const player = await node.joinVoiceChannel({ deaf: true, guildID: message.guild.id, voiceChannelID: message.member.voice.channel.id });
+        queueConstruct.connection = await player;
+        await client.shoukaku.play(queueConstruct.songs[0], message)
       } catch (e) {
         console.log(e);
         message.guild.queue = null;

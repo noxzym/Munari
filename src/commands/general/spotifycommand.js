@@ -80,59 +80,59 @@ module.exports = {
             return message.channel.send(e)
         }
 
-        const canvas = createCanvas(1280, 423);
-        const ctx = canvas.getContext("2d");
-        let hex = await GetColor(img);
+          const canvas = createCanvas(1280, 423);
+          const ctx = canvas.getContext("2d");
+          let hex = await GetColor(img);
 
-        ctx.beginPath()
-        ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = hex;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.beginPath()
+          ctx.rect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = hex;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.drawImage(await loadImage(img), 1280 - 423, 0, 423, 423)
+          ctx.drawImage(await loadImage(img), 1280 - 423, 0, 423, 423)
 
-        var lingrad = ctx.createLinearGradient(1500, 0, 900, 0)
-        lingrad.addColorStop(0, "rgba(0,0,0,0.0)")
-        lingrad.addColorStop(1, `${hex}`)
-        ctx.restore()
-        ctx.fillStyle = lingrad
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+          var lingrad = ctx.createLinearGradient(1500, 0, 900, 0)
+          lingrad.addColorStop(0, "rgba(0,0,0,0.0)")
+          lingrad.addColorStop(1, `${hex}`)
+          ctx.restore()
+          ctx.fillStyle = lingrad
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const logo = await SpotifyImg(img, path);
-        ctx.drawImage(await loadImage(logo), 50, 40, 80, 80)
+          const logo = await SpotifyImg(img, path);
+          ctx.drawImage(await loadImage(logo), 50, 40, 80, 80)
 
-        const colortext = await TextColor(img);
-        ctx.font = "40px Sans";
-        ctx.fillStyle = colortext;
-        ctx.fillText(progressrun, 70, canvas.height - 40);
+          const colortext = await TextColor(img);
+          ctx.font = "40px Sans";
+          ctx.fillStyle = colortext;
+          ctx.fillText(progressrun, 70, canvas.height - 40);
 
-        ctx.font = "40px Sans";
-        ctx.fillStyle = colortext;
-        ctx.fillText(endprogress, canvas.width - 180, canvas.height - 40);
+          ctx.font = "40px Sans";
+          ctx.fillStyle = colortext;
+          ctx.fillText(endprogress, canvas.width - 180, canvas.height - 40);
 
-        ctx.font = "40px Sans";
-        ctx.fillStyle = colortext;
-        ctx.fillText(fittingString(ctx, `Spotify • ${album}`, canvas.width - (canvas.height + 50)), 130, 90)
+          ctx.font = "40px Sans";
+          ctx.fillStyle = colortext;
+          ctx.fillText(fittingString(ctx, `Spotify • ${album}`, canvas.width - (canvas.height + 50)), 130, 90)
 
-        ctx.font = "80px Sans";
-        ctx.fillStyle = colortext;
-        ctx.fillText(fittingString(ctx, songname, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) - 20)
+          ctx.font = "80px Sans";
+          ctx.fillStyle = colortext;
+          ctx.fillText(fittingString(ctx, songname, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) - 20)
 
-        ctx.font = "50px Sans";
-        ctx.fillStyle = colortext;
-        ctx.fillText(fittingString(ctx, auth, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) + 50)
+          ctx.font = "50px Sans";
+          ctx.fillStyle = colortext;
+          ctx.fillText(fittingString(ctx, auth, canvas.width - (canvas.height + 50)), 70, (canvas.height / 2) + 50)
 
-        const barcolor = await barprogress(img);
-        ctx.rect(70, canvas.height - 100, canvas.width - 148, 8);
-        ctx.fillStyle = barcolor;
-        ctx.fillRect(70, canvas.height - 100, canvas.width - 148, 8);
+          const barcolor = await barprogress(img);
+          ctx.rect(70, canvas.height - 100, canvas.width - 148, 8);
+          ctx.fillStyle = barcolor;
+          ctx.fillRect(70, canvas.height - 100, canvas.width - 148, 8);
 
-        const toFormat = (progress / duration) * (canvas.width - 148);
-        ctx.fillStyle = colortext;
-        ctx.fillRect(70, canvas.height - 100, toFormat, 8);
+          const toFormat = (progress / duration) * (canvas.width - 148);
+          ctx.fillStyle = colortext;
+          ctx.fillRect(70, canvas.height - 100, toFormat, 8);
 
-        var deletit = await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
-        await delmsg(deletit, message)
+          var deletit = await message.inlineReply(new MessageAttachment(canvas.toBuffer(), "data.png"));
+          await delmsg(deletit, message)
     }
 };
 

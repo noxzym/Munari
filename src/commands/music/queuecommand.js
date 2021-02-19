@@ -28,7 +28,7 @@ module.exports = {
 async function geneembed(message, queue) {
   const embeds = [];
   const track = queue.slice(1).length;
-  const estimate = await client.util.parseMs(eval(queue.slice(1).map(x => x.nowplaying).filter(x => x !== undefined).join('+')) * 1000);
+  const estimate = await message.client.util.parseMs(eval(queue.slice(1).map(x => x.nowplaying).filter(x => x !== undefined).join('+')) * 1000);
   let k = 5
   for (let i = 0; i < queue.length; i += 5) {
     const current = queue.slice(i + 1, k + 1);

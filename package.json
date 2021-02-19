@@ -3,10 +3,10 @@
   "version": "6.4.0",
   "description": " - ",
   "private": true,
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "bash start.sh",
-    "main": "node index.js"
+    "main": "bash start.sh",
+    "start": "node index.js"
   },
   "engines": {
     "node": "14.40.0"
@@ -52,7 +52,7 @@
     "parse-ms": "^2.1.0",
     "path": "^0.12.7",
     "pretty-ms": "^7.0.1",
-    "shoukaku": "github:nezuchan/shoukaku",
+    "shoukaku": "^1.6.0",
     "sodium": "^3.0.2",
     "spotify-url-info": "^2.2.0",
     "string-progressbar": "^1.0.3",

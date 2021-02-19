@@ -26,7 +26,7 @@ const shards = new ShardingManager(`${mainFile}`, {
   totalShards: 'auto',
   mode: 'process',
   respawn: true,
-  token: "NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.PNWsdNSf-fCylgj8hsSo22ZprRc"
+  token: "NzQwMTEyMzUzNDgzNTU0ODU4.XykRVw.tSkdflj2vTo5eOYWgAW4Hm6RltQ"
   // token: 'NzkxMjcxMjIzMDc3MTA5ODIw.X-MuwA.XTpdWsnWaAt3Qm7qGqkQr7zL3cM'
 });
 

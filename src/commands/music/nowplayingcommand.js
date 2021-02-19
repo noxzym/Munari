@@ -51,7 +51,7 @@ module.exports = {
       .setDescription(`${status} **${nowpl} \`[${date}]\` \nRequested by \`【${song.requester.username}】\`**`)
       .setThumbnail(song.thumbnail)
       .setFooter(`Commanded by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
-    istenmoenoeplaying.setURL(song.url)
+    listenmoenoeplaying.setURL(song.url)
 
     song.url.includes("youtube.com") ? message.channel.send(nowPlaying) : message.channel.send(listenmoenoeplaying)
   }

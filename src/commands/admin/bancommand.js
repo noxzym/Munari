@@ -34,13 +34,11 @@ module.exports = {
 
         try {
             if (member.user !== undefined) {
-
                 if (message.guild.me.roles.highest.comparePositionTo(member.roles.highest) < 0) return message.channel.send(`My Highest role must be higher than **\`${member.user.username}\`** highest role!`).then(msg => { msg.delete({ timeout: 10000 }) })
                 if (member.hasPermission('ADMINISTRATOR')) return message.channel.send(`This member has permission **\`ADMINISTRATOR\`**`).then(msg => { msg.delete({ timeout: 10000 }) })
                 if (!member.bannable) return message.channel.send("This member is not kickable").then(msg => { msg.delete({ timeout: 10000 }) })
                 if (member.user.id === message.author.id) return message.channel.send(`You can't kicked yourself`).then(msg => { msg.delete({ timeout: 10000 }) })
                 if (member.user.id === message.client.user.id) return message.channel.send(`I can't kick myself`).then(msg => { msg.delete({ timeout: 10000 }) })
-
             }
 
             var tag;
